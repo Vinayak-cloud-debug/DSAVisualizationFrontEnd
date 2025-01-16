@@ -645,6 +645,11 @@ const merge = async (arr, low, mid, high) => {
     let rightArrInd = 0;
   
     // Visualize the subarrays
+    setLow(low)
+    setHigh(high)
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+
     setLeftArr(left);
     await new Promise((resolve) => setTimeout(resolve, 1000));
   
