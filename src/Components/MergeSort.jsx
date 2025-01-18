@@ -557,85 +557,7 @@ const MergeSort = () => {
     // Merge the two sorted parts
     await merge(arr, low, mid, high);
   };
-  
-
-//   // Merge two sorted subarrays
-//   const merge = async (arr, low, mid, high) => {
-//     let left = []
-//     left = arr.slice(low, mid + 1);
-//     let right = []
-//     right = arr.slice(mid + 1, high + 1);
-//     let temp = [];
-//     let leftArrInd = 0;
-//     let rightArrInd = 0;
-    
-
-//     setLeftArr([])
-//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     alert("LeftArr "+leftArr)
-
-//     setRightArr([])
-//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     alert('rightArr '+rightArr)
-
-//     setLeftIndex(leftArrInd);
-//     setRightIndex(rightArrInd);
-
-//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//     // Merge array
-//     while (leftArrInd < left.length && rightArrInd < right.length) {
-
-//       if (left[leftArrInd] <= right[rightArrInd]) {
-//         temp.push(left[leftArrInd]);
-//         alert('temp '+temp)
-//         leftArrInd++;
-//       } else 
-//       if(left[leftArrInd] > right[rightArrInd]){
-//         alert('temp '+temp)
-//         temp.push(right[rightArrInd]);
-//         rightArrInd++;
-//       }
-
-//       // Only update indices after a change to avoid unnecessary updates
-//       setLeftIndex(leftArrInd);
-//       setRightIndex(rightArrInd);
-
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//       alert(temp)
-//     }
-  
-//     // Add remaining elements from the left array
-//     while (leftArrInd < left.length) {
-//       temp.push(left[leftArrInd]);
-//       alert('temp '+temp)
-//       leftArrInd++;
-//       setLeftIndex(leftArrInd); // Update left index
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     }
-
-//     // Add remaining elements from the right array
-//     while (rightArrInd < right.length) {
-//       temp.push(right[rightArrInd]);
-//       alert('temp '+temp)
-//       rightArrInd++;
-//       setRightIndex(rightArrInd); // Update right index
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     }
-  
-//     // Now update the main array with the merged result
-//     let newArr = [...arr];
-//     alert('temp '+temp)
-//     for (let i = 0; i < temp.length; i++) {
-//       newArr[low + i] = temp[i];
-//     }
-  
-//     // Update the array once after merging
-//     setArr(newArr);
-//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//   };
-  
+ 
 
 const merge = async (arr, low, mid, high) => {
     const left = arr.slice(low, mid + 1);
@@ -643,7 +565,7 @@ const merge = async (arr, low, mid, high) => {
     let temp = [];
     let leftArrInd = 0;
     let rightArrInd = 0;
-  
+    
     // Visualize the subarrays
     setLow(low)
     setHigh(high)
