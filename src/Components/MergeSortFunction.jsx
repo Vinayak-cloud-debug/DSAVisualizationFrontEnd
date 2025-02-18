@@ -105,7 +105,7 @@ const MergeSortFunction = () => {
 };
 
   return (
-    <div className="flex  flex-col gap-5">
+    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen justify-center overflow-hidden">
         <h1>Merge function in Merge Sort</h1>
       <input
         type="number"

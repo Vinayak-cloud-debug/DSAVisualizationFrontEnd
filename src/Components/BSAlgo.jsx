@@ -40,22 +40,22 @@ const BSAlgo = () => {
       setMid(mid);
 
       // Visualize the current state
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       if (arr[mid] === value) {
         setFound(true);
         setMid(mid)
-        toast.success("Element found at "+mid)
+        toast.success("Element found at "+mid+" index")
       
         return;
       } else if (arr[mid] < value) {
         low = mid + 1;
         setLow(mid+1)
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       } else {
         high = mid - 1;
         setHigh(mid-1)
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       }
     }
 
@@ -64,63 +64,104 @@ const BSAlgo = () => {
 };
 
   return (
-    <div className="flex  flex-col gap-5">
-        <h1>Binary Search Algorithm</h1>
+    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen  overflow-hidden">
+        <h1 className='text-2xl font-bold text-center mt-10 text-white'>Binary Search Algorithm</h1>
       <input
         type="number"
-        className="w-48 p-2 border rounded bg-white text-black"
+        className="w-56 p-2 ml-5 border rounded bg-gray-900 text-white placeholder-white"
         placeholder="Enter the size of the array"
         onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
       />
       <input
         type="text"
-        className="w-80 p-2 border rounded bg-white text-black"
+        className="w-80 p-2 border ml-5 rounded bg-gray-900 text-white placeholder-white"
         placeholder="Enter array elements separated by space"
         value={inputValue}
         onChange={handleInputChange}
       />
       <input
         type="text"
-        className="w-52 p-2 border rounded bg-white text-black"
+        className="w-52 p-2 border ml-5 rounded bg-gray-900 text-white placeholder-white"
         placeholder="Enter the element to search"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
       <button
         onClick={handleSubmit}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="px-4 py-2 w-[200px] ml-5 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
         Submit
       </button>
       <button
         onClick={visualizeBinarySearch}
-        className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-blue-700"
+        className="px-4 py-2  w-[200px] ml-5 bg-orange-600 text-white rounded hover:bg-blue-700"
       >
         BSAlgo
       </button>
 
       <div className="flex flex-row gap-8 mt-16 self-center">
-        {arr.map((val, index) => (
-          <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-            {index === Mid &&(<div><span>Mid</span> <FaArrowDown size={20} color="green" /></div>)}
-            {index === Low && (<div><span>Low</span> <FaArrowDown size={20} color="blue" /></div>)}
-            <span
-              className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center ${
-                index === Mid ? 'bg-green-400' : index === Low ? 'bg-blue-400' : index === High ? 'bg-red-400' : ''
-              }`}
-            >
-              {val}
-            </span>
-            {index === High && (<div><span>High</span> <FaArrowUp size={20} color="red" /></div>)}
+  {arr.map((val, index) => (
+    <div
+      key={index}
+      className="p-2 flex flex-col gap-[10px] items-center relative"
+      style={{ minHeight: "60px" }} // Ensures consistent height for the container
+    >
+      {/* Top Pointer */}
+      <div
+        className="flex justify-center"
+        style={{ height: "30px", width: "50px", position: "relative" }}
+      >
+        {index === Mid && (
+          <div className="absolute top-0 flex flex-col items-center">
+            <span className='text-white'>Mid</span>
+            <FaArrowDown size={20} color="green" />
           </div>
-        ))}
+        )}
+
       </div>
 
-      <div>
-            {Mid === searchValue ? <h1>{Mid} === {searchValue}</h1>:null}
-            {Mid > searchValue ? <h1>{Mid} greater than {searchValue}</h1>:null}
-            {Mid < searchValue ? <h1>{Mid} smaller than {searchValue}</h1>:null}
+      {/* Main Box */}
+      <span
+        className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center ${
+          index === Mid
+            ? "bg-green-400"
+            : index === Low
+            ? "bg-blue-400"
+            : index === High
+            ? "bg-red-400"
+            : ""
+        }`}
+      >
+        {val}
+      </span>
+
+      
+
+      {/* Bottom Pointer */}
+      <div
+        className="flex justify-center"
+        style={{ height: "30px", width: "50px", position: "relative" }}
+      >
+        {index === High && (
+          <div className="absolute bottom-0 flex flex-col items-center">
+            <FaArrowUp size={20} color="red" />
+            <span className='text-white'>High</span>
+          </div>
+        )}
+
+{index === Low && (
+          <div className="absolute top-0 flex flex-col items-center">
+            <FaArrowUp size={20} color="blue" />
+            <span className='text-white'>Low</span>
+          </div>
+        )}
       </div>
+      
+    </div>
+  ))}
+</div>
+
+      
       <Toaster/>
     </div>
   );

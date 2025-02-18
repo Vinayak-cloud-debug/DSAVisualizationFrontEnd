@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   GitBranch,
   BarChart2,
@@ -17,10 +17,7 @@ const Ring = ({ radius, color }) => (
       height: `${radius}px`,
       borderColor: color,
       boxShadow: `0 0 10px ${color}`,
-     
     }}
-
-    
   />
 );
 
@@ -44,58 +41,160 @@ const Home = () => {
     { name: 'Graph', icon: <Share2 />, ringIndex: 5, duration: '45s', nodeColor: 'bg-rose-500' }
   ];
 
-  return (
-    <div className='bg-gray-900 mr-40 overflow-hidden min-h-screen w-screen '>
-    <div className="  flex items-center mt-72 justify-center overflow-x-hidden overflow-y-hidden ">
-      {/* All 6 physical rings */}
-      {rings.map((ring, index) => (
-        <Ring key={index} {...ring} />
-      ))}
+  const [blink,setBlink] = useState(0);
 
-      {/* Central DSA Element */}
-      <div className="absolute z-50 w-32 h-32 bg-yellow-500 rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-yellow-500/50">
-        <div className="text-gray-900 font-bold text-2xl flex flex-col items-center gap-2">
-          <Brain className="w-8 h-8" />
-          <span>DSA</span>
-        </div>
+  const selectedBlink = (id) => {
+
+    setBlink(id)
+
+
+    if(id == 1)
+      window.location.href = '/BSAlgo';
+    if(id == 2)
+      window.location.href = '/MergeSortAlgo';
+    if(id == 3)
+      window.location.href = '/BubbleSortAlgo';
+    if(id == 4)
+      window.location.href = '/InsertionSortAlgo';
+    if(id == 5)
+      window.location.href = '/MergeSort';
+    if(id == 6)
+      window.location.href = '/NumberOfPaths';
+    if(id == 7)
+      window.location.href = '/SelectionSortAlgo';
+    if(id == 8)
+      window.location.href = '/LeftRotateArray';
+    if(id == 9)
+      window.location.href = '/SecondLargestElement';
+    if(id == 10)
+      window.location.href = '/SpiralMatrix';
+    if(id == 11)
+      window.location.href = '/QuickSortAlgo';
+    if(id == 12)
+      window.location.href = '/TwoPointerAlgo';
+    if(id == 13)
+      window.location.href = '/LargestElement';
+    if(id == 14)
+      window.location.href = '/SmallestElement';
+  }
+
+  var concept1  = [
+    
+    {id:1,text:'Binary Search'},
+    {id:2,text:'Merge Sort'},
+    {id:3,text:'Bubble Sort'},
+    {id:4,text:'Insertion Sort'},
+    {id:5,text:'Merge Sort function'},
+    {id:6,text:'Number Of Paths'},
+    {id:7,text:'Selection Sort'},
+
+    
+
+  ]
+
+
+  var concept2  = [
+    
+    
+    {id:8,text:'LeftRotateArray'},
+    {id:9,text:'Second Largest Element'},
+    {id:10,text:'Spiral Matrix'},
+    {id:11,text:'Quick Sort'},
+    {id:12,text:'Two Pointer'},
+    {id:13,text:'Largest Element'},
+    {id:14,text:'Smallest Element'},
+  ]
+
+  return (
+  
+  <div className='bg-gray-900 w-screen min-h-screen justify-center overflow-hidden'>
+    <h1 className='text-2xl font-bold text-center text-white mt-5'>Algo Vision</h1>
+    <div className=' flex flex-row gap-[50px]    '>
+      {/* Center content using flexbox */}
+
+      
+
+      <div className='w-[600px] h-[600px] bg-gray-900 mt-20 flex flex-row gap-[50px] items-center justify-center'>
+          <div className='w-[300px] h-[600px] flex flex-col gap-[50px] items-center justify-center'>
+          {concept1.map((item,index)=>
+            <div key={item.id} className="inline-block relative">
+              <h1 onClick={(e) => selectedBlink(item.id)} className="text-xl font-semibold text-white cursor-pointer">
+                {item.text}
+              </h1>
+              {blink == item.id ? (
+                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
+              ) : null}
+            </div>
+          )}
+         
+          </div>  
+
+          <div className='w-[300px] h-[600px] flex flex-col gap-[50px] items-center justify-center'>
+          {concept2.map((item,index)=>
+            <div key={item.id} className="inline-block relative">
+              <h1 onClick={(e) => selectedBlink(item.id)} className="text-xl font-semibold text-white cursor-pointer">
+                {item.text}
+              </h1>
+              {blink == item.id ? (
+                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
+              ) : null}
+            </div>
+          )}
+         
+          </div>  
       </div>
 
-      {/* Orbiting Elements */}
-      {orbitElements.map((item, index) => (
-        <div
-          key={item.name}
-          className="absolute"
-          style={{
-            width: `${rings[item.ringIndex].radius}px`,
-            height: `${rings[item.ringIndex].radius}px`,
-            animation: `spin ${item.duration} linear infinite`
-          }}
-        >
-          <div 
-            className={`absolute -top-6 left-1/2 transform -translate-x-1/2 ${item.nodeColor} 
-                       p-3 rounded-full text-white hover:scale-110 transition-transform 
-                       cursor-pointer flex flex-col items-center gap-1 z-20`}
-            style={{
-              animation: `counter-spin ${item.duration} linear infinite`,
-              boxShadow: `0 0 15px ${rings[item.ringIndex].color}`
-            }}
-          >
-            {item.icon}
-            <span className="text-xs whitespace-nowrap font-medium">{item.name}</span>
+      <div className="flex items-center justify-center mt-96 left-40 w-full h-full relative">
+        {/* All 6 physical rings */}
+        {rings.map((ring, index) => (
+          <Ring key={index} {...ring} />
+        ))}
+
+        {/* Central DSA Element */}
+        <div className="absolute z-50 w-32 h-32 bg-yellow-500 rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-yellow-500/50">
+          <div className="text-gray-900 font-bold text-2xl flex flex-col items-center gap-2">
+            <Brain className="w-8 h-8" />
+            <span>DSA</span>
           </div>
         </div>
-      ))}
 
-      <style jsx>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes counter-spin {
-          from { transform: rotate(360deg) translateX(-50%); }
-          to { transform: rotate(0deg) translateX(-50%); }
-        }
-      `}</style>
+        {/* Orbiting Elements */}
+        {orbitElements.map((item, index) => (
+          <div
+            key={item.name}
+            className="absolute"
+            style={{
+              width: `${rings[item.ringIndex].radius}px`,
+              height: `${rings[item.ringIndex].radius}px`,
+              animation: `spin ${item.duration} linear infinite`
+            }}
+          >
+            <div 
+              className={`absolute -top-6 left-1/2 transform -translate-x-1/2 ${item.nodeColor} 
+                         p-3 rounded-full text-white hover:scale-110 transition-transform 
+                         cursor-pointer flex flex-col items-center gap-1 z-20`}
+              style={{
+                animation: `counter-spin ${item.duration} linear infinite`,
+                boxShadow: `0 0 15px ${rings[item.ringIndex].color}`
+              }}
+            >
+              {item.icon}
+              <span className="text-xs whitespace-nowrap font-medium">{item.name}</span>
+            </div>
+          </div>
+        ))}
+
+        <style jsx>{`
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          @keyframes counter-spin {
+            from { transform: rotate(360deg) translateX(-50%); }
+            to { transform: rotate(0deg) translateX(-50%); }
+          }
+        `}</style>
+      </div>
     </div>
     </div>
   );

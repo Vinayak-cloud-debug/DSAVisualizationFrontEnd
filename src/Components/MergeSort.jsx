@@ -557,7 +557,7 @@ const MergeSort = () => {
     // Merge the two sorted parts
     await merge(arr, low, mid, high);
   };
- 
+
 
 const merge = async (arr, low, mid, high) => {
     const left = arr.slice(low, mid + 1);
@@ -633,7 +633,7 @@ const merge = async (arr, low, mid, high) => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 bg-gray-900 w-screen min-h-screen justify-center overflow-hidden">
       <h1>Merge Sort</h1>
       <input
         type="number"
