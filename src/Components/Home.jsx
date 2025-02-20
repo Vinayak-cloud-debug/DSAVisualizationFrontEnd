@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   GitBranch,
   BarChart2,
@@ -8,6 +8,7 @@ import {
   Package,
   Brain
 } from 'lucide-react';
+import LogOut from '../pages/LogOut/Logout'
 
 const Ring = ({ radius, color }) => (
   <div 
@@ -105,10 +106,19 @@ const Home = () => {
     {id:14,text:'Smallest Element'},
   ]
 
+
+  
+
+
   return (
   
   <div className='bg-gray-900 w-screen min-h-screen justify-center overflow-hidden'>
-    <h1 className='text-2xl font-bold text-center text-white mt-5'>Algo Vision</h1>
+        <h1 className='text-2xl font-bold text-center text-white mt-5'>Algo Vision</h1>
+        <div className="flex justify-end mr-32">
+          <LogOut/>
+        </div>
+
+
     <div className=' flex flex-row gap-[50px]    '>
       {/* Center content using flexbox */}
 
@@ -196,7 +206,7 @@ const Home = () => {
         `}</style>
       </div>
     </div>
-    </div>
+  </div>
   );
 };
 

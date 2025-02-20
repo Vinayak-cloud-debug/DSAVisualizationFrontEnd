@@ -1,233 +1,191 @@
-import { Link, useNavigate } from "react-router-dom";
-import GenderCheckbox from "./GenderCheckbox";
-import { useEffect, useState } from "react";
-import useSignup from "../../hooks/useSignup";
+
+
+
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import useSignup from "../../hooks/useSignup";
+import GenderCheckbox from "./GenderCheckbox";
 
 const SignUp = () => {
-	const [inputs, setInputs] = useState({
-		fullName: "",
-		username: "",
-		password: "",
-		confirmPassword: "",
-		gender: "",
-	});
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
 
+  const { loading, signup } = useSignup();
+  const [gmailVerified, setGmailVerified] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
 
+  const [gmailValue, setGmailValue] = useState("");
+  const [otpValue, setOtpValue] = useState("");
+  const [genOtp, setGenOtp] = useState("");
 
-	const { loading, signup } = useSignup();
+  const navigate = useNavigate();
 
-	const handleCheckboxChange = (gender) => {
-		setInputs({ ...inputs, gender });
-	};
+  const handleCheckboxChange = (gender) => {
+    setInputs({ ...inputs, gender });
+  };
 
-	const [gmailVerified,setgmailVerified] = useState(false)
-	const [OtpVerified,setOtpVerified] = useState(false)
+  const verifyOtp = () => {
+    if (otpValue === genOtp) {
+      toast.success("OTP Verified");
+      setOtpVerified(true);
+    } else {
+      toast.error("Invalid OTP");
+      setOtpVerified(false);
+      setGmailVerified(false);
+    }
+  };
 
+  const verifyGmail = async (e) => {
+    e.preventDefault();
 
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/Verify-Gmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ GmailValue: gmailValue }),
+      });
 
-	const [GmailValue,setGmailValue] = useState('')
-	const [OtpValue,setOtpValue] = useState('')
+      const data = await response.json();
+      if (data.otp) {
+        setGenOtp(data.otp);
+        toast.success("OTP sent successfully!");
+        setGmailVerified(true);
+      } else {
+        toast.error(data.error || "Invalid OTP.");
+      }
+    } catch (error) {
+      toast.error("Failed to verify OTP. " + error.message);
+    }
+  };
 
-	const [GenOTp,setGenOtp] = useState('')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(inputs);
 
+    if(localStorage.getItem("chat-user") != null){
+        navigate("/home");
+    }
 
+  };
 
-	const VerifyOtp=()=>{
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+      <div className="w-full max-w-lg bg-gray-800 text-white rounded-2xl shadow-xl p-8 backdrop-filter backdrop-blur-md bg-opacity-70 border border-gray-700">
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Sign Up for <span className="text-blue-500">Algo Vision</span>
+        </h2>
 
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {!gmailVerified ? (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Enter Gmail</label>
+              <input
+                type="text"
+                placeholder="Enter your Gmail"
+                className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                value={gmailValue}
+                onChange={(e) => setGmailValue(e.target.value)}
+              />
+              <button
+                onClick={verifyGmail}
+                className="w-full bg-blue-600 hover:bg-blue-500 transition-all p-3 rounded-lg font-semibold text-white mt-3"
+              >
+                Verify Gmail
+              </button>
+            </div>
+          ) : !otpVerified ? (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Enter OTP</label>
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                value={otpValue}
+                onChange={(e) => setOtpValue(e.target.value)}
+              />
+              <button
+                onClick={verifyOtp}
+                className="w-full bg-green-600 hover:bg-green-500 transition-all p-3 rounded-lg font-semibold text-white mt-3"
+              >
+                Verify OTP
+              </button>
+            </div>
+          ) : (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter your Name"
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={inputs.fullName}
+                  onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
+                />
+              </div>
 
-		if(OtpValue === GenOTp){
-			toast.success("Otp Verified")
-			setOtpVerified(true)
-		}
-		else{
-			toast.success("Invalid Otp")
-			setOtpVerified(false)
-			setgmailVerified(false)
-		}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <input
+                  type="text"
+                  placeholder="Enter your Email"
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={inputs.username}
+                  onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+                />
+              </div>
 
-	}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter Password"
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={inputs.password}
+                  onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+                />
+              </div>
 
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={inputs.confirmPassword}
+                  onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
+                />
+              </div>
 
-	const navigate = useNavigate()
+              <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender} />
 
-	const VerifyGmail = async(e) =>{
+              <div className="flex justify-between text-sm mt-3">
+                <Link to="/login" className="text-blue-400 hover:text-blue-300 transition">
+                  Already have an account?
+                </Link>
+              </div>
 
-		e.preventDefault()
+              <button
+                
+                
+                className="w-full bg-green-600 hover:bg-green-500 transition-all p-3 rounded-lg font-semibold text-white"
+                
+              >
+                <span ></span>Sign Up
+              </button>
+            </>
+          )}
+        </form>
 
-		try {
-			
-			
-
-			const response = await fetch('/api/auth/Verify-Gmail', {
-			  method: 'POST',
-			  headers: { 'Content-Type': 'application/json' },
-			  body:JSON.stringify({GmailValue})
-			});
-	  
-			
-
-			const data = await response.json();
-			console.log(data)
-			
-			
-			if (data.otp) {
-
-				setGenOtp(data.otp)
-			  toast.success("OTP sent successfully ! ")
-			  setgmailVerified(true)
-			} else {
-			  toast.error(data.error || 'Invalid OTP.');
-			}
-		  } catch (error) {
-			toast.error('Failed to verify OTP.'+error.message);
-		  }
-
-	}
-
-
-	const handleSubmit = async (e) => {
-
-		e.preventDefault();
-
-		await signup(inputs);
-
-		navigate('/home')
-			
-	};
-
-	return (
-		<div className='flex flex-col items-center justify-center min-w-96 mx-auto bg-gray-800 rounded-2xl'>
-			<div className='w-full p-6 flex flex-col gap-[20px] rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-					Sign Up <span className='text-blue-500'> ChatApp</span>
-				</h1>
-
-				<form onSubmit={handleSubmit} className="flex flex-col gap-[20px]">
-
-				{gmailVerified && OtpVerified ? 
-				<div>
-					<div>
-						<label className='label p-2 ' >
-						</label>
-						<input
-							type='text'
-							placeholder='Enter your Name'
-							className='w-full input input-bordered  h-10'
-							value={inputs.fullName}
-							onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
-						/>
-					</div>
-
-					<div>
-						<label className='label p-2 '>
-						</label>
-						<input
-							type='text'
-							placeholder='Enter your Email'
-							className='w-full input input-bordered h-10'
-							value={inputs.username}
-							onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
-						/>
-					</div>
-
-					<div>
-						<label className='label'>
-						</label>
-						<input
-							type='password'
-							placeholder='Enter Password'
-							className='w-full input input-bordered h-10'
-							value={inputs.password}
-							onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-						/>
-					</div>
-
-					<div>
-						<label className='label'>
-						</label>
-						<input
-							type='password'
-							placeholder='Confirm Password'
-							className='w-full input input-bordered h-10'
-							value={inputs.confirmPassword}
-							onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
-						/>
-					</div>
-
-					<GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender} />
-					
-					<Link
-						to={"/login"}
-						className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'
-						
-					>
-						Already have an account?
-					</Link>
-				
-
-					<div>
-					
-						<button className='btn btn-block btn-sm mt-2 border border-slate-700' disabled={loading}>
-							{loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
-						</button>
-					</div>
-
-				</div>
-				: null}
-				
-				{!gmailVerified ? 
-				<div>
-					
-					<label className='label'>
-					</label>
-					<input
-						type='text'
-						placeholder='Enter Gmail'
-						className='w-full input input-bordered h-10'
-						value={GmailValue}
-						onChange={(e) => setGmailValue(e.target.value)}
-					/>
-
-					<div>
-						
-						<button onClick={VerifyGmail} className='btn btn-block btn-sm mt-2 border border-slate-700'>
-							VerifyGmail
-						</button>
-					</div>
-				</div> 
-				:null}
-
-
-				{gmailVerified && !OtpVerified ?
-				<div>
-					
-				<label className='label'>
-				</label>
-				<input
-					type='password'
-					placeholder='Confirm Password'
-					className='w-full input input-bordered h-10'
-					value={OtpValue}
-					onChange={(e) => setOtpValue(e.target.value)}
-				/>
-
-				<div>
-					
-					<button onClick={VerifyOtp} className='btn btn-block btn-sm mt-2 border border-slate-700'>
-						VerifyOtp
-					</button>
-				</div>
-				</div>
-				:null}
-				
-
-					
-				</form>
-			</div>
-
-			<Toaster/>
-		</div>
-	);
+        <Toaster />
+      </div>
+    </div>
+  );
 };
+
 export default SignUp;

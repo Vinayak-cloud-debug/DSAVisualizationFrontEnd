@@ -63,6 +63,8 @@ const BSAlgo = () => {
     toast.error("Element not found")
 };
 
+
+
   return (
     <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen  overflow-hidden">
         <h1 className='text-2xl font-bold text-center mt-10 text-white'>Binary Search Algorithm</h1>

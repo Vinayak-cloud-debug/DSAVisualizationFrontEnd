@@ -1,76 +1,93 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import { Toaster } from "react-hot-toast";
 
 const Login = () => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-	const { loading, login } = useLogin();
-	const navigate = useNavigate()
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		await login(username, password);
-		if(loading)
-			navigate('/home')
-	};
+  const { loading, login } = useLogin();
+  const navigate = useNavigate();
 
-	return (
-		<div className='flex flex-col relative items-center justify-center min-w-96 mx-auto bg-gray-800 rounded-2xl'>
-			
-			<div className='w-full p-6 flex flex-col gap-[20px] rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-			<div className="text-3xl font-semibold">Login To Hack <span className='text-green-700' >The</span> <span className='text-amber-700' >Code</span></div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+    if (!loading) navigate("/home");
+  };
 
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+      <div className="w-full max-w-md bg-gray-800 text-white rounded-2xl shadow-lg p-8 backdrop-filter backdrop-blur-md bg-opacity-70 border border-gray-700">
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Login To <span className="text-green-500">Algo</span>{" "}
+          <span className="text-amber-500">Vision</span>
+        </h2>
 
-				<form onSubmit={handleSubmit} className="flex flex-col gap-[20px]">
-					<div>
-						<label className='label p-2'>
-							
-						</label>
-						<input
-							type='text'
-							placeholder='Enter your Email'
-							className='w-full  input input-bordered p-2 h-10'
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-					</div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Email Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Email
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your email"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-green-500 outline-none"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-					<div>
-						<label className='label'>
-							
-						</label>
-						<input
-								type="password"
-							
-								placeholder="Enter Password"
-								className="w-full input input-bordered rounded-md p-2 h-10"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								/>
+          {/* Password Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter password"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-green-500 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-					</div>
+          {/* Forgot Password & Signup Links */}
+          <div className="flex justify-between text-sm">
+            <Link
+              to="/signup"
+              className="text-green-400 hover:text-green-300 transition"
+            >
+              Don't have an account?
+            </Link>
+            <Link
+              to="/forgot-password"
+              className="text-blue-400 hover:text-blue-300 transition"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
-					<div className='flex justify-between items-center'>
-						<Link to='/signup' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
-							{"Don't"} have an account?
-						</Link>
+          {/* Login Button */}
+          <button
+            className="w-full bg-green-600 hover:bg-green-500 transition-all p-3 rounded-lg font-semibold text-white flex items-center justify-center"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Login"
+            )}
+          </button>
+        </form>
 
-						<Link to='/forgot-password' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
-							Forgot Password
-						</Link>
-					</div>
-
-					<div>
-						<button className='btn btn-block btn-sm mt-2' disabled={loading}>
-							{loading ? <span className='loading loading-spinner '></span> : "Login"}
-						</button>
-					</div>
-				</form>
-			</div>
-			<Toaster/>
-		</div>
-	);
+        <Toaster />
+      </div>
+    </div>
+  );
 };
+
 export default Login;
+
