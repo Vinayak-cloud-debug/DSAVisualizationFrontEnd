@@ -5,7 +5,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import useSignup from "../../hooks/useSignup";
-import GenderCheckbox from "./GenderCheckbox";
+import GenderCheckbox from "./GenderCheckBox";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
