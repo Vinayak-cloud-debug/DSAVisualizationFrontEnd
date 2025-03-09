@@ -67,9 +67,15 @@ const SignUp = () => {
 
 
   const handleSubmit = async (e) => {
+
+	    var fullName = inputs.fullName
+	  var username = inputs.username
+	  var password = inputs.password
+	  var confirmPassword = inputs.confirmPassword
+	  var gender = inputs.gender
     e.preventDefault();
     try {
-			const res = await fetch("http://localhost:5000/api/auth/signup", {
+			const res = await fetch("https://dsavisualizationbackend-tmii.onrender.com/api/auth/signup", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
