@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("https://dsavisualizationbackend-tmii.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
