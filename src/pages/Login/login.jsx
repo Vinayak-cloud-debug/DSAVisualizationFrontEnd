@@ -23,7 +23,7 @@ const Login = () => {
 
 			console.log(username+" "+password)
 
-			const res = await fetch("http://localhost:5000/api/auth/login", {
+			const res = await fetch("https://dsavisualizationbackend-tmii.onrender.com/api/auth/login", {
 				method: "POST",
         credentials:"include",
 				headers: { "Content-Type": "application/json" },
