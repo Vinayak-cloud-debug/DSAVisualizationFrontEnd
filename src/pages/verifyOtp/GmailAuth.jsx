@@ -24,7 +24,7 @@ const GmailAuth = () => {
           return res.status(400).json({ error: "GmailOtp is required" });
         }
         
-      const response = await fetch('/api/auth/GmailVerify-otp', {
+      const response = await fetch('https://dsavisualizationbackend-tmii.onrender.com/api/auth/GmailVerify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({GmailOtp,otp,UserData}),
