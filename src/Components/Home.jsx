@@ -25,12 +25,12 @@ const Ring = ({ radius, color }) => (
 const Home = () => {
   // Define each ring's properties with fixed pixel sizes
   const rings = [
-    { radius: 100, color: '#3B82F6' },  // Blue - innermost ring
-    { radius: 180, color: '#10B981' },  // Green - second ring
-    { radius: 260, color: '#EC4899' },  // Pink - third ring
-    { radius: 340, color: '#F97316' },  // Orange - fourth ring
-    { radius: 420, color: '#A855F7' },  // Purple - fifth ring
-    { radius: 500, color: '#F43F5E' }   // Rose - outermost ring
+    { radius: 50, color: '#3B82F6' },  // Blue - innermost ring
+    { radius: 120, color: '#10B981' },  // Green - second ring
+    { radius: 170, color: '#EC4899' },  // Pink - third ring
+    { radius: 220, color: '#F97316' },  // Orange - fourth ring
+    { radius: 270, color: '#A855F7' },  // Purple - fifth ring
+    { radius: 320, color: '#F43F5E' }   // Rose - outermost ring
   ];
 
   const orbitElements = [
@@ -111,65 +111,35 @@ const Home = () => {
 
 
   return (
+
+    <div className="bg-gray-900 w-screen min-h-[180vh] lg:min-h-screen flex flex-col items-center overflow-hidden px-4">
+    {/* Title */}
+    <h1 className="text-2xl font-bold text-center text-white mt-5">Algo Vision</h1>
   
-  <div className='bg-gray-900 w-screen min-h-screen justify-center overflow-hidden'>
-        <h1 className='text-2xl font-bold text-center text-white mt-5'>Algo Vision</h1>
-        <div className="flex justify-end mr-32">
-          <LogOut/>
-        </div>
-
-
-    <div className=' flex flex-row gap-[50px]    '>
-      {/* Center content using flexbox */}
-
-      
-
-      <div className='w-[600px] h-[600px] bg-gray-900 mt-20 flex flex-row gap-[50px] items-center justify-center'>
-          <div className='w-[300px] h-[600px] flex flex-col gap-[50px] items-center justify-center'>
-          {concept1.map((item,index)=>
-            <div key={item.id} className="inline-block relative">
-              <h1 onClick={(e) => selectedBlink(item.id)} className="text-xl font-semibold text-white cursor-pointer">
-                {item.text}
-              </h1>
-              {blink == item.id ? (
-                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
-              ) : null}
-            </div>
-          )}
-         
-          </div>  
-
-          <div className='w-[300px] h-[600px] flex flex-col gap-[50px] items-center justify-center'>
-          {concept2.map((item,index)=>
-            <div key={item.id} className="inline-block relative">
-              <h1 onClick={(e) => selectedBlink(item.id)} className="text-xl font-semibold text-white cursor-pointer">
-                {item.text}
-              </h1>
-              {blink == item.id ? (
-                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
-              ) : null}
-            </div>
-          )}
-         
-          </div>  
-      </div>
-
-      <div className="flex items-center justify-center mt-96 left-40 w-full h-full relative">
-        {/* All 6 physical rings */}
+    {/* Logout Button */}
+    <div className="w-full flex  justify-end mt-4">
+      <LogOut />
+    </div>
+  
+    {/* Main Content */}
+    <div className="flex flex-col lg:flex-row items-center justify-center w-full mt-10 space-y-5  lg:mt-20  lg:space-y-0 lg:space-x-72">
+  
+      {/* Solar System */}
+      <div className="relative flex items-center justify-center w-full lg:w-auto min-h-[400px] lg:min-h-[600px]">
         {rings.map((ring, index) => (
           <Ring key={index} {...ring} />
         ))}
-
-        {/* Central DSA Element */}
-        <div className="absolute z-50 w-32 h-32 bg-yellow-500 rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-yellow-500/50">
-          <div className="text-gray-900 font-bold text-2xl flex flex-col items-center gap-2">
-            <Brain className="w-8 h-8" />
+  
+        {/* Central DSA */}
+        <div className="absolute z-50 w-24 lg:w-32 h-24 lg:h-32 bg-yellow-500 rounded-full flex items-center justify-center animate-pulse shadow-lg shadow-yellow-500/50">
+          <div className="text-gray-900 font-bold text-lg lg:text-2xl flex flex-col items-center gap-2">
+            <Brain className="w-6 lg:w-8 h-6 lg:h-8" />
             <span>DSA</span>
           </div>
         </div>
-
+  
         {/* Orbiting Elements */}
-        {orbitElements.map((item, index) => (
+        {orbitElements.map((item) => (
           <div
             key={item.name}
             className="absolute"
@@ -181,8 +151,8 @@ const Home = () => {
           >
             <div 
               className={`absolute -top-6 left-1/2 transform -translate-x-1/2 ${item.nodeColor} 
-                         p-3 rounded-full text-white hover:scale-110 transition-transform 
-                         cursor-pointer flex flex-col items-center gap-1 z-20`}
+                          p-3 rounded-full text-white hover:scale-110 transition-transform 
+                          cursor-pointer flex flex-col items-center gap-1 z-20`}
               style={{
                 animation: `counter-spin ${item.duration} linear infinite`,
                 boxShadow: `0 0 15px ${rings[item.ringIndex].color}`
@@ -193,8 +163,47 @@ const Home = () => {
             </div>
           </div>
         ))}
-
-        <style jsx>{`
+      </div>
+  
+      {/* Text Section (Separated Below Solar System in Mobile) */}
+      <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center w-full lg:w-auto justify-center pt-10 lg:pt-0">
+  
+        <div className="flex flex-col gap-8 items-center w-full lg:w-[300px] text-center">
+          {concept1.map((item) => (
+            <div key={item.id} className="inline-block relative">
+              <h1 
+                onClick={() => selectedBlink(item.id)}
+                className="text-xl font-semibold text-white cursor-pointer"
+              >
+                {item.text}
+              </h1>
+              {blink === item.id && (
+                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
+              )}
+            </div>
+          ))}
+        </div>  
+  
+        <div className="flex flex-col gap-8 items-center w-full lg:w-[300px] text-center">
+          {concept2.map((item) => (
+            <div key={item.id} className="inline-block relative">
+              <h1 
+                onClick={() => selectedBlink(item.id)}
+                className="text-xl font-semibold text-white cursor-pointer"
+              >
+                {item.text}
+              </h1>
+              {blink === item.id && (
+                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
+              )}
+            </div>
+          ))}
+        </div>  
+  
+      </div>
+  
+      <style>
+        {`
           @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -203,10 +212,14 @@ const Home = () => {
             from { transform: rotate(360deg) translateX(-50%); }
             to { transform: rotate(0deg) translateX(-50%); }
           }
-        `}</style>
-      </div>
+        `}
+      </style>
+  
     </div>
   </div>
+  
+  
+  
   );
 };
 

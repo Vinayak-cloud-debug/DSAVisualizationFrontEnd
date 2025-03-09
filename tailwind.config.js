@@ -16,6 +16,16 @@ export default {
       animation: {
         glitter: "glitter 0.5s infinite alternate ease-in-out",
       },
+
+      keyframes: {
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 0.7s ease-in-out',
+      },
     
     },
   },

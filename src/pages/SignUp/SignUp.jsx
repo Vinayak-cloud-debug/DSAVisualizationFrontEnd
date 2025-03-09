@@ -4,8 +4,8 @@
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import useSignup from "../../hooks/useSignup";
 import GenderCheckbox from "./GenderCheckBox";
+import { useAuthContext } from "../../context/AuthContext";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -16,7 +16,7 @@ const SignUp = () => {
     gender: "",
   });
 
-  const { loading, signup } = useSignup();
+  
   const [gmailVerified, setGmailVerified] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
 
@@ -25,6 +25,7 @@ const SignUp = () => {
   const [genOtp, setGenOtp] = useState("");
 
   const navigate = useNavigate();
+  const { setAuthUser } = useAuthContext();
 
   const handleCheckboxChange = (gender) => {
     setInputs({ ...inputs, gender });
@@ -64,9 +65,30 @@ const SignUp = () => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(inputs);
+    try {
+			const res = await fetch("http://localhost:5000/api/auth/signup", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
+			});
+
+			const data = await res.json();
+			if (data.error) {
+				throw new Error(data.error);
+			}
+
+			
+			localStorage.setItem("chat-user", JSON.stringify(data));
+			console.log(localStorage.getItem("chat-user"));
+			setAuthUser(data);
+
+			toast.success('Signed Up Successfully !')
+		} catch (error) {
+			toast.error(error.message);
+		} 
 
     if(localStorage.getItem("chat-user") != null){
         navigate("/home");

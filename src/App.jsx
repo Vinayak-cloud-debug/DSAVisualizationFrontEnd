@@ -1,42 +1,42 @@
 
-import {Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import BSAlgo from './Components/BSAlgo'
 import BubbleSort from './Components/BubbleSort'
 import Home from './Components/Home'
 import InsertionSort from './Components/Insertion'
+import LargestElement from './Components/LargestElement'
+import LeftRotateArray from './Components/LeftRotateArray'
+import LinearSearch from './Components/LinearSearch'
 import MergeSort from './Components/MergeSort'
 import MergeSortFunction from './Components/MergeSortFunction'
-import SelectionSort from './Components/SelectionSort'
-import TwoPointerAlgo from './Components/TwoPointerAlgo'
+import NumberOfPaths from './Components/NumberOfPaths'
 import QuickSort from './Components/QuickSort'
 import ReverseLL from './Components/ReverseLL'
-import LinearSearch from './Components/LinearSearch'
-import LargestElement from './Components/LargestElement'
-import SmallestElement from './Components/SmallestElement'
 import SecondLargestElement from './Components/SecondLargestElement'
-import LeftRotateArray from './Components/LeftRotateArray'
+import SelectionSort from './Components/SelectionSort'
+import SmallestElement from './Components/SmallestElement'
 import SpiralMatrix from './Components/SpiralMatrix'
-import NumberOfPaths from './Components/NumberOfPaths'
+import TwoPointerAlgo from './Components/TwoPointerAlgo'
+import { useAuthContext } from './context/AuthContext'
 import Login from './pages/Login/login'
 import SignUp from './pages/SignUp/SignUp'
-import ResetPassword from './pages/resetPassword/ResetPassword'
-import verifyGmail from './pages/verifyOtp/GmailAuth'
-import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
-import { useAuthContext } from './context/AuthContext'
+import ResetPassword from './pages/resetPassword/ResetPassword'
+import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
+
 function App() {
 
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthContext()
 
   return (
     
     <div className='top-0 left-0 '  >
       <Routes>
-        <Route path='/home' element = { authUser == null? <Login/> : <Home/>} />
         <Route path = '/login' element = {<Login/>}/>
+        <Route path='/' element = { authUser == null? <Login/> : <Home/>} />
         <Route path = '/signup' element = {<SignUp/>}/>
-        <Route path = '/resetPassword' element = {<ResetPassword/>}/>
+        <Route path = '/reset-password' element = {<ResetPassword/>}/>
         <Route path='/Verify-Gmail' element = { <verifyGmail/>} />
         <Route path='/verifyOTP' element = { <VerifyOTP/>} />
         <Route path='/forgot-password' element = { <ForgotPassword/>} />
