@@ -97,7 +97,7 @@ const SignUp = () => {
 		} 
 
     if(localStorage.getItem("chat-user") != null){
-        navigate("/home");
+        navigate("/");
     }
 
   };
