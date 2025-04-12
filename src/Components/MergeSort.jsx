@@ -1,735 +1,294 @@
-// import React, { useState } from 'react';
-// import toast, { Toaster } from 'react-hot-toast';
-// import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
-
-// const MergeSort = () => {
-
-//   const [arr, setArr] = useState([]);
-//   const [arrSize, setArrSize] = useState(0);
-//   const [inputValue, setInputValue] = useState('');
-//   const [low, setLow] = useState(-1);
-//   const [mid, setMid] = useState(0);
-//   const [high, setHigh] = useState(arrSize);
-//   const [ans,setAns] = useState([])
-//   const [leftArr,setLeftArr] = useState([])
-//   const [rightArr,setRightArr] = useState([])
-//   const [leftIndex,setLeftIndex] = useState(0)
-//   const [rightIndex,setRightIndex] = useState(0)
-
-
-
-//   const handleInput = (e) => setInputValue(e.target.value);
-
-
-
-//   const handleSubmit = () => {
-//     const elements = inputValue.trim().split(/\s+/).map(Number);
-//     if (elements.length !== arrSize) {
-//       alert(`Please enter exactly ${arrSize} elements.`);
-//       return;
-//     }
-//     setArr(elements);
-//     setHigh(elements.length-1)
-    
-//   };
-
-
-
-//   const MS = async(low,high,arr) =>{
-
-//         if(low >= high)  {
-//             setLow(low); // Update low even when it's equal to high
-//             setHigh(high); // Update high even when it's equal to high
-//             return;
-//         }
-
-        
-//         setLow(low);
-//         setHigh(high);
-//         await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//         const mid = Math.floor((low + high) / 2);
-//         setMid(mid);
-//         await new Promise((resolve) => setTimeout(resolve, 1000));
-
-
-
-//         await new Promise((resolve) => setTimeout(resolve, 500));
-
-//         await MS(low,mid-1,arr);
-//         await MS(mid,high,arr);
-//         await merge(arr, low, mid, high); // Merge step
-//     };
-    
-//     const merge = async (arr, low, mid, high) => {
-
-//         let left = arr.slice(low,mid+1)
-//         let right = arr.slice(mid+1,high+1)
-
-//         setLeftArr(leftArr)
-//         setRightArr(rightArr)
-
-//         await new Promise((resolve)=>setTimeout(resolve,500))
-
-//         let leftArrInd  =  low
-//         let rightArrInd = mid+1
-
-//         setLeftIndex(leftArrInd)
-//         setRightIndex(rightArrInd)
-//         await new Promise((resolve)=>setTimeout(resolve,500))
-
-
-
-//       while (leftArrInd < left.length && rightArrInd < rightArr.length) {
-//         if (arr[leftArrInd] <= arr[rightArrInd]) {
-//             leftArrInd++;
-//             setAns((ans)=>[...ans,arr[leftArrInd]])
-//             await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//             setLeftIndex(leftArrInd)
-//             await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//         } else {
-//           rightArrInd++;
-//           setAns((ans)=>[...ans,arr[rightArrInd]])
-//           await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//           setRightIndex(rightArrInd)
-//           await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//         }
-        
-        
-//       }
-    
-    
-//       while (leftArrInd < left.length) {
-        
-//         leftArrInd++;
-//         setAns((ans)=>[...ans,arr[leftArrInd]])
-//         await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//         setLeftIndex(leftArrInd)
-//         await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//       }
-
-
-//       while (rightArrInd < right.length) {
-        
-//         rightArrInd++;
-//         setAns((ans)=>[...ans,arr[rightArrInd]])
-//         await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//         setLeftIndex(rightArrInd)
-//         await new Promise((resolve) => setTimeout(resolve, 500)); // Visualize delay
-
-//       }
-    
-//       // Notify when merge is complete
-//       toast.success("Merge Completed!");
-//     };
-
-
-
-//   const handleMergeSort = async () => {
-//     if (!arr.length) {
-//       toast.error("Please submit the array first!");
-//       return;
-//     }
-//     await MS(arr, 0, arr.length - 1);
-//     toast.success("Merge Sort Completed!");
-//   };
-
-
-//   return (
-//     <div className="flex  flex-col gap-5">
-//         <h1>Merge Sort</h1>
-//       <input
-//         type="number"
-//         className="w-48 p-2 border rounded bg-white text-black"
-//         placeholder="Enter the size of the first array"
-//         onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-//       />
-//       <input
-//         type="text"
-//         className="w-80 p-2 border rounded bg-white text-black"
-//         placeholder="Enter array elements of 1st array separated by space"
-//         value={inputValue}
-//         onChange={handleInput}
-//       />
-
-//       <button
-//         onClick={handleSubmit}
-//         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//       >
-//         Submit Input Array
-//       </button>
-
-      
-//       <button
-//         onClick={handleMergeSort}
-//         className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-blue-700"
-//       >
-//         MergeSort Analyze
-//       </button>
-
-//      <div className="flex flex-row gap-8 mt-16 self-center">
-//             {arr.map((val, index) => (
-//               <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//                 {index === mid &&(<div><span>Mid</span> <FaArrowDown size={20} color="green" /></div>)}
-//                 {index === low && (<div><span>Low</span> <FaArrowDown size={20} color="blue" /></div>)}
-//                 <span
-//                   className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//                 >
-//                   {val}
-//                 </span>
-//                 {index === high && (<div><span>High</span> <FaArrowUp size={20} color="red" /></div>)}
-//               </div>
-//             ))}
-//         </div>
-
-//             <div className='flex flex-col gap-8 justify-center items-center'>
-//                 <div className="flex flex-row gap-8 mt-16 self-center">
-//                     {leftArr.map((val, index) => (
-//                     <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//                         {index === leftIndex && (<div><span>LeftIndex</span> <FaArrowDown size={20} color="black" /></div>)}
-//                         <span
-//                         className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//                         >
-//                         {val}
-//                         </span>
-//                     </div>
-//                     ))}
-//                 </div>
-
-//                 <div className="flex flex-row gap-8 mt-16 self-center">
-//                     {rightArr.map((val, index) => (
-//                     <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//                         <span
-//                         className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//                         >
-//                         {val}
-//                         </span>
-//                         {index === rightIndex && (<div><span>rightIndex</span> <FaArrowUp size={20} color="orange" /></div>)}
-//                     </div>
-//                     ))}
-//                 </div>
-//             </div>
-
-
-//         <h1>Merge Sort Result: </h1>
-//         <div className='flex flex-row gap-8 justify-center items-center '>
-//             {ans.map((val,index) =>
-//                 <span key = {index}
-//                 className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//             >
-//                 {val}
-//             </span>)}
-//         </div>
-
-//             <Toaster/>
-//     </div>
-//   );
-// };
-
-// export default MergeSort;
-
-
-// import React, { useState, useEffect } from 'react';
-// import toast, { Toaster } from 'react-hot-toast';
-// import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
-
-// const MergeSort = () => {
-//   const [arr, setArr] = useState([]);
-//   const [arrSize, setArrSize] = useState(0);
-//   const [inputValue, setInputValue] = useState('');
-//   const [low, setLow] = useState(-1);
-//   const [mid, setMid] = useState(0);
-//   const [high, setHigh] = useState(arrSize);
-//   const [ans, setAns] = useState([]);
-//   const [leftArr, setLeftArr] = useState([]);
-//   const [rightArr, setRightArr] = useState([]);
-//   const [leftIndex, setLeftIndex] = useState(0);
-//   const [rightIndex, setRightIndex] = useState(0);
-
-//   // Log low, mid, high to debug
-//   useEffect(() => {
-//     console.log('Low:', low, 'Mid:', mid, 'High:', high);
-//   }, [low, mid, high,leftIndex,rightIndex]);
-
-//   const handleInput = (e) => setInputValue(e.target.value);
-
-//   const handleSubmit = () => {
-//     const elements = inputValue.trim().split(/\s+/).map(Number);
-//     if (elements.length !== arrSize) {
-//       alert(`Please enter exactly ${arrSize} elements.`);
-//       return;
-//     }
-//     setArr(elements);
-//     setHigh(elements.length - 1);
-//   };
-
-//   const MS = async (low, high, arr) => {
-//     if (low >= high) {
-//       setLow(low);  // Ensure low is updated on recursion completion
-//       setHigh(high); // Ensure high is updated on recursion completion
-//       await new Promise((resolve) => setTimeout(resolve, 500));
-
-//       return;
-//     }
-
-//     setLow(low);
-//     setHigh(high);
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//     const mid = Math.floor((low + high) / 2);
-//     setMid(mid);
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//     await new Promise((resolve) => setTimeout(resolve, 500));
-
-//     await MS(low, mid, arr);
-//     await MS(mid + 1, high, arr);
-//     await merge(arr, low, mid, high); // Merge step
-//   };
-
-//   const merge = async (arr, low, mid, high) => {
-//     setLeftArr([])
-//     setRightArr([])
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//     let left = arr.slice(low, mid + 1);
-//     let right = arr.slice(mid + 1, high + 1);
-
-//     let temp = []
-
-//     setLeftArr(left);
-//     setRightArr(right);
-
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//     let leftArrInd = 0;
-//     let rightArrInd = 0;
-
-//     setLeftIndex(leftArrInd);
-//     setRightIndex(rightArrInd);
-//     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//     while (leftArrInd < left.length && rightArrInd < right.length) {
-
-//       if (left[leftArrInd] <= right[rightArrInd]) {
-//         setLeftArr((leftArr)=>[...leftArr,left[leftArrInd]])
-//         await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//         temp.push(left[leftArrInd])
-//         // setAns((ans) => [...ans, left[leftArrInd]]);
-//         // await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//         leftArrInd++;
-//         setLeftIndex(leftArrInd);
-//         await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//       } else {
-
-//         setRightArr((rightArr)=>[...rightArr,right[rightArrInd]])
-//         await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//         temp.push(right[rightArrInd])
-//         // setAns((ans) => [...ans, right[rightArrInd]]);
-//         // await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//         rightArrInd++;
-//         setRightIndex(rightArrInd);
-//         await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//       }
-//     }
-
-//     while (leftArrInd < left.length) {
-//       temp.push(left[leftArrInd])
-//       setLeftArr((leftArr)=>[...leftArr,left[leftArrInd]])
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//     //   setAns((ans) => [...ans, left[leftArrInd]]);
-//     //   await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//       leftArrInd++;
-//       setLeftIndex(leftArrInd);
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     }
-
-//     while (rightArrInd < right.length) {
-//       temp.push(rightArr[rightArrInd])
-//       setRightArr((rightArr)=>[...leftArr,left[rightArrInd]])
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//     //   setAns((ans) => [...ans, right[rightArrInd]]);
-//     //   await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-//       rightArrInd++;
-//       setRightIndex(rightArrInd);
-//       await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-//     }
-
-//     let newArr = [...arr];  // Copy the current arr
-//     for (let i = 0; i < temp.length; i++) {
-//         newArr[low + i] = temp[i];  // Update the elements from index 'low' onwards
-//     }
-    
-//     setArr(newArr);  // Update the arr state
-//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visual
-
-
-        
-    
-
-
-//   };
-
-//   const handleMergeSort = async () => {
-//     if (!arr.length) {
-//       toast.error("Please submit the array first!");
-//       return;
-//     }
-//     await MS(0, arr.length - 1, arr);
-//     toast.success("Merge Sort Completed!");
-//   };
-
-//   return (
-//     <div className="flex flex-col gap-5">
-//       <h1>Merge Sort</h1>
-//       <input
-//         type="number"
-//         className="w-48 p-2 border rounded bg-white text-black"
-//         placeholder="Enter the size of the first array"
-//         onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-//       />
-//       <input
-//         type="text"
-//         className="w-80 p-2 border rounded bg-white text-black"
-//         placeholder="Enter array elements of 1st array separated by space"
-//         value={inputValue}
-//         onChange={handleInput}
-//       />
-
-//       <button
-//         onClick={handleSubmit}
-//         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-//       >
-//         Submit Input Array
-//       </button>
-
-//       <button
-//         onClick={handleMergeSort}
-//         className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-blue-700"
-//       >
-//         MergeSort Analyze
-//       </button>
-
-//       <div className="flex flex-row gap-8 mt-16 self-center">
-//         {arr.map((val, index) => (
-//           <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//             {index === mid && (
-//               <div>
-//                 <span>Mid</span> <FaArrowDown size={20} color="green" />
-//               </div>
-//             )}
-//             {index === low && (
-//               <div>
-//                 <span>Low</span> <FaArrowDown size={20} color="blue" />
-//               </div>
-//             )}
-//             <span
-//               className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//             >
-//               {val}
-//             </span>
-//             {index === high && (
-//               <div>
-//                 <span>High</span> <FaArrowUp size={20} color="red" />
-//               </div>
-//             )}
-//           </div>
-//         ))}
-//       </div>
-
-//       <div className="flex flex-col gap-8 justify-center items-center">
-//         <div className="flex flex-row gap-8 mt-16 self-center">
-//           {leftArr.map((val, index) => (
-//             <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//               {index === leftIndex && (
-//                 <div>
-//                   <span>LeftIndex</span> <FaArrowDown size={20} color="black" />
-//                 </div>
-//               )}
-//               <span
-//                 className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//               >
-//                 {val}
-//               </span>
-//             </div>
-//           ))}
-//         </div>
-
-//         <div className="flex flex-row gap-8 mt-16 self-center">
-//           {rightArr.map((val, index) => (
-//             <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-//               <span
-//                 className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-//               >
-//                 {val}
-//               </span>
-//               {index === rightIndex && (
-//                 <div>
-//                   <span>rightIndex</span> <FaArrowUp size={20} color="orange" />
-//                 </div>
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-
-   
-
-//       <Toaster />
-//     </div>
-//   );
-// };
-
-// export default MergeSort;
-
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 const MergeSort = () => {
   const [arr, setArr] = useState([]);
-  const [arrSize, setArrSize] = useState(0);
+  const [arrSize, setArrSize] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [low, setLow] = useState(0);
   const [mid, setMid] = useState(0);
-  const [high, setHigh] = useState(arrSize);
+  const [high, setHigh] = useState(0);
   const [leftArr, setLeftArr] = useState([]);
   const [rightArr, setRightArr] = useState([]);
-  const [leftIndex, setLeftIndex] = useState(0);
-  const [rightIndex, setRightIndex] = useState(0);
+  const [leftIndex, setLeftIndex] = useState(-1);
+  const [rightIndex, setRightIndex] = useState(-1);
+  const [isSorting, setIsSorting] = useState(false);
+  const [temp,setTemp] = useState([])
+  const [ind,setInd] = useState(-1)
 
-  // Log low, mid, high to debug
-  useEffect(() => {
-    console.log('Low:', low, 'Mid:', mid, 'High:', high);
-  }, [low, mid, high, leftIndex, rightIndex,leftArr,rightArr]);
+  const PARTITION_DELAY = 1500;
+  const COMPARISON_DELAY = 800;
+  const MERGE_DELAY = 600;
 
-  const handleInput = (e) => setInputValue(e.target.value);
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const handleInput = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSizeChange = (e) => {
+    setArrSize(e.target.value);
+  };
 
   const handleSubmit = () => {
-    const elements = inputValue.trim().split(/\s+/).map(Number);
-    if (elements.length !== arrSize) {
-      alert(`Please enter exactly ${arrSize} elements.`);
+    const size = parseInt(arrSize, 10);
+    if (isNaN(size) || size <= 0) {
+      toast.error('Please enter a valid array size');
       return;
     }
-    setArr(elements);
+
+    const elements = inputValue.trim().split(/\s+/);
+    if (elements.length !== size) {
+      toast.error(`Please enter exactly ${size} elements`);
+      return;
+    }
+
+    setArr([...elements]);
     setHigh(elements.length - 1);
+    setLeftArr([]);
+    setRightArr([]);
+    toast.success('Array submitted successfully!');
   };
 
-  // Merge Sort recursive function
-  const MS = async (low, high, arr) => {
-    if (low >= high) {
-      // Base case: low and high pointers are equal or crossed, no further sorting needed
-      setLow(low); // Update low state (visualization purpose)
-      setHigh(high); // Update high state (visualization purpose)
-      return;
-    }
-  
-    // Set low, high, and mid states (visualization purposes)
-    setLow(low);
-    setHigh(high);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-  
-    const mid = Math.floor((low + high) / 2);
-    setMid(mid); // Update mid state (visualization purpose)
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-  
-    // Recursively sort the left and right parts
-    await MS(low, mid, arr); // Recursively sort the left part
-    await MS(mid + 1, high, arr); // Recursively sort the right part
-  
-    // Merge the two sorted parts
-    await merge(arr, low, mid, high);
-  };
-
-
-const merge = async (arr, low, mid, high) => {
+  const merge = async (arr, low, mid, high) => {
     const left = arr.slice(low, mid + 1);
     const right = arr.slice(mid + 1, high + 1);
-    let temp = [];
-    let leftArrInd = 0;
-    let rightArrInd = 0;
-    
-    // Visualize the subarrays
-    setLow(low)
-    setHigh(high)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
 
     setLeftArr(left);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  
     setRightArr(right);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-    setLeftIndex(leftArrInd);
-    setRightIndex(rightArrInd);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-    // Merge arrays
-    while (leftArrInd < left.length && rightArrInd < right.length) {
-      if (left[leftArrInd] <= right[rightArrInd]) {
-        temp.push(left[leftArrInd]);
-        leftArrInd++;
+    setTemp([]);
+    
+
+    await delay(PARTITION_DELAY);
+
+    let i = 0;
+    let j = 0;
+    let k = low;
+
+    while (i < left.length && j < right.length) {
+      setLeftIndex(i);
+      setRightIndex(j);
+      await delay(COMPARISON_DELAY);
+
+      if (left[i] <= right[j]) {
+        arr[k] = left[i];
+        setTemp((prev) => [...prev, left[i]]);
+        await delay(MERGE_DELAY);
+        i++;
       } else {
-        temp.push(right[rightArrInd]);
-        rightArrInd++;
+        arr[k] = right[j];
+        setTemp((prev) => [...prev,right[j]]);
+        await delay(MERGE_DELAY);
+        j++;
+
       }
-  
-      setLeftIndex(leftArrInd);
-      setRightIndex(rightArrInd);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      k++;
+      setArr([...arr]);
+      await delay(MERGE_DELAY);
     }
-  
-    // Add remaining elements from left array
-    while (leftArrInd < left.length) {
-      temp.push(left[leftArrInd]);
-      leftArrInd++;
-      setLeftIndex(leftArrInd);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    while (i < left.length) {
+      setLeftIndex(i);
+      await delay(COMPARISON_DELAY);
+      arr[k++] = left[i];
+      setArr([...arr]);
+      setTemp((prev) => [...prev, left[i]]);
+      await delay(MERGE_DELAY);
+      i++;
     }
-  
-    // Add remaining elements from right array
-    while (rightArrInd < right.length) {
-      temp.push(right[rightArrInd]);
-      rightArrInd++;
-      setRightIndex(rightArrInd);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    while (j < right.length) {
+      setRightIndex(j);
+      await delay(COMPARISON_DELAY);
+      arr[k++] = right[j];
+      setArr([...arr]);
+      setTemp((prev) => [...prev,right[j]]);
+      await delay(MERGE_DELAY);
+      j++
     }
-  
-    // Update the main array with merged result
-    for (let i = 0; i < temp.length; i++) {
-      arr[low + i] = temp[i];
-      // Create a new array reference for React state update
-      const newArr = [...arr];
-      setArr(newArr);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+
+    
+
+    
+
+    
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    await delay(PARTITION_DELAY);
+  };
+
+  const mergeSort = async (arr, low, high) => {
+    if (low < high) {
+      setLow(low);
+      setHigh(high);
+      const mid = Math.floor((low + high) / 2);
+      setMid(mid);
+      await delay(PARTITION_DELAY);
+
+      await mergeSort(arr, low, mid);
+      await mergeSort(arr, mid + 1, high);
+      await merge(arr, low, mid, high);
     }
-}  
+  };
 
   const handleMergeSort = async () => {
     if (!arr.length) {
-      toast.error("Please submit the array first!");
+      toast.error('Please submit the array first!');
       return;
     }
-    await MS(0, arr.length - 1, arr); // Start sorting from the full array
-    toast.success("Merge Sort Completed!");
+    if (isSorting) {
+      toast.error('Sorting is already in progress!');
+      return;
+    }
+
+    setIsSorting(true);
+    try {
+      await mergeSort([...arr], 0, arr.length - 1);
+      toast.success('Sorting completed!');
+    } catch {
+      toast.error('An error occurred during sorting');
+    }
+    setIsSorting(false);
+    setLeftArr([]);
+    setRightArr([]);
   };
 
   return (
-    <div className="flex flex-col gap-5 bg-gray-900 w-screen min-h-screen justify-center overflow-hidden">
-      <h1>Merge Sort</h1>
-      <input
-        type="number"
-        className="w-48 p-2 border rounded bg-white text-black"
-        placeholder="Enter the size of the first array"
-        onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-      />
-      <input
-        type="text"
-        className="w-80 p-2 border rounded bg-white text-black"
-        placeholder="Enter array elements of 1st array separated by space"
-        value={inputValue}
-        onChange={handleInput}
-      />
+    <div className="flex flex-col min-h-screen items-center bg-gray-900 gap-6 p-8 text-white">
+      <h1 className="text-3xl font-bold mb-4">Merge Sort Visualization</h1>
 
-<div className="flex gap-4">
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        <input
+          type="number"
+          className="w-full p-2 border rounded bg-gray-800 text-white"
+          placeholder="Enter array size"
+          value={arrSize}
+          onChange={handleSizeChange}
+        />
+        <input
+          type="text"
+          className="w-full p-2 border rounded bg-gray-800 text-white"
+          placeholder="Enter elements separated by space"
+          value={inputValue}
+          onChange={handleInput}
+        />
+        <div className="flex gap-4 justify-center">
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            disabled={isSorting}
+            className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
           >
             Submit Array
           </button>
           <button
             onClick={handleMergeSort}
-            className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
+            disabled={isSorting}
+            className="px-4 py-2 bg-green-600 rounded hover:bg-green-700 disabled:opacity-50"
           >
             Start Sorting
           </button>
         </div>
+      </div>
 
-      <div className="flex flex-row gap-8 mt-16 self-center">
+      {/* Main Array */}
+      <div className="flex flex-wrap mt-14 gap-4 justify-center ">
         {arr.map((val, index) => (
-          <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
+          <div key={index} className="relative flex flex-col items-center">
             {index === mid && (
-              <div>
-                <span>Mid</span> <FaArrowDown size={20} color="green" />
+              <div className="absolute mb-16 -top-14 text-green-400 flex flex-col items-center">
+                <span>Mid</span>
+                <ArrowDown className="h-4 w-4" />
               </div>
             )}
             {index === low && (
-              <div>
-                <span>Low</span> <FaArrowDown size={20} color="blue" />
+              <div className="absolute text-blue-400 mb-5 flex flex-col items-center">
+                <span>Low</span>
+                <ArrowDown className="h-4 w-4" />
               </div>
             )}
-            <span
-              className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-            >
+            <div className={`w-12 h-12 mt-14 flex items-center justify-center rounded-lg 
+              ${index >= low && index <= high ? 'bg-[#13246c]' : 'bg-gray-700'}`}>
               {val}
-            </span>
+            </div>
             {index === high && (
-              <div>
-                <span>High</span> <FaArrowUp size={20} color="red" />
+              <div className="absolute  -bottom-12 text-red-400 flex flex-col items-center">
+                <ArrowUp className="h-4 w-4" />
+                <span>High</span>
               </div>
             )}
           </div>
         ))}
       </div>
 
-      <div className="flex flex-col gap-8 justify-center items-center">
-        <div className="flex flex-row gap-8 mt-16 self-center">
-          {leftArr.map((val, index) => (
-            <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-              {index === leftIndex && (
-                <div>
-                  <span>LeftIndex</span> <FaArrowDown size={20} color="black" />
+      {/* Subarrays */}
+      {(leftArr.length > 0 || rightArr.length > 0) && (
+        <div className="flex flex-col gap-8 mt-12">
+          <div className="flex flex-col items-center">
+            <h3 className="text-xl mb-4">Left Subarray</h3>
+            <div className="flex gap-4">
+              {leftArr.map((val, index) => (
+                <div key={index} className="relative">
+                  {index === leftIndex && (
+                    <div className="absolute mt-5 -top-8 text-yellow-400 flex flex-col items-center">
+                      <span>Current</span>
+                      <ArrowDown className="h-4 w-4" />
+                    </div>
+                  )}
+                  <div className="w-12 h-12 flex mt-5 items-center justify-center rounded-lg bg-blue-500">
+                    {val}
+                  </div>
                 </div>
-              )}
-              <span
-                className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-              >
-                {val}
-              </span>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="flex flex-row gap-8 mt-16 self-center">
-          {rightArr.map((val, index) => (
-            <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-              <span
-                className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-              >
-                {val}
-              </span>
-              {index === rightIndex && (
-                <div>
-                  <span>rightIndex</span> <FaArrowUp size={20} color="orange" />
+          <div className="flex flex-col items-center">
+            <h3 className="text-xl mb-4">Right Subarray</h3>
+            <div className="flex gap-4">
+              {rightArr.map((val, index) => (
+                <div key={index} className="relative">
+                  {index === rightIndex && (
+                    <div className="absolute mt-5 -top-8 text-yellow-400 flex flex-col items-center">
+                      <span>Current</span>
+                      <ArrowDown className="h-4 w-4" />
+                    </div>
+                  )}
+                  <div className="w-12 h-12 mt-5 flex items-center justify-center rounded-lg bg-green-500">
+                    {val}
+                  </div>
                 </div>
-              )}
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <Toaster />
+
+
+      {temp.length > 0 ?
+        <div className='flex flex-col gap-5'>
+          <h3 className="text-xl mb-4">Merged Array</h3>
+          <div className="flex flex-row gap-4">
+            {temp.map((val, index) => (
+              <div key={index} className="w-12 h-12 flex text-lg font-bold items-center justify-center rounded-lg bg-gray-500">
+                {val}
+              </div>
+            ))}
+          </div>
+        </div>
+        : null}
+      <div className="mb-28"></div>
+
+      <Toaster position="top-center" />
     </div>
   );
 };
 
+
+
 export default MergeSort;
+
+
+

@@ -40,7 +40,7 @@ const BSAlgo = () => {
       setMid(mid);
 
       // Visualize the current state
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1800));
 
       if (arr[mid] === value) {
         setFound(true);
@@ -51,11 +51,11 @@ const BSAlgo = () => {
       } else if (arr[mid] < value) {
         low = mid + 1;
         setLow(mid+1)
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1800));
       } else {
         high = mid - 1;
         setHigh(mid-1)
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1800));
       }
     }
 
@@ -66,7 +66,7 @@ const BSAlgo = () => {
 
 
   return (
-    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen  overflow-hidden">
+    <div className="flex  flex-col gap-5 bg-gray-900 items-center w-screen min-h-screen  overflow-hidden">
         <h1 className='text-2xl font-bold text-center mt-10 text-white'>Binary Search Algorithm</h1>
       <input
         type="number"
@@ -98,7 +98,7 @@ const BSAlgo = () => {
         onClick={visualizeBinarySearch}
         className="px-4 py-2  w-[200px] ml-5 bg-orange-600 text-white rounded hover:bg-blue-700"
       >
-        BSAlgo
+        Search
       </button>
 
       <div className="flex flex-row gap-8 mt-16 self-center">
@@ -124,7 +124,7 @@ const BSAlgo = () => {
 
       {/* Main Box */}
       <span
-        className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center ${
+        className={`rounded shadow mt-3 bg-gray-200 w-12 h-12 text-xl font-bold flex items-center justify-center ${
           index === Mid
             ? "bg-green-400"
             : index === Low
@@ -137,11 +137,11 @@ const BSAlgo = () => {
         {val}
       </span>
 
-      
+
 
       {/* Bottom Pointer */}
       <div
-        className="flex justify-center"
+        className="flex justify-center mt-5"
         style={{ height: "30px", width: "50px", position: "relative" }}
       >
         {index === High && (

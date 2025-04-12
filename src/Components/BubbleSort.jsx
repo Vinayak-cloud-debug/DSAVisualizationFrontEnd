@@ -82,28 +82,33 @@ const BubbleSort = () => {
 
 
   const startBubbleSort = async () => {
+    
     if (!arr.length) {
       toast.error("Please submit the array first!");
       return;
     }
+    setsortedArrayIndex([]) // Reset the sorted array index
+    setLeftIndex(-1)
+    setRightIndex(-1)
     await handleBubbleSort(); // Start sorting from the full array
     setLeftIndex(-1)
     setRightIndex(-1)
     toast.success("Bubble Sort Completed!");
+    
   };
 
   return (
-    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen  overflow-hidden">
+    <div className="flex  flex-col gap-5 bg-gray-900 w-screen items-center min-h-screen  overflow-hidden">
       <h1 className='text-2xl font-bold text-white text-center mt-5'>Bubble Sort</h1>
       <input
         type="number"
-        className="w-64 p-2 border rounded bg-gray-900 text-white placeholder-white"
+        className="w-64 p-2 border-2 rounded bg-gray-800 text-white placeholder-white"
         placeholder="Enter the size of the first array"
         onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
       />
       <input
         type="text"
-        className="w-80 p-2 border rounded bg-gray-900 text-white placeholder-white"
+        className="w-80 p-2 border-2 bg-gray-800 rounded  text-white placeholder-white"
         placeholder="Enter array elements of 1st array separated by space"
         value={inputValue}
         onChange={handleInput}
@@ -128,7 +133,7 @@ const BubbleSort = () => {
         <div className="flex flex-row gap-8 mt-16 self-center">
   {arr.map((val, index) => (
     <div key={index} className="p-2 flex flex-col gap-[20px] items-center relative ">
-      <div style={{ height: "30px", width: "50px" }} className="flex justify-center">
+      <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
         {index === leftIndex && (
           <div className="absolute ml-9 gap-10">
             <span className='text-white'>leftIndex</span>
@@ -137,12 +142,12 @@ const BubbleSort = () => {
         )}
       </div>
       <span
-      className={`rounded shadow bg-gray-200 w-10 h-10 font-bold flex items-center justify-center ${
+      className={`rounded shadow bg-gray-200 w-16 h-16 text-2xl font-bold flex items-center justify-center ${
           sortedArrayIndex.includes(val) ? ' bg-green-500 text-white' : ''
         }`}>
         {val}
       </span>
-      <div style={{ height: "30px", width: "50px" }} className="flex justify-center">
+      <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
         {index === rightIndex && (
           <div className="absolute ml-12 gap-3">
             <FaArrowUp size={20} color="blue" />

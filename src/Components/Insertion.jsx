@@ -97,7 +97,7 @@ const InsertionSort = () => {
   };
 
   return (
-    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen  overflow-hidden">
+    <div className="flex  flex-col gap-5 bg-gray-900 w-screen min-h-screen items-center  overflow-hidden">
       <h1 className='text-2xl font-bold text-white mt-5 text-center'>Insertion Sort</h1>
       <input
         type="number"
@@ -132,7 +132,7 @@ const InsertionSort = () => {
     <div className="flex flex-row gap-8 mt-16 self-center">
       {arr.map((val, index) => (
         <div key={index} className="p-2 flex flex-col gap-[20px] items-center relative ">
-          <div style={{ height: "30px", width: "50px" }} className="flex justify-center">
+          <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
             {index === leftIndex && (
               <div className="absolute ml-9 gap-10">
                 <span className='text-white'>leftIndex</span>
@@ -140,13 +140,14 @@ const InsertionSort = () => {
               </div>
             )}
           </div>
+
           <span
-          className={`rounded shadow bg-gray-200 w-10 h-10 font-bold flex items-center justify-center ${
+          className={`rounded shadow bg-gray-200 text-2xl w-16 h-16 font-bold flex items-center justify-center ${
               sortedArrayIndex.includes(val) ? ' bg-green-500 text-white' : ''
             }`}>
             {val}
           </span>
-          <div style={{ height: "30px", width: "50px" }} className="flex justify-center">
+          <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
             {index === rightIndex && (
               <div className="absolute ml-12 gap-3">
                 <FaArrowUp size={20} color="blue" />
