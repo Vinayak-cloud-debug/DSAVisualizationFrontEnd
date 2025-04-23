@@ -93,81 +93,74 @@ const Home = () => {
 
   return (
 
-    <div className="bg-gray-900 w-screen  min-h-[180vh] lg:min-h-screen flex flex-col items-center overflow-hidden px-4">
-    {/* Title */}
-    <h1 className="text-2xl font-bold text-center text-[#da6334] mt-5">Algo Vision</h1>
-  
-  
-  
-    {/* Main Content */}
-    <div className="flex flex-col lg:flex-row items-center justify-center w-full mt-10 space-y-5  lg:mt-20  lg:space-y-0 lg:space-x-72">
-  
-     
-  
-      {/* Text Section (Separated Below Solar System in Mobile) */}
-      <div className="flex flex-col gap-5 lg:gap-16 items-center w-full lg:w-auto justify-center pt-10 lg:pt-0">
-  
-        <h1 className=' font-medium text-white self-start ml-3 text-lg'>Sorting Algorithms</h1>
+    <div className="bg-gray-900 w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-6">
+  {/* Title */}
+  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-[#da6334] mt-4">
+    Algo Vision
+  </h1>
 
-        <div className="flex flex-row gap-4 items-center w-full  text-center">
-          {concept1.map((item) => (
-            <div key={item.id} className="inline-block relative w-[170px] h-[40px] hover:border-2 hover:border-[#da6334] rounded-lg bg-[#0e1716]">
-              <h1 
-                onClick={() => selectedBlink(item.id)}
-                className="text-base font-semibold text-white mt-2 cursor-pointer"
-              >
-                {item.text}
-              </h1>
-              {blink === item.id && (
-                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
-              )}
-            </div>
-          ))}
-        </div>  
-
-
-        <h1 className=' font-medium text-white self-start ml-3 text-lg'>Graph Algorithms</h1>
-
-        <div className="flex flex-row gap-4 items-center w-full  text-center">
-          {concept2.map((item) => (
-            <div key={item.id} className="inline-block relative w-[170px] h-[40px] hover:border-2 hover:border-[#da6334] rounded-lg bg-[#0e1716]">
-              <h1 
-                onClick={() => selectedBlink(item.id)}
-                className="text-base font-semibold text-white mt-2 cursor-pointer"
-              >
-                {item.text}
-              </h1>
-              {blink === item.id && (
-                <div className="w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate] mt-0.5"></div>
-              )}
-            </div>
-          ))}
-        </div>  
-  
+  {/* Main Content */}
+  <div className="flex flex-col lg:flex-row items-center justify-center w-full mt-10 space-y-10 lg:space-y-0 lg:space-x-20 px-2">
+    
+    {/* Text Section */}
+    <div className="flex flex-col gap-8 items-center w-full lg:w-auto justify-center">
       
-        
-  
+      {/* Sorting Algorithms */}
+      <div className="w-full max-w-3xl">
+        <h2 className="font-medium text-white text-lg sm:text-xl mb-4 ml-3">Sorting Algorithms</h2>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {concept1.map((item) => (
+            <div key={item.id} className="relative w-36 h-12 hover:border-2 hover:border-[#da6334] rounded-lg bg-[#0e1716] flex items-center justify-center">
+              <h1 
+                onClick={() => selectedBlink(item.id)}
+                className="text-sm sm:text-base font-semibold text-white cursor-pointer"
+              >
+                {item.text}
+              </h1>
+              {blink === item.id && (
+                <div className="absolute bottom-0 w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate]" />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-  
-      <style>
-        {`
-          @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          @keyframes counter-spin {
-            from { transform: rotate(360deg) translateX(-50%); }
-            to { transform: rotate(0deg) translateX(-50%); }
-          }
-        `}
-      </style>
-  
+
+      {/* Graph Algorithms */}
+      <div className="w-full max-w-3xl">
+        <h2 className="font-medium text-white text-lg sm:text-xl mb-4 ml-3">Graph Algorithms</h2>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {concept2.map((item) => (
+            <div key={item.id} className="relative w-36 h-12 hover:border-2 hover:border-[#da6334] rounded-lg bg-[#0e1716] flex items-center justify-center">
+              <h1 
+                onClick={() => selectedBlink(item.id)}
+                className="text-sm sm:text-base font-semibold text-white cursor-pointer"
+              >
+                {item.text}
+              </h1>
+              {blink === item.id && (
+                <div className="absolute bottom-0 w-full h-0.5 bg-green-400 animate-[glitter_0.5s_infinite_alternate]" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-
-    <div className='mt-32'></div>
-
   </div>
-  
+
+  <style>
+    {`
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes counter-spin {
+        from { transform: rotate(360deg) translateX(-50%); }
+        to { transform: rotate(0deg) translateX(-50%); }
+      }
+    `}
+  </style>
+</div>
+
   
   
   );

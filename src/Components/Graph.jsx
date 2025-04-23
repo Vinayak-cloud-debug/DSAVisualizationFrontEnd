@@ -466,218 +466,443 @@ const Graph = () => {
 
   return (
 
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold text-center mb-8 text-white">Graph Visualization</h1>
 
-        <div className="mb-6">
-          <label className="block text-white text-sm font-bold mb-2">
-            Number of Vertices:
-            <input
-              type="text"
-              value={vertices}
-              onChange={(e)=>handleVerticesChange(e.target.value)}
-              
-              className="ml-3 shadow bg-gray-800 placeholder:text-white appearance-none border rounded py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </label>
-        </div>
+    <div className="min-h-screen bg-gray-900 p-4 sm:p-8">
+  <div className="max-w-5xl mx-auto bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6">
+    <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-white">
+      Graph Visualization
+    </h1>
 
-        <div className="mb-6">
-          <label className="block text-white mb-5 text-sm font-bold">
-            Edges format: (source  target) Example:- "0 1":
-          </label>
-          {edges.map((edge, index) => (
-            <div key={index} className="flex items-center mb-2">
-              <input
-                type="text"
-                value={edge}
-                onChange={(e) => handleEdgeChange(e, index)}
-                placeholder="Enter the edge"
-                className="shadow appearance-none border-2 bg-gray-800 placeholder:text-white  rounded py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline mr-2"
-              />
-
-              <input
-                type="number"
-                placeholder="Weight"
-                onChange={(e) => handleWeightChange(edge, e.target.value)}
-                className="w-20 shadow appearance-none bg-gray-800 placeholder:text-white  border-2 rounded py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline mr-2"
-              />
-              
-              <button
-                onClick={() => removeEdge(index)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={addEdge}
-            className="bg-[#151313] mt-5 rounded-xl hover:border-2 hover:border-[#5f3636]  text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-          >
-            Add Edge
-          </button>
-        </div>
-
-        <div className="flex flex-wrap gap-4 mb-8">
-          <button
-            onClick={handleSubmit}
-            className="bg-[#0c103c] hover:border-2 hover:border-[#544141] rounded-xl  text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-          >
-            Generate Graph
-          </button>
-
-            {graphId === '7' ?
-              <button
-                onClick={handleDFS}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 outline-none focus:shadow-outline"
-              >
-                Depth First Search
-              </button>
-              :null}
-
-
-            {graphId === '8' ?
-
-              <button
-                onClick={handleBFS}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-              >
-                Breadth First Search
-              </button>
-              :null}
-
-            {graphId === '9' ?
-
-              <button
-                onClick={handleDijkstra}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-              >
-                Dijkstra's Algorithm
-              </button>
-              :null}
-
-
-            {graphId === '10' ?  
-              <button
-                onClick={handleKruskal}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-              >
-                Kruskal's Algorithm
-              </button>
-            :null}
-
-            {graphId === '11' ?
-              <button
-                onClick={handleTopologicalSort}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-              >
-                Topological Sort
-              </button>
-            :null}
-
-            {graphId === '12' ?  
-              <button
-                onClick={handlePrims}
-                className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
-              >
-                Prim's Algorithm
-              </button>
-            : null}
-
-        </div>
-
-        <div className="mb-6">
-          <h2 className="text-xl text-white font-bold mb-2">Algorithm Output:</h2>
-          
-          {distanceArray.length > 0 && (
-            <div className="mb-4">
-              <h3 className="font-bold text-white">Dijkstra's Distances:</h3>
-              <div className="flex flex-wrap gap-2">
-                {distanceArray.map(([node, distance]) => (
-                  <div key={node} className="bg-gray-100 p-2 rounded">
-                    Node {node}: {distance === Infinity ? '∞' : distance}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {topologicalOrder.length > 0 && (
-            <div className="mb-4">
-              <h3 className="font-bold text-white">Traversal Order:</h3>
-              <div className="flex flex-wrap mt-5 gap-2">
-                {topologicalOrder.map((node, index) => (
-                  <div key={index} className="bg-gray-100 font-semibold p-2 w-[40px] h-[40px] text-center rounded">
-                    {node}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="relative w-[800px] h-[600px] mx-auto border  border-gray-200 rounded-lg">
-          <svg className="absolute  w-full h-full">
-            {graphData.edges.map((edge, index) => {
-              const sourceNode = graphData.nodes[edge.source];
-              const targetNode = graphData.nodes[edge.target];
-              const isMST = mstEdges.some(
-                e => (e.source === edge.source && e.target === edge.target) ||
-                    (e.source === edge.target && e.target === edge.source)
-              );
-              return (
-                <g key={index}>
-                  <line
-                    x1={sourceNode.x}
-                    y1={sourceNode.y}
-                    x2={targetNode.x}
-                    y2={targetNode.y}
-                    stroke={isMST ? "#E11D48" : "#4B5563"}
-                    strokeWidth={isMST ? "4" : "2"}
-                  />
-                  {isDirected && (
-                    <path
-                      d={calculateArrowPoints(sourceNode.x, sourceNode.y, targetNode.x, targetNode.y)}
-                      fill="#4B5563"
-                    />
-                  )}
-
-                  <text
-                    x={(sourceNode.x + targetNode.x) / 2}
-                    y={(sourceNode.y + targetNode.y) / 2}
-                    className="text-sm "
-                    fill="#ffffff"
-                  >
-                    {edge.weight ? edge.weight : ''}
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
-
-          {graphData.nodes.map((node) => (
-            <div
-              key={node.id}
-              className={`absolute w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transform -translate-x-1/2 -translate-y-1/2 transition-colors duration-300 ${
-                highlightedNodes.has(node.id) ? 'bg-red-500' : 'bg-blue-500'
-              }`}
-              style={{
-                top: `${node.y}px`,
-                left: `${node.x}px`,
-              }}
-            >
-              {node.name}
-            </div>
-          ))}
-        </div>
-      </div>
-      <Toaster position="top-center"
-      toastOptions={{
-        duration: 1500, // time in milliseconds (e.g., 3 seconds)
-      }} />
+    {/* Vertices Input */}
+    <div className="mb-6">
+      <label className="block text-white text-sm font-bold mb-2">
+        Number of Vertices:
+        <input
+          type="text"
+          value={vertices}
+          onChange={(e) => handleVerticesChange(e.target.value)}
+          className="ml-3 shadow bg-gray-800 text-white placeholder-white border rounded py-2 px-3 mt-2 sm:mt-0 w-full sm:w-auto"
+        />
+      </label>
     </div>
+
+    {/* Edges Section */}
+    <div className="mb-6">
+      <label className="block text-white text-sm font-bold mb-2">
+        Edges format: (source target) Example - "0 1":
+      </label>
+      {edges.map((edge, index) => (
+        <div key={index} className="flex flex-col sm:flex-row items-center mb-3 gap-2">
+          <input
+            type="text"
+            value={edge}
+            onChange={(e) => handleEdgeChange(e, index)}
+            placeholder="Enter the edge"
+            className="shadow bg-gray-800 placeholder-white border-2 rounded py-2 px-3 text-white w-full sm:w-auto"
+          />
+          <input
+            type="number"
+            placeholder="Weight"
+            onChange={(e) => handleWeightChange(edge, e.target.value)}
+            className="w-full sm:w-20 shadow bg-gray-800 placeholder-white border-2 rounded py-2 px-3 text-white"
+          />
+          <button
+            onClick={() => removeEdge(index)}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <button
+        onClick={addEdge}
+        className="mt-4 bg-[#151313] hover:border-2 hover:border-[#5f3636] text-white font-bold py-2 px-4 rounded-xl"
+      >
+        Add Edge
+      </button>
+    </div>
+
+    {/* Action Buttons */}
+    <div className="flex flex-wrap gap-4 mb-8">
+      <button
+        onClick={handleSubmit}
+        className="bg-[#0c103c] hover:border-2 hover:border-[#544141] text-white font-bold py-2 px-4 rounded-xl"
+      >
+        Generate Graph
+      </button>
+
+      {graphId === '7' && (
+        <button
+          onClick={handleDFS}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Depth First Search
+        </button>
+      )}
+
+      {graphId === '8' && (
+        <button
+          onClick={handleBFS}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Breadth First Search
+        </button>
+      )}
+
+      {graphId === '9' && (
+        <button
+          onClick={handleDijkstra}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Dijkstra's Algorithm
+        </button>
+      )}
+
+      {graphId === '10' && (
+        <button
+          onClick={handleKruskal}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Kruskal's Algorithm
+        </button>
+      )}
+
+      {graphId === '11' && (
+        <button
+          onClick={handleTopologicalSort}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Topological Sort
+        </button>
+      )}
+
+      {graphId === '12' && (
+        <button
+          onClick={handlePrims}
+          className="bg-[#1e1717] border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 rounded-xl"
+        >
+          Prim's Algorithm
+        </button>
+      )}
+    </div>
+
+    {/* Algorithm Output */}
+    <div className="mb-6">
+      <h2 className="text-xl text-white font-bold mb-2">Algorithm Output:</h2>
+
+      {distanceArray.length > 0 && (
+        <div className="mb-4">
+          <h3 className="font-bold text-white mb-2">Dijkstra's Distances:</h3>
+          <div className="flex flex-wrap gap-2">
+            {distanceArray.map(([node, distance]) => (
+              <div key={node} className="bg-gray-100 p-2 rounded">
+                Node {node}: {distance === Infinity ? '∞' : distance}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {topologicalOrder.length > 0 && (
+        <div className="mb-4">
+          <h3 className="font-bold text-white mb-2">Traversal Order:</h3>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {topologicalOrder.map((node, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 font-semibold p-2 w-10 h-10 text-center rounded"
+              >
+                {node}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    {/* Graph Container */}
+    <div className="relative w-full max-w-[100%] sm:max-w-[700px] md:max-w-[800px] aspect-[4/3] mx-auto border border-gray-200 rounded-lg overflow-hidden">
+      <svg className="absolute w-full h-full">
+        {graphData.edges.map((edge, index) => {
+          const sourceNode = graphData.nodes[edge.source];
+          const targetNode = graphData.nodes[edge.target];
+          const isMST = mstEdges.some(
+            (e) =>
+              (e.source === edge.source && e.target === edge.target) ||
+              (e.source === edge.target && e.target === edge.source)
+          );
+          return (
+            <g key={index}>
+              <line
+                x1={sourceNode.x}
+                y1={sourceNode.y}
+                x2={targetNode.x}
+                y2={targetNode.y}
+                stroke={isMST ? '#E11D48' : '#4B5563'}
+                strokeWidth={isMST ? '4' : '2'}
+              />
+              {isDirected && (
+                <path
+                  d={calculateArrowPoints(
+                    sourceNode.x,
+                    sourceNode.y,
+                    targetNode.x,
+                    targetNode.y
+                  )}
+                  fill="#4B5563"
+                />
+              )}
+              <text
+                x={(sourceNode.x + targetNode.x) / 2}
+                y={(sourceNode.y + targetNode.y) / 2}
+                className="text-sm"
+                fill="#ffffff"
+              >
+                {edge.weight || ''}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {graphData.nodes.map((node) => (
+        <div
+          key={node.id}
+          className={`absolute w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transform -translate-x-1/2 -translate-y-1/2 transition-colors duration-300 ${
+            highlightedNodes.has(node.id) ? 'bg-red-500' : 'bg-blue-500'
+          }`}
+          style={{
+            top: `${node.y}px`,
+            left: `${node.x}px`,
+          }}
+        >
+          {node.name}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <Toaster
+    position="top-center"
+    toastOptions={{
+      duration: 1500,
+    }}
+  />
+</div>
+
+
+    // <div className="min-h-screen bg-gray-900 p-8">
+    //   <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
+    //     <h1 className="text-3xl font-bold text-center mb-8 text-white">Graph Visualization</h1>
+
+    //     <div className="mb-6">
+    //       <label className="block text-white text-sm font-bold mb-2">
+    //         Number of Vertices:
+    //         <input
+    //           type="text"
+    //           value={vertices}
+    //           onChange={(e)=>handleVerticesChange(e.target.value)}
+              
+    //           className="ml-3 shadow bg-gray-800 placeholder:text-white appearance-none border rounded py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+    //         />
+    //       </label>
+    //     </div>
+
+    //     <div className="mb-6">
+    //       <label className="block text-white mb-5 text-sm font-bold">
+    //         Edges format: (source  target) Example:- "0 1":
+    //       </label>
+    //       {edges.map((edge, index) => (
+    //         <div key={index} className="flex items-center mb-2">
+    //           <input
+    //             type="text"
+    //             value={edge}
+    //             onChange={(e) => handleEdgeChange(e, index)}
+    //             placeholder="Enter the edge"
+    //             className="shadow appearance-none border-2 bg-gray-800 placeholder:text-white  rounded py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline mr-2"
+    //           />
+
+    //           <input
+    //             type="number"
+    //             placeholder="Weight"
+    //             onChange={(e) => handleWeightChange(edge, e.target.value)}
+    //             className="w-20 shadow appearance-none bg-gray-800 placeholder:text-white  border-2 rounded py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline mr-2"
+    //           />
+              
+    //           <button
+    //             onClick={() => removeEdge(index)}
+    //             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    //           >
+    //             Remove
+    //           </button>
+    //         </div>
+    //       ))}
+    //       <button
+    //         onClick={addEdge}
+    //         className="bg-[#151313] mt-5 rounded-xl hover:border-2 hover:border-[#5f3636]  text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //       >
+    //         Add Edge
+    //       </button>
+    //     </div>
+
+    //     <div className="flex flex-wrap gap-4 mb-8">
+    //       <button
+    //         onClick={handleSubmit}
+    //         className="bg-[#0c103c] hover:border-2 hover:border-[#544141] rounded-xl  text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //       >
+    //         Generate Graph
+    //       </button>
+
+    //         {graphId === '7' ?
+    //           <button
+    //             onClick={handleDFS}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4 outline-none focus:shadow-outline"
+    //           >
+    //             Depth First Search
+    //           </button>
+    //           :null}
+
+
+    //         {graphId === '8' ?
+
+    //           <button
+    //             onClick={handleBFS}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //           >
+    //             Breadth First Search
+    //           </button>
+    //           :null}
+
+    //         {graphId === '9' ?
+
+    //           <button
+    //             onClick={handleDijkstra}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //           >
+    //             Dijkstra's Algorithm
+    //           </button>
+    //           :null}
+
+
+    //         {graphId === '10' ?  
+    //           <button
+    //             onClick={handleKruskal}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //           >
+    //             Kruskal's Algorithm
+    //           </button>
+    //         :null}
+
+    //         {graphId === '11' ?
+    //           <button
+    //             onClick={handleTopologicalSort}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //           >
+    //             Topological Sort
+    //           </button>
+    //         :null}
+
+    //         {graphId === '12' ?  
+    //           <button
+    //             onClick={handlePrims}
+    //             className="bg-[#1e1717] rounded-xl border-2 border-black hover:border-[#e33535] text-white font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+    //           >
+    //             Prim's Algorithm
+    //           </button>
+    //         : null}
+
+    //     </div>
+
+    //     <div className="mb-6">
+    //       <h2 className="text-xl text-white font-bold mb-2">Algorithm Output:</h2>
+          
+    //       {distanceArray.length > 0 && (
+    //         <div className="mb-4">
+    //           <h3 className="font-bold text-white">Dijkstra's Distances:</h3>
+    //           <div className="flex flex-wrap gap-2">
+    //             {distanceArray.map(([node, distance]) => (
+    //               <div key={node} className="bg-gray-100 p-2 rounded">
+    //                 Node {node}: {distance === Infinity ? '∞' : distance}
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       )}
+
+    //       {topologicalOrder.length > 0 && (
+    //         <div className="mb-4">
+    //           <h3 className="font-bold text-white">Traversal Order:</h3>
+    //           <div className="flex flex-wrap mt-5 gap-2">
+    //             {topologicalOrder.map((node, index) => (
+    //               <div key={index} className="bg-gray-100 font-semibold p-2 w-[40px] h-[40px] text-center rounded">
+    //                 {node}
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       )}
+    //     </div>
+
+    //     <div className="relative w-[800px] h-[600px] mx-auto border  border-gray-200 rounded-lg">
+    //       <svg className="absolute  w-full h-full">
+    //         {graphData.edges.map((edge, index) => {
+    //           const sourceNode = graphData.nodes[edge.source];
+    //           const targetNode = graphData.nodes[edge.target];
+    //           const isMST = mstEdges.some(
+    //             e => (e.source === edge.source && e.target === edge.target) ||
+    //                 (e.source === edge.target && e.target === edge.source)
+    //           );
+    //           return (
+    //             <g key={index}>
+    //               <line
+    //                 x1={sourceNode.x}
+    //                 y1={sourceNode.y}
+    //                 x2={targetNode.x}
+    //                 y2={targetNode.y}
+    //                 stroke={isMST ? "#E11D48" : "#4B5563"}
+    //                 strokeWidth={isMST ? "4" : "2"}
+    //               />
+    //               {isDirected && (
+    //                 <path
+    //                   d={calculateArrowPoints(sourceNode.x, sourceNode.y, targetNode.x, targetNode.y)}
+    //                   fill="#4B5563"
+    //                 />
+    //               )}
+
+    //               <text
+    //                 x={(sourceNode.x + targetNode.x) / 2}
+    //                 y={(sourceNode.y + targetNode.y) / 2}
+    //                 className="text-sm "
+    //                 fill="#ffffff"
+    //               >
+    //                 {edge.weight ? edge.weight : ''}
+    //               </text>
+    //             </g>
+    //           );
+    //         })}
+    //       </svg>
+
+    //       {graphData.nodes.map((node) => (
+    //         <div
+    //           key={node.id}
+    //           className={`absolute w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transform -translate-x-1/2 -translate-y-1/2 transition-colors duration-300 ${
+    //             highlightedNodes.has(node.id) ? 'bg-red-500' : 'bg-blue-500'
+    //           }`}
+    //           style={{
+    //             top: `${node.y}px`,
+    //             left: `${node.x}px`,
+    //           }}
+    //         >
+    //           {node.name}
+    //         </div>
+    //       ))}
+    //     </div>
+    //   </div>
+    //   <Toaster position="top-center"
+    //   toastOptions={{
+    //     duration: 1500, // time in milliseconds (e.g., 3 seconds)
+    //   }} />
+    // </div>
   );
 };
 
