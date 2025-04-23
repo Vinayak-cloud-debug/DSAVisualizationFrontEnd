@@ -18,7 +18,6 @@ import SelectionSort from './Components/SelectionSort'
 import SmallestElement from './Components/SmallestElement'
 import SpiralMatrix from './Components/SpiralMatrix'
 import TwoPointerAlgo from './Components/TwoPointerAlgo'
-import { useAuthContext } from './context/AuthContext'
 import Login from './pages/Login/login'
 import SignUp from './pages/SignUp/SignUp'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
@@ -28,7 +27,6 @@ import Graph from './Components/Graph'
   
 function App() {
 
-  const { authUser } = useAuthContext()
 
   return (
     
