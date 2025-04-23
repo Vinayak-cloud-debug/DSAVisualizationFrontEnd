@@ -621,7 +621,70 @@ const Graph = () => {
     </div>
 
     {/* Graph Container */}
-    <div className="relative w-full max-w-[100%] sm:max-w-[700px] md:max-w-[800px] aspect-[4/3] mx-auto border border-gray-200 rounded-lg overflow-hidden">
+
+    {/* Graph Container */}
+<div className="relative w-full max-w-full sm:max-w-[700px] md:max-w-[800px] aspect-[4/3] mx-auto border border-gray-200 rounded-lg overflow-hidden">
+  <svg className="absolute w-full h-full">
+    {graphData.edges.map((edge, index) => {
+      const sourceNode = graphData.nodes[edge.source];
+      const targetNode = graphData.nodes[edge.target];
+      const isMST = mstEdges.some(
+        (e) =>
+          (e.source === edge.source && e.target === edge.target) ||
+          (e.source === edge.target && e.target === edge.source)
+      );
+      return (
+        <g key={index}>
+          <line
+            x1={sourceNode.x}
+            y1={sourceNode.y}
+            x2={targetNode.x}
+            y2={targetNode.y}
+            stroke={isMST ? '#E11D48' : '#4B5563'}
+            strokeWidth={isMST ? '4' : '2'}
+          />
+          {isDirected && (
+            <path
+              d={calculateArrowPoints(
+                sourceNode.x,
+                sourceNode.y,
+                targetNode.x,
+                targetNode.y
+              )}
+              fill="#4B5563"
+            />
+          )}
+          <text
+            x={(sourceNode.x + targetNode.x) / 2}
+            y={(sourceNode.y + targetNode.y) / 2}
+            className="text-sm"
+            fill="#ffffff"
+          >
+            {edge.weight || ''}
+          </text>
+        </g>
+      );
+    })}
+  </svg>
+
+  {/* Nodes */}
+  {graphData.nodes.map((node) => (
+    <div
+      key={node.id}
+      className={`absolute w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transform -translate-x-1/2 -translate-y-1/2 transition-colors duration-300 ${
+        highlightedNodes.has(node.id) ? 'bg-red-500' : 'bg-blue-500'
+      }`}
+      style={{
+        top: `${node.y}px`,
+        left: `${node.x}px`,
+      }}
+    >
+      {node.name}
+    </div>
+  ))}
+</div>
+
+    {/* <div className="relative w-full max-w-[100%] sm:max-w-[700px] md:max-w-[800px] aspect-[4/3] mx-auto border border-gray-200 rounded-lg overflow-hidden">
       <svg className="absolute w-full h-full">
         {graphData.edges.map((edge, index) => {
           const sourceNode = graphData.nodes[edge.source];
@@ -679,7 +742,7 @@ const Graph = () => {
           {node.name}
         </div>
       ))}
-    </div>
+    </div> */}
   </div>
 
   <Toaster
