@@ -19,6 +19,8 @@ const MergeSortFunction = () => {
 
 
   const handleArray1Submit = () => {
+    
+    
     const elements = inputValue1.trim().split(/\s+/).map(Number);
     if (elements.length !== arr1Size) {
       alert(`Please enter exactly ${arr1Size} elements.`);
@@ -28,7 +30,10 @@ const MergeSortFunction = () => {
     
   };
 
-  const handleArray2Submit = () => {
+  const handleArray2Submit = () => 
+    
+  
+    {
     const elements = inputValue2.trim().split(/\s+/).map(Number);
     if (elements.length !== arr2Size) {
       alert(`Please enter exactly ${arr2Size} elements.`);
@@ -40,6 +45,8 @@ const MergeSortFunction = () => {
 
 
   const visualizeMergeFunction = async () => {
+    
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
     let left = 0;
     let right = 0;
 
@@ -54,20 +61,20 @@ const MergeSortFunction = () => {
     
 
         setAns((ans)=>[...ans,arr1[left]])
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setLeft((prevLeft)=>left+1)
         left += 1
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
       } else if (arr1[left] > arr2[right]) {
         
         setAns((ans)=>[...ans,arr2[right]])
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setRight((prevRight)=>right+1)
         right += 1
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
       } 
     }
@@ -75,14 +82,14 @@ const MergeSortFunction = () => {
 
     while(left < arr1Size){
         setLeft(left);
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setAns((ans)=>[...ans,arr1[left]])
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setLeft(left+1)
         left += 1
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
     }
 
@@ -109,13 +116,13 @@ const MergeSortFunction = () => {
         <h1>Merge function in Merge Sort</h1>
       <input
         type="number"
-        className="w-48 p-2 border rounded bg-white text-black"
+        className="w-48 p-2 border rounded bg-gray-900 text-white"
         placeholder="Enter the size of the first array"
         onChange={(e) => setArr1Size(parseInt(e.target.value, 10))}
       />
       <input
         type="text"
-        className="w-80 p-2 border rounded bg-white text-black"
+        className="w-80 p-2 border rounded bg-gray-900 text-white"
         placeholder="Enter array elements of 1st array separated by space"
         value={inputValue1}
         onChange={handleArr1Input}
@@ -123,33 +130,33 @@ const MergeSortFunction = () => {
 
 <input
         type="number"
-        className="w-48 p-2 border rounded bg-white text-black"
+        className="w-48 p-2 border rounded bg-gray-900 text-white"
         placeholder="Enter the size of the second array"
         onChange={(e) => setArr2Size(parseInt(e.target.value, 10))}
       />
       <input
         type="text"
-        className="w-80 p-2 border rounded bg-white text-black"
+        className="w-80 p-2 border rounded bg-gray-900 text-white"
         placeholder="Enter array elements of 1st array separated by space"
         value={inputValue2}
         onChange={handleArr2Input}
       />
       <button
         onClick={handleArray1Submit}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-600 w-[200px] text-white rounded hover:bg-blue-700"
       >
         Submit 1st Array
       </button>
 
       <button
         onClick={handleArray2Submit}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-600 w-[200px] text-white rounded hover:bg-blue-700"
       >
         Submit 2nd Array
       </button>
       <button
         onClick={visualizeMergeFunction}
-        className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-blue-700"
+        className="px-4 py-2 bg-orange-600 w-[200px] text-white rounded hover:bg-blue-700"
       >
         Merge_Two_Arrays
       </button>
@@ -157,9 +164,9 @@ const MergeSortFunction = () => {
       <div className="flex flex-row gap-8 mt-16 self-center">
         {arr1.map((val, index) => (
           <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
-            {index === left && (<div><span>left</span> <FaArrowDown size={20} color="blue" /></div>)}
+            {index === left && (<div><span className='text-white'>left</span> <FaArrowDown size={20} color="blue" /></div>)}
             <span
-              className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
+              className={`rounded shadow bg-gray-200  w-14 h-14 text-lg font-medium flex items-center justify-center `}
             >
               {val}
             </span>
@@ -171,24 +178,30 @@ const MergeSortFunction = () => {
         {arr2.map((val, index) => (
           <div key={index} className="p-2 flex flex-col gap-[10px] items-center">
             <span
-              className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
+              className={`rounded shadow bg-gray-200 w-14 h-14 text-lg font-medium flex items-center justify-center `}
             >
               {val}
             </span>
-            {index === right && (<div><span>High</span> <FaArrowUp size={20} color="red" /></div>)}
+            {index === right && (<div><span className='text-white'>High</span> <FaArrowUp size={20} color="red" /></div>)}
           </div>
         ))}
       </div>
 
-      <h1>Merged array: </h1>
-        <div className='flex flex-row gap-8 justify-center items-center '>
-            {ans.map((val,index) =>
-                <span key = {index}
-                className={`rounded shadow bg-gray-200 w-10 h-10 flex items-center justify-center `}
-            >
-                {val}
-            </span>)}
-        </div>
+        {ans.length > 0 ?
+          <div className='flex flex-col gap-5  self-center'>
+            <h1 className='text-[#ffffff] text-xl font-medium'>Merged array </h1>
+            <div className='flex flex-row gap-8 justify-center items-center '>
+                {ans.map((val,index) =>
+                    <span key = {index}
+                    className={`rounded shadow bg-gray-200 w-16 h-16 text-2xl font-medium flex items-center justify-center `}
+                >
+                    {val}
+                </span>)}
+            </div>
+          </div>
+        :null}
+
+        <div className='mb-28'></div>
             <Toaster/>
     </div>
   );

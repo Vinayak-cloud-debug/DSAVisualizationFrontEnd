@@ -24,7 +24,8 @@ import SignUp from './pages/SignUp/SignUp'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import ResetPassword from './pages/resetPassword/ResetPassword'
 import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
-
+import Graph from './Components/Graph'
+  
 function App() {
 
   const { authUser } = useAuthContext()
@@ -34,28 +35,30 @@ function App() {
     <div className='top-0 left-0 '  >
       <Routes>
         <Route path = '/login' element = {<Login/>}/>
-        <Route path='/' element = { authUser == null? <Login/> : <Home/>} />
+        <Route path='/' element = {  <Home/>} />
         <Route path = '/signup' element = {<SignUp/>}/>
         <Route path = '/reset-password' element = {<ResetPassword/>}/>
         <Route path='/Verify-Gmail' element = { <verifyGmail/>} />
         <Route path='/verifyOTP' element = { <VerifyOTP/>} />
         <Route path='/forgot-password' element = { <ForgotPassword/>} />
-        <Route path='/BSAlgo' element = { authUser == null ?<Login/> : <BSAlgo/>} />
-        <Route path='/TwoPointerAlgo' element =  {  authUser == null ? <Login/> :<TwoPointerAlgo/>}/>
-        <Route path='/MergeSort' element = {  authUser == null ? <Login/> :<MergeSortFunction/>}/>
-        <Route path='/MergeSortAlgo' element = {  authUser == null ? <Login/> :<MergeSort/>}/>
-        <Route path='/SelectionSortAlgo' element = {  authUser == null ? <Login/> :<SelectionSort/>}/>
-        <Route path='/BubbleSortAlgo' element =  { authUser == null ?<Login/> :<BubbleSort/>}/>
-        <Route path='/InsertionSortAlgo' element = { authUser == null ? <Login/> :<InsertionSort/>}/>
-        <Route path='/QuickSortAlgo' element = {  authUser == null ?<Login/> :<QuickSort/>}/>
-        <Route path='/ReverseLL' element = { authUser == null ? <Login/> :<ReverseLL/>}/>
+        <Route path='/BSAlgo' element = { <BSAlgo/>} />
+        <Route path='/TwoPointerAlgo' element = {<TwoPointerAlgo/>}/>
+        <Route path='/MergeSort' element = {  <MergeSortFunction/>}/>
+        <Route path='/MergeSortAlgo' element = {  <MergeSort/>}/>
+        <Route path='/SelectionSortAlgo' element = {  <SelectionSort/>}/>
+        <Route path='/BubbleSortAlgo' element =  { <BubbleSort/>}/>
+        <Route path='/InsertionSortAlgo' element = {<InsertionSort/>}/>
+        <Route path='/QuickSortAlgo' element = { <QuickSort/>}/>
+        <Route path='/ReverseLL' element = { <ReverseLL/>}/>
         <Route path='/LinearSearch' element = {<LinearSearch/>}/>
-        <Route path='/LargestElement' element = {  authUser == null ? <Login/> :<LargestElement/>}/>
-        <Route path='/SmallestElement' element = { authUser == null ?<Login/> :<SmallestElement/>}/>
-        <Route path='/SecondLargestElement' element = {  authUser == null ? <Login/> :<SecondLargestElement/>}/>
-        <Route path='/LeftRotateArray' element = {  authUser == null ? <Login/> :<LeftRotateArray/>}/>
-        <Route path='/SpiralMatrix' element = {  authUser == null ? <Login/> :<SpiralMatrix/>}/>
-        <Route path='/NumberOfPaths' element = {  authUser == null ? <Login/> :<NumberOfPaths/>}/>
+        <Route path='/LargestElement' element = {  <LargestElement/>}/>
+        <Route path='/SmallestElement' element = { <SmallestElement/>}/>
+        <Route path='/SecondLargestElement' element = { <SecondLargestElement/>}/>
+        <Route path='/LeftRotateArray' element = { <LeftRotateArray/>}/>
+        <Route path='/SpiralMatrix' element = { <SpiralMatrix/>}/>
+        <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
+        <Route path='/Graph' element = {  <Graph/>}/>
+
 
 
 
