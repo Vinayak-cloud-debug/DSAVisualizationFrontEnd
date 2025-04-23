@@ -14,6 +14,9 @@ const Ring = ({ radius, color }) => (
 );
 
 const Home = () => {
+
+  
+  const navigate = useNavigate();
   // // Define each ring's properties with fixed pixel sizes
   // const rings = [
   //   { radius: 50, color: '#3B82F6' },  // Blue - innermost ring
@@ -39,7 +42,6 @@ const Home = () => {
 
     setBlink(id)
 
-    const navigate = useNavigate();
     
 
     if(id == 1)
