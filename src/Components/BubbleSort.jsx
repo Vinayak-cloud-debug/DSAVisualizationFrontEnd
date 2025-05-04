@@ -1,245 +1,615 @@
 
 
 
+// import React, { useEffect, useState } from 'react';
+// import toast, { Toaster } from 'react-hot-toast';
+// import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+
+// const BubbleSort = () => {
+//   const [arr, setArr] = useState([]);
+//   const [arrSize, setArrSize] = useState(0);
+//   const [inputValue, setInputValue] = useState('');
+//   const [sortedArrayIndex,setsortedArrayIndex] = useState([])
+ 
+//   const [leftIndex, setLeftIndex] = useState(0);
+//   const [rightIndex, setRightIndex] = useState(0);
+
+//   // Log low, mid, high to debug
+//   useEffect(() => {
+//   }, [leftIndex, rightIndex,arr,sortedArrayIndex]);
+
+//   const handleInput = (e) => setInputValue(e.target.value);
+
+//   const handleSubmit = () => {
+//     const elements = inputValue.trim().split(/\s+/).map(Number);
+//     if (elements.length !== arrSize) {
+//       alert(`Please enter exactly ${arrSize} elements.`);
+//       return;
+//     }
+//     setArr(elements);
+//   };
+
+//   // Merge Sort recursive function
+//   const handleBubbleSort = async () => {
+    
+    
+//     setLeftIndex(0);
+//     setRightIndex(0);
+//     await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
+
+
+//     let newArr = [...arr]
+//     for(let i=0; i<arrSize-1; i++){
+
+//         for(let j=0; j<arrSize-i-1; j++){
+
+//             setLeftIndex(j);
+//             setRightIndex(j+1);
+//             await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
+
+
+            
+//             if(newArr[j] > newArr[j+1]){
+//                 let temp = newArr[j];
+//                 newArr[j] = newArr[j+1];
+//                 newArr[j+1] = temp;
+
+//                 setArr([...newArr])
+//                 await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
+
+//             }
+//         }
+
+        
+//         setsortedArrayIndex((prev) => {
+//           const updatedArray = [...prev, newArr[arrSize - i - 1]];
+//           console.log(updatedArray); // Log the updated state here
+//           return updatedArray;
+//         });
+//         await new Promise((resolve) => setTimeout(resolve, 1000));
+        
+//     }
+
+//     setsortedArrayIndex((prev) => {
+//       const updatedArray = [...prev, newArr[0]];
+//       console.log(updatedArray); // Log the updated state here
+//       return updatedArray;
+//     });
+//     await new Promise((resolve) => setTimeout(resolve, 1000));
+
+//     setArr([...newArr])
+//   };
+
+
+//   const startBubbleSort = async () => {
+    
+//     if (!arr.length) {
+//       toast.error("Please submit the array first!");
+//       return;
+//     }
+//     setsortedArrayIndex([]) // Reset the sorted array index
+//     setLeftIndex(-1)
+//     setRightIndex(-1)
+//     await handleBubbleSort(); // Start sorting from the full array
+//     setLeftIndex(-1)
+//     setRightIndex(-1)
+//     toast.success("Bubble Sort Completed!");
+    
+//   };
+
+//   return (
+
+//     <div className="flex flex-col gap-6 bg-gray-900 w-full min-h-screen items-center px-3 py-6">
+//   {/* Title */}
+//   <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center mt-2">
+//     Bubble Sort
+//   </h1>
+
+//   {/* Input Fields */}
+//   <input
+//     type="number"
+//     className="w-full max-w-[14rem] sm:max-w-xs md:max-w-sm p-2 border-2 rounded bg-gray-800 text-white placeholder-white text-sm sm:text-base"
+//     placeholder="Enter array size"
+//     onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
+//   />
+//   <input
+//     type="text"
+//     className="w-full max-w-[18rem] sm:max-w-md p-2 border-2 rounded bg-gray-800 text-white placeholder-white text-sm sm:text-base"
+//     placeholder="Enter array elements separated by space"
+//     value={inputValue}
+//     onChange={handleInput}
+//   />
+
+//   {/* Buttons */}
+//   <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full justify-center items-center">
+//     <button
+//       onClick={handleSubmit}
+//       className="w-40 sm:w-auto px-4 py-2 bg-blue-600 font-semibold text-white rounded hover:bg-blue-700 text-sm sm:text-base"
+//     >
+//       Submit Array
+//     </button>
+//     <button
+//       onClick={startBubbleSort}
+//       className="w-40 sm:w-auto px-4 py-2 bg-orange-600 font-semibold text-white rounded hover:bg-orange-700 text-sm sm:text-base"
+//     >
+//       Start Sorting
+//     </button>
+//   </div>
+
+//   {/* Array Display */}
+//   <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-10 px-2 w-full">
+//     {arr.map((val, index) => (
+//       <div key={index} className="flex flex-col items-center relative w-[3.5rem] sm:w-20">
+//         {/* Left Arrow */}
+//         <div className="h-8 flex justify-center relative w-full">
+//           {index === leftIndex && (
+//             <div className="absolute top-0 flex flex-col items-center">
+//               <span className="text-white text-[0.6rem] sm:text-xs">leftIndex</span>
+//               <FaArrowDown size={14} color="green" />
+//             </div>
+//           )}
+//         </div>
+
+//         {/* Value Box */}
+//         <span
+//           className={`rounded shadow bg-gray-200 w-12 h-12 sm:w-16 sm:h-16 text-base sm:text-xl font-bold flex items-center justify-center ${
+//             sortedArrayIndex.includes(val) ? 'bg-green-500 text-white' : ''
+//           }`}
+//         >
+//           {val}
+//         </span>
+
+//         {/* Right Arrow */}
+//         <div className="h-8 flex justify-center relative w-full">
+//           {index === rightIndex && (
+//             <div className="absolute bottom-0 flex flex-col items-center">
+//               <FaArrowUp size={14} color="blue" />
+//               <span className="text-white text-[0.6rem] sm:text-xs">rightIndex</span>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     ))}
+//   </div>
+
+//   <Toaster />
+// </div>
+
+
+//   );
+// };
+
+// export default BubbleSort;
+
+
+
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { ArrowDownCircle, ArrowUpCircle, Code, RefreshCw, PlayCircle, Info } from 'lucide-react';
 
 const BubbleSort = () => {
   const [arr, setArr] = useState([]);
   const [arrSize, setArrSize] = useState(0);
   const [inputValue, setInputValue] = useState('');
-  const [sortedArrayIndex,setsortedArrayIndex] = useState([])
- 
-  const [leftIndex, setLeftIndex] = useState(0);
-  const [rightIndex, setRightIndex] = useState(0);
+  const [sortedArrayIndex, setSortedArrayIndex] = useState([]);
+  const [leftIndex, setLeftIndex] = useState(-1);
+  const [rightIndex, setRightIndex] = useState(-1);
+  const [isSorting, setIsSorting] = useState(false);
+  const [backgroundParticles, setBackgroundParticles] = useState([]);
+  const [showCode, setShowCode] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
-  // Log low, mid, high to debug
+  // Generate random particles for the background
   useEffect(() => {
-  }, [leftIndex, rightIndex,arr,sortedArrayIndex]);
+    const particles = Array.from({ length: 40 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      speed: Math.random() * 0.3 + 0.1,
+      opacity: Math.random() * 0.4 + 0.1,
+      color: `rgba(${Math.random() * 50 + 50}, ${Math.random() * 100 + 100}, ${Math.random() * 150 + 100}, ${Math.random() * 0.3 + 0.1})`
+    }));
+    setBackgroundParticles(particles);
+  }, []);
+
+  // Animation frame for particles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBackgroundParticles(prev => 
+        prev.map(particle => ({
+          ...particle,
+          y: (particle.y + particle.speed) % 100
+        }))
+      );
+    }, 50);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInput = (e) => setInputValue(e.target.value);
 
-  const handleSubmit = () => {
-    const elements = inputValue.trim().split(/\s+/).map(Number);
-    if (elements.length !== arrSize) {
-      alert(`Please enter exactly ${arrSize} elements.`);
+  const generateRandomArray = () => {
+    if (!arrSize || arrSize <= 0 || arrSize > 15) {
+      toast.error("Please enter a valid array size between 1 and 15");
       return;
     }
-    setArr(elements);
+    
+    // Generate random array
+    const randomArray = Array.from({ length: arrSize }, () => 
+      Math.floor(Math.random() * 100)
+    );
+    
+    setArr(randomArray);
+    setInputValue(randomArray.join(' '));
+    setSortedArrayIndex([]);
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    toast.success("Random array generated!");
   };
 
-  // Merge Sort recursive function
-  const handleBubbleSort = async () => {
-    
-    
-    setLeftIndex(0);
-    setRightIndex(0);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-
-    let newArr = [...arr]
-    for(let i=0; i<arrSize-1; i++){
-
-        for(let j=0; j<arrSize-i-1; j++){
-
-            setLeftIndex(j);
-            setRightIndex(j+1);
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-
-            
-            if(newArr[j] > newArr[j+1]){
-                let temp = newArr[j];
-                newArr[j] = newArr[j+1];
-                newArr[j+1] = temp;
-
-                setArr([...newArr])
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-            }
-        }
-
-        
-        setsortedArrayIndex((prev) => {
-          const updatedArray = [...prev, newArr[arrSize - i - 1]];
-          console.log(updatedArray); // Log the updated state here
-          return updatedArray;
-        });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        
+  const handleSubmit = () => {
+    if (!arrSize || arrSize <= 0) {
+      toast.error("Please enter a valid array size");
+      return;
     }
-
-    setsortedArrayIndex((prev) => {
-      const updatedArray = [...prev, newArr[0]];
-      console.log(updatedArray); // Log the updated state here
-      return updatedArray;
-    });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setArr([...newArr])
+    
+    const elements = inputValue.trim().split(/\s+/).map(Number);
+    
+    if (elements.some(isNaN)) {
+      toast.error("Please enter valid numbers");
+      return;
+    }
+    
+    if (elements.length !== arrSize) {
+      toast.error(`Please enter exactly ${arrSize} elements.`);
+      return;
+    }
+    
+    setArr(elements);
+    setSortedArrayIndex([]);
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    toast.success("Array initialized successfully!");
   };
 
+  const handleBubbleSort = async () => {
+    let newArr = [...arr];
+    
+    for (let i = 0; i < arrSize - 1; i++) {
+      for (let j = 0; j < arrSize - i - 1; j++) {
+        setLeftIndex(j);
+        setRightIndex(j + 1);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        if (newArr[j] > newArr[j + 1]) {
+          // Swap elements
+          let temp = newArr[j];
+          newArr[j] = newArr[j + 1];
+          newArr[j + 1] = temp;
+          setArr([...newArr]);
+          await new Promise((resolve) => setTimeout(resolve, 800));
+        }
+      }
+      
+      // Mark this position as sorted
+      setSortedArrayIndex((prev) => [...prev, arrSize - i - 1]);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+    }
+    
+    // Mark the first element as sorted too
+    setSortedArrayIndex((prev) => [...prev, 0]);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    
+    setArr([...newArr]);
+  };
 
   const startBubbleSort = async () => {
-    
     if (!arr.length) {
-      toast.error("Please submit the array first!");
+      toast.error("Please submit an array first!");
       return;
     }
-    setsortedArrayIndex([]) // Reset the sorted array index
-    setLeftIndex(-1)
-    setRightIndex(-1)
-    await handleBubbleSort(); // Start sorting from the full array
-    setLeftIndex(-1)
-    setRightIndex(-1)
-    toast.success("Bubble Sort Completed!");
     
+    setIsSorting(true);
+    setSortedArrayIndex([]);
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    
+    await handleBubbleSort();
+    
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    toast.success("Bubble Sort Completed!");
+    setIsSorting(false);
   };
 
+  const resetArray = () => {
+    if (isSorting) return;
+    
+    setArr([]);
+    setInputValue('');
+    setSortedArrayIndex([]);
+    setLeftIndex(-1);
+    setRightIndex(-1);
+    toast.success("Reset successful!");
+  };
+
+  // Pseudo code for bubble sort
+  const bubbleSortCode = `function bubbleSort(arr):
+    n = arr.length
+    
+    for i from 0 to n-1:
+        for j from 0 to n-i-1:
+            // Compare adjacent elements
+            if arr[j] > arr[j+1]:
+                // Swap them if they are in wrong order
+                swap arr[j] and arr[j+1]
+                
+    return arr`;
+
+  // Algorithm info
+  const algorithmInfo = `
+    Bubble Sort is a simple sorting algorithm that repeatedly steps through the list,
+    compares adjacent elements, and swaps them if they are in the wrong order. 
+    
+    Time Complexity:
+    • Best Case: O(n) - when array is already sorted
+    • Average Case: O(n²)
+    • Worst Case: O(n²) - when array is sorted in reverse order
+    
+    Space Complexity: O(1) - only requires a single additional memory space for swapping
+    
+    This algorithm is named for the way smaller elements "bubble" to the top of the list.
+    While simple to understand and implement, Bubble Sort is not efficient for large data sets.`;
+
   return (
+    <div className="relative flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
+      {/* Background particles */}
+      {backgroundParticles.map((particle, i) => (
+        <div 
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            background: particle.color,
+            filter: 'blur(1px)'
+          }}
+        />
+      ))}
+      
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
+      
+      {/* Content container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+        {/* Header with animated border */}
+        <div className="relative mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
+            Bubble Sort Algorithm
+          </h1>
+          <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
+          <p className="text-gray-400 text-center mt-3 max-w-xl">
+            Visualize how bubble sort works by comparing adjacent elements
+          </p>
+        </div>
 
-    <div className="flex flex-col gap-6 bg-gray-900 w-full min-h-screen items-center px-3 py-6">
-  {/* Title */}
-  <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center mt-2">
-    Bubble Sort
-  </h1>
+        {/* Input Section - Glass morphism card */}
+        <div className="backdrop-blur-sm bg-gray-900/50 border border-gray-800 rounded-xl p-6 w-full max-w-3xl mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-gray-300 text-sm font-medium">Array Size <span className="text-gray-500">(max 15)</span></label>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  max="15"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  placeholder="Enter size"
+                  onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
+                  disabled={isSorting}
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-gray-300 text-sm font-medium">Array Elements</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  placeholder="Enter elements separated by space (e.g., 42 17 8 23 5)"
+                  value={inputValue}
+                  onChange={handleInput}
+                  disabled={isSorting}
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 mt-6">
+            <button
+              onClick={handleSubmit}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-emerald-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} className={isSorting ? "animate-spin" : ""} />
+              Initialize Array
+            </button>
+            
+            <button
+              onClick={generateRandomArray}
+              disabled={isSorting || !arrSize}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-blue-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Random Array
+            </button>
+            
+            <button
+              onClick={startBubbleSort}
+              disabled={isSorting || arr.length === 0}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
+            >
+              <PlayCircle size={18} />
+              {isSorting ? "Sorting..." : "Start Sorting"}
+            </button>
+            
+            <button
+              onClick={resetArray}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Reset
+            </button>
+            
+            <div className="flex gap-2 ml-auto">
+              <button
+                onClick={() => setShowInfo(!showInfo)}
+                className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium flex items-center gap-2 transition-all"
+              >
+                <Info size={18} />
+                {showInfo ? "Hide Info" : "Algorithm Info"}
+              </button>
+              
+              <button
+                onClick={() => setShowCode(!showCode)}
+                className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium flex items-center gap-2 transition-all"
+              >
+                <Code size={18} />
+                {showCode ? "Hide Code" : "Show Code"}
+              </button>
+            </div>
+          </div>
+        </div>
 
-  {/* Input Fields */}
-  <input
-    type="number"
-    className="w-full max-w-[14rem] sm:max-w-xs md:max-w-sm p-2 border-2 rounded bg-gray-800 text-white placeholder-white text-sm sm:text-base"
-    placeholder="Enter array size"
-    onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-  />
-  <input
-    type="text"
-    className="w-full max-w-[18rem] sm:max-w-md p-2 border-2 rounded bg-gray-800 text-white placeholder-white text-sm sm:text-base"
-    placeholder="Enter array elements separated by space"
-    value={inputValue}
-    onChange={handleInput}
-  />
-
-  {/* Buttons */}
-  <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full justify-center items-center">
-    <button
-      onClick={handleSubmit}
-      className="w-40 sm:w-auto px-4 py-2 bg-blue-600 font-semibold text-white rounded hover:bg-blue-700 text-sm sm:text-base"
-    >
-      Submit Array
-    </button>
-    <button
-      onClick={startBubbleSort}
-      className="w-40 sm:w-auto px-4 py-2 bg-orange-600 font-semibold text-white rounded hover:bg-orange-700 text-sm sm:text-base"
-    >
-      Start Sorting
-    </button>
-  </div>
-
-  {/* Array Display */}
-  <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-10 px-2 w-full">
-    {arr.map((val, index) => (
-      <div key={index} className="flex flex-col items-center relative w-[3.5rem] sm:w-20">
-        {/* Left Arrow */}
-        <div className="h-8 flex justify-center relative w-full">
-          {index === leftIndex && (
-            <div className="absolute top-0 flex flex-col items-center">
-              <span className="text-white text-[0.6rem] sm:text-xs">leftIndex</span>
-              <FaArrowDown size={14} color="green" />
+        {/* Information and Code Sections */}
+        <div className="w-full max-w-3xl mb-8 space-y-4">
+          {/* Algorithm Info */}
+          {showInfo && (
+            <div className="backdrop-blur-sm bg-gray-900/70 border border-gray-800 rounded-xl p-4 w-full overflow-x-auto">
+              <h3 className="text-lg font-medium text-emerald-400 mb-3">About Bubble Sort</h3>
+              <div className="text-gray-300 text-sm whitespace-pre-line">
+                {algorithmInfo}
+              </div>
+            </div>
+          )}
+          
+          {/* Code Section */}
+          {showCode && (
+            <div className="backdrop-blur-sm bg-gray-900/70 border border-gray-800 rounded-xl p-4 w-full overflow-x-auto">
+              <h3 className="text-lg font-medium text-emerald-400 mb-3">Pseudo Code</h3>
+              <pre className="text-gray-300 font-mono text-sm">
+                {bubbleSortCode}
+              </pre>
             </div>
           )}
         </div>
 
-        {/* Value Box */}
-        <span
-          className={`rounded shadow bg-gray-200 w-12 h-12 sm:w-16 sm:h-16 text-base sm:text-xl font-bold flex items-center justify-center ${
-            sortedArrayIndex.includes(val) ? 'bg-green-500 text-white' : ''
-          }`}
-        >
-          {val}
-        </span>
-
-        {/* Right Arrow */}
-        <div className="h-8 flex justify-center relative w-full">
-          {index === rightIndex && (
-            <div className="absolute bottom-0 flex flex-col items-center">
-              <FaArrowUp size={14} color="blue" />
-              <span className="text-white text-[0.6rem] sm:text-xs">rightIndex</span>
+        {/* Visualization Section */}
+        {arr.length > 0 && (
+          <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
+            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+              Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
+            </h3>
+            
+            {/* Legend */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-emerald-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Sorted Elements</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Left Element (j)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-purple-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Right Element (j+1)</span>
+              </div>
             </div>
-          )}
-        </div>
+            
+            {/* Array visualization */}
+            <div className="flex flex-wrap justify-center gap-3 mt-8 pb-20 relative">
+              {arr.map((val, index) => {
+                const isSorted = sortedArrayIndex.includes(index);
+                const isLeft = index === leftIndex;
+                const isRight = index === rightIndex;
+                
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center gap-1 relative my-8"
+                  >
+                    {/* Index number */}
+                    <div className="text-gray-500 text-xs mb-1">{index}</div>
+                    
+                    {/* Left Comparison Indicator */}
+                    {isLeft && (
+                      <div className="absolute -top-14 flex flex-col items-center">
+                        <span className="text-blue-400 text-sm font-medium mb-1">j</span>
+                        <div className="h-8 w-px bg-gradient-to-b from-blue-500 to-transparent"></div>
+                        <ArrowDownCircle size={20} className="text-blue-500" />
+                      </div>
+                    )}
+                    
+                    {/* Right Comparison Indicator */}
+                    {isRight && (
+                      <div className="absolute -top-14 flex flex-col items-center">
+                        <span className="text-purple-400 text-sm font-medium mb-1">j+1</span>
+                        <div className="h-8 w-px bg-gradient-to-b from-purple-500 to-transparent"></div>
+                        <ArrowDownCircle size={20} className="text-purple-500" />
+                      </div>
+                    )}
+
+                    {/* Value Box with glass effect */}
+                    <div
+                      className={`relative rounded-lg backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
+                        ${isSorted
+                            ? "bg-emerald-500/30 border-2 border-emerald-500 text-emerald-300 shadow-emerald-500/30"
+                            : isLeft
+                                ? "bg-blue-500/30 border-2 border-blue-500 text-blue-300 shadow-blue-500/30"
+                                : isRight
+                                    ? "bg-purple-500/30 border-2 border-purple-500 text-purple-300 shadow-purple-500/30"
+                                    : "bg-gray-800/50 border border-gray-700 text-gray-300"
+                        }`}
+                    >
+                      {/* Inner glow/pulse effect when swapping */}
+                      {(isLeft || isRight) && !isSorted && (
+                        <div className="absolute inset-0 bg-blue-500/10 animate-pulse rounded-lg"></div>
+                      )}
+                      <span className="relative z-10">{val}</span>
+                    </div>
+                    
+                    {/* Connection line between compared elements */}
+                    {isLeft && arr[index + 1] !== undefined && index + 1 === rightIndex && (
+                      <div className="absolute top-1/2 left-[calc(100%_-_7px)] w-[calc(100%_+_6px)] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
-    ))}
-  </div>
 
-  <Toaster />
-</div>
-
-//     <div className="flex  flex-col gap-5 bg-gray-900 w-screen items-center min-h-screen  overflow-hidden">
-//       <h1 className='text-2xl font-bold text-white text-center mt-5'>Bubble Sort</h1>
-//       <input
-//         type="number"
-//         className="w-64 p-2 border-2 rounded bg-gray-800 text-white placeholder-white"
-//         placeholder="Enter the size of the first array"
-//         onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-//       />
-//       <input
-//         type="text"
-//         className="w-80 p-2 border-2 bg-gray-800 rounded  text-white placeholder-white"
-//         placeholder="Enter array elements of 1st array separated by space"
-//         value={inputValue}
-//         onChange={handleInput}
-//       />
-
-// <div className="flex gap-4">
-//           <button
-//             onClick={handleSubmit}
-//             className="px-4 py-2 bg-blue-600 font-semibold text-white rounded hover:bg-blue-700"
-//           >
-//             Submit Array
-//           </button>
-//           <button
-//             onClick={startBubbleSort}
-//             className="px-4 py-2 bg-orange-600 font-semibold text-white rounded hover:bg-orange-700"
-//           >
-//             Start Sorting
-//           </button>
-//         </div>
-
-
-//         <div className="flex flex-row gap-8 mt-16 self-center">
-//   {arr.map((val, index) => (
-//     <div key={index} className="p-2 flex flex-col gap-[20px] items-center relative ">
-//       <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-//         {index === leftIndex && (
-//           <div className="absolute ml-9 gap-10">
-//             <span className='text-white'>leftIndex</span>
-//             <FaArrowDown size={20} color="green" />
-//           </div>
-//         )}
-//       </div>
-//       <span
-//       className={`rounded shadow bg-gray-200 w-16 h-16 text-2xl font-bold flex items-center justify-center ${
-//           sortedArrayIndex.includes(val) ? ' bg-green-500 text-white' : ''
-//         }`}>
-//         {val}
-//       </span>
-//       <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-//         {index === rightIndex && (
-//           <div className="absolute ml-12 gap-3">
-//             <FaArrowUp size={20} color="blue" />
-//             <span className='text-white'>RightIndex</span>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   ))}
-// </div>
-
-
-        
-//       <Toaster />
-//     </div>
+      {/* Custom styled toast container */}
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1f2937',
+            color: '#f3f4f6',
+            borderRadius: '8px',
+          },
+        }}
+      />
+    </div>
   );
 };
 

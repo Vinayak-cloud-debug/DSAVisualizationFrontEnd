@@ -1,286 +1,473 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { ArrowDownCircle, Code, RefreshCw, PlayCircle, Info, Target } from 'lucide-react';
+
 
 const SelectionSort = () => {
   const [arr, setArr] = useState([]);
   const [arrSize, setArrSize] = useState(0);
   const [inputValue, setInputValue] = useState('');
-  const [sortedArrayIndex,setsortedArrayIndex] = useState([])
-  const [leftIndex, setLeftIndex] = useState(0);
-  const [rightIndex, setRightIndex] = useState(0);
-  const [miniInd,setMiniInd] = useState(0);
+  const [sortedArrayIndex, setSortedArrayIndex] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [compareIndex, setCompareIndex] = useState(-1);
+  const [minIndex, setMinIndex] = useState(-1);
+  const [isSorting, setIsSorting] = useState(false);
+  const [showCode, setShowCode] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [particles, setParticles] = useState([]);
 
-
-  // Log low, mid, high to debug
+  // Generate random particles for the background
   useEffect(() => {
-  }, [leftIndex, rightIndex,arr,sortedArrayIndex,miniInd]);
+    const particlesArray = Array.from({ length: 40 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      speed: Math.random() * 0.3 + 0.1,
+      opacity: Math.random() * 0.4 + 0.1,
+      color: `rgba(${Math.random() * 50 + 100}, ${Math.random() * 50 + 100}, ${Math.random() * 255}, ${Math.random() * 0.3 + 0.1})`
+    }));
+    setParticles(particlesArray);
+  }, []);
 
-  const handleInput = (e) => setInputValue(e.target.value);
+  // Animation frame for particles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setParticles(prev => 
+        prev.map(particle => ({
+          ...particle,
+          y: (particle.y + particle.speed) % 100
+        }))
+      );
+    }, 50);
+    
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleSubmit = () => {
-    const elements = inputValue.trim().split(/\s+/).map(Number);
-    if (elements.length !== arrSize) {
-      alert(`Please enter exactly ${arrSize} elements.`);
+  const handleInput = () => setInputValue(e.target.value);
+
+  const generateRandomArray = () => {
+    if (!arrSize || arrSize <= 0 || arrSize > 15) {
+      toast.error("Please enter a valid array size between 1 and 15");
       return;
     }
-    setArr(elements);
+    
+    // Generate random array
+    const randomArray = Array.from({ length: arrSize }, () => 
+      Math.floor(Math.random() * 100)
+    );
+    
+    setArr(randomArray);
+    setInputValue(randomArray.join(' '));
+    setSortedArrayIndex([]);
+    setCurrentIndex(-1);
+    setCompareIndex(-1);
+    setMinIndex(-1);
+    toast.success("Random array generated!");
   };
 
-  // Merge Sort recursive function
-  const handleSelectionSort = async () => {
-    
-    setsortedArrayIndex([])
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-    setLeftIndex(0);
-    setRightIndex(0);
-    setMiniInd(0);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-
-    let newArr = [...arr]
-    for(let i=0; i<arrSize-1; i++){
-
-        let minIndex = i;
-      
-        setLeftIndex(i);
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-        setMiniInd(i);
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-        for(let j=i+1; j<arrSize; j++){
-
-
-            setRightIndex(j);
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-
-            
-            if(newArr[j] < newArr[minIndex]){
-                minIndex = j;
-                
-                setMiniInd(minIndex)
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-            }
-        }
-
-
-        
-        setMiniInd(minIndex)
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Visualize delay
-    
-
-
-        // Swap the found minimum element with the leftmost unsorted element
-        if (minIndex !== i) {
-          let temp = newArr[minIndex];
-          newArr[minIndex] = newArr[i];
-          newArr[i] = temp;
-
-          setArr([...newArr]); // Update the state with the swapped array
-          await new Promise((resolve) => setTimeout(resolve, 2000)); // Visualize delay
-        }
-
-        
-
-        setsortedArrayIndex((prev) => {
-          const updatedArray = [...prev, newArr[i]];
-          console.log(updatedArray); // Log the updated state here
-          return updatedArray;
-        });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-
+  const handleSubmit = () => {
+    if (!arrSize || arrSize <= 0) {
+      toast.error("Please enter a valid array size");
+      return;
     }
-
-    setsortedArrayIndex((prev) => {
-      const updatedArray = [...prev, newArr[arrSize-1]];
-      console.log(updatedArray); // Log the updated state here
-      return updatedArray;
-    });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-
-    setArr([...newArr])
+    
+    const elements = inputValue.trim().split(/\s+/).map(Number);
+    
+    if (elements.some(isNaN)) {
+      toast.error("Please enter valid numbers");
+      return;
+    }
+    
+    if (elements.length !== arrSize) {
+      toast.error(`Please enter exactly ${arrSize} elements.`);
+      return;
+    }
+    
+    setArr(elements);
+    setSortedArrayIndex([]);
+    setCurrentIndex(-1);
+    setCompareIndex(-1);
+    setMinIndex(-1);
+    toast.success("Array initialized successfully!");
   };
 
+  const handleSelectionSort = async () => {
+    let newArr = [...arr];
+    
+    for (let i = 0; i < arrSize - 1; i++) {
+      let minIndex = i;
+      
+      setCurrentIndex(i);
+      setMinIndex(i);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      for (let j = i + 1; j < arrSize; j++) {
+        setCompareIndex(j);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        
+        if (newArr[j] < newArr[minIndex]) {
+          minIndex = j;
+          setMinIndex(minIndex);
+          await new Promise((resolve) => setTimeout(resolve, 800));
+        }
+      }
+
+      setMinIndex(minIndex);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      // Swap the found minimum element with the first element
+      if (minIndex !== i) {
+        let temp = newArr[minIndex];
+        newArr[minIndex] = newArr[i];
+        newArr[i] = temp;
+
+        setArr([...newArr]);
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+      }
+
+      // Mark as sorted
+      setSortedArrayIndex(prev => [...prev, i]);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+    }
+    
+    // Mark the last element as sorted too
+    setSortedArrayIndex(prev => [...prev, arrSize - 1]);
+    
+    setArr([...newArr]);
+  };
 
   const startSelectionSort = async () => {
     if (!arr.length) {
-      toast.error("Please submit the array first!");
+      toast.error("Please submit an array first!");
       return;
     }
-    await handleSelectionSort(); // Start sorting from the full array
-    setLeftIndex(-1)
-    setRightIndex(-1)
-    setMiniInd(-1)
+    
+    setIsSorting(true);
+    setSortedArrayIndex([]);
+    setCurrentIndex(-1);
+    setCompareIndex(-1);
+    setMinIndex(-1);
+    
+    await handleSelectionSort();
+    
+    setCurrentIndex(-1);
+    setCompareIndex(-1);
+    setMinIndex(-1);
     toast.success("Selection Sort Completed!");
+    setIsSorting(false);
   };
 
-
+  const resetArray = () => {
+    if (isSorting) return;
+    
+    setArr([]);
+    setInputValue('');
+    setSortedArrayIndex([]);
+    setCurrentIndex(-1);
+    setCompareIndex(-1);
+    setMinIndex(-1);
+    toast.success("Reset successful!");
+  };
 
   return (
-    <div className="flex flex-col gap-5 bg-gray-900 items-center w-screen min-h-screen overflow-hidden">
-  <h1 className="text-2xl font-bold mt-5 text-white text-center">Selection Sort</h1>
-
-  {/* Input Section */}
-  <input
-    type="number"
-    className="w-56 p-2 border rounded bg-gray-900 text-white placeholder-white"
-    placeholder="Enter the size of the first array"
-    onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-  />
-  <input
-    type="text"
-    className="w-80 p-2 border rounded bg-gray-900 text-white placeholder-white"
-    placeholder="Enter array elements of 1st array separated by space"
-    value={inputValue}
-    onChange={handleInput}
-  />
-
-  <div className="flex gap-4 mt-4">
-    <button
-      onClick={handleSubmit}
-      className="px-4 py-2 bg-blue-600 font-semibold text-white rounded hover:bg-blue-700"
-    >
-      Submit Array
-    </button>
-    <button
-      onClick={startSelectionSort}
-      className="px-4 py-2 bg-orange-600 font-semibold text-white rounded hover:bg-orange-700"
-    >
-      Start Sorting
-    </button>
-  </div>
-
-  {/* Array Visualization */}
-  <div className="flex flex-row gap-8 mt-16 self-center">
-    {arr.map((val, index) => (
-      <div key={index} className="p-2 flex flex-col gap-[20px] items-center relative">
-        
-        {/* Left Index Indicator */}
-        <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-          {index === leftIndex && (
-            <div className="absolute ml-9 gap-10">
-              <span className="text-white">leftIndex</span>
-              <FaArrowDown size={20} color="green" />
-            </div>
-          )}
-        </div>
-
-        {/* Minimum Element Indicator */}
-        <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-          {index === miniInd && (
-            <div className="absolute ml-9 gap-10">
-              <span className="text-white">MinEle</span>
-              <FaArrowDown size={20} color="green" />
-            </div>
-          )}
-        </div>
-
-        {/* Array Element Box */}
-        <span
-          className={`rounded shadow bg-gray-200 text-2xl w-16 h-16 font-bold flex items-center justify-center ${
-            sortedArrayIndex.includes(val) ? "bg-green-500 text-white" : ""
-          }`}
-        >
-          {val}
-        </span>
-
-        {/* Right Index Indicator */}
-        <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-          {index === rightIndex && (
-            <div className="absolute ml-12 gap-3">
-              <FaArrowUp size={20} color="blue" />
-              <span className="text-white">RightIndex</span>
-            </div>
-          )}
-        </div>
-      </div>
-    ))}
-  </div>
-
-  {/* Toaster for notifications */}
-  <Toaster />
-</div>
-
-  //   <div className="flex  flex-col gap-5 bg-gray-900 items-center w-screen min-h-screen  overflow-hidden">
-  //     <h1 className='text-2xl font-bold mt-5 text-white text-center'>Selection Sort</h1>
-  //     <input
-  //       type="number"
-  //       className="w-56 p-2 border rounded bg-gray-900 text-white placeholder-white"
-  //       placeholder="Enter the size of the first array"
-  //       onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
-  //     />
-  //     <input
-  //       type="text"
-  //       className="w-80 p-2 border rounded bg-gray-900 text-white placeholder-white"
-  //       placeholder="Enter array elements of 1st array separated by space"
-  //       value={inputValue}
-  //       onChange={handleInput}
-  //     />
-
-  // <div className="flex gap-4">
-  //         <button
-  //           onClick={handleSubmit}
-  //           className="px-4 py-2 bg-blue-600 font-semibold text-white rounded hover:bg-blue-700"
-  //         >
-  //           Submit Array
-  //         </button>
-  //         <button
-  //           onClick={startSelectionSort}
-  //           className="px-4 py-2 bg-orange-600 font-semibold text-white rounded hover:bg-orange-700"
-  //         >
-  //           Start Sorting
-  //         </button>
-  // </div>
-
-  //     <div className="flex flex-row gap-8 mt-16 self-center">
-  //       {arr.map((val, index) => (
-  //         <div key={index} className="p-2 flex flex-col gap-[20px] items-center relative ">
-  //           <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-  //             {index === leftIndex && (
-  //               <div className="absolute ml-9 gap-10">
-  //                 <span className='text-white'>leftIndex</span>
-  //                 <FaArrowDown size={20} color="green" />
-  //               </div>
-  //             )}
-  //           </div>
-
-  //           <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-  //             {index === miniInd && (
-  //               <div className="absolute ml-9 gap-10">
-  //                 <span className='text-white'>MinEle</span>
-  //                 <FaArrowDown size={20} color="green" />
-  //               </div>
-  //             )}
-  //           </div>
-
-  //           <span
-  //           className={`rounded shadow bg-gray-200 text-2xl w-16 h-16 font-bold flex items-center justify-center ${
-  //               sortedArrayIndex.includes(val) ? ' bg-green-500 text-white' : ''
-  //             }`}>
-  //             {val}
-  //           </span>
-  //           <div style={{ height: "40px", width: "40px" }} className="flex justify-center">
-  //             {index === rightIndex && (
-  //               <div className="absolute ml-12 gap-3">
-  //                 <FaArrowUp size={20} color="blue" />
-  //                 <span className='text-white'>RightIndex</span>
-  //               </div>
-  //             )}
-  //           </div>
-  //         </div>
-  //       ))}
-  //     </div>
+    <div className="relative flex flex-col bg-gray-950  min-h-screen w-full px-4 py-8 overflow-hidden">
+      {/* Background particles */}
+      {particles.map((particle, i) => (
+        <div 
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            background: particle.color,
+            filter: 'blur(1px)'
+          }}
+        />
+      ))}
       
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
+      
+      {/* Content container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+        {/* Header with animated border */}
+        <div className="relative mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-500 to-indigo-600">
+            Selection Sort Algorithm
+          </h1>
+          <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full"></div>
+          <p className="text-gray-400 text-center mt-3 max-w-xl">
+            Visualize how selection sort finds the minimum element in each pass
+          </p>
+        </div>
 
-  //     <Toaster />
-  //   </div>
+        {/* Input Section - Glass morphism card */}
+        <div className="backdrop-blur-sm bg-gray-900/50 border border-gray-800 rounded-xl p-6 w-full max-w-3xl mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-gray-300 text-sm font-medium">Array Size <span className="text-gray-500">(max 15)</span></label>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  max="15"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                  placeholder="Enter size"
+                  onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
+                  disabled={isSorting}
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-gray-300 text-sm font-medium">Array Elements</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                  placeholder="Enter elements separated by space (e.g., 42 17 8 23 5)"
+                  value={inputValue}
+                  onChange={handleInput}
+                  disabled={isSorting}
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 mt-6">
+            <button
+              onClick={handleSubmit}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-700 hover:from-violet-500 hover:to-indigo-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-violet-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} className={isSorting ? "animate-spin" : ""} />
+              Initialize Array
+            </button>
+            
+            <button
+              onClick={generateRandomArray}
+              disabled={isSorting || !arrSize}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-blue-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Random Array
+            </button>
+            
+            <button
+              onClick={startSelectionSort}
+              disabled={isSorting || arr.length === 0}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
+            >
+              <PlayCircle size={18} />
+              {isSorting ? "Sorting..." : "Start Sorting"}
+            </button>
+            
+            <button
+              onClick={resetArray}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Reset
+            </button>
+            
+            <div className="flex gap-2 ml-auto">
+              <button
+                onClick={() => setShowInfo(!showInfo)}
+                className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium flex items-center gap-2 transition-all"
+              >
+                <Info size={18} />
+                {showInfo ? "Hide Info" : "Algorithm Info"}
+              </button>
+              
+              <button
+                onClick={() => setShowCode(!showCode)}
+                className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium flex items-center gap-2 transition-all"
+              >
+                <Code size={18} />
+                {showCode ? "Hide Code" : "Show Code"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Information and Code Sections */}
+        <div className="w-full max-w-3xl mb-8 space-y-4">
+          {/* Algorithm Info */}
+          {showInfo && (
+            <div className="backdrop-blur-sm bg-gray-900/70 border border-gray-800 rounded-xl p-4 w-full overflow-x-auto">
+              <h3 className="text-lg font-medium text-violet-400 mb-3">About Selection Sort</h3>
+              <div className="text-gray-300 text-sm whitespace-pre-line">
+                Selection Sort works by repeatedly finding the minimum element from the unsorted part of the array
+                and putting it at the beginning of the unsorted section.
+                
+                Time Complexity:
+                • Best Case: O(n²)
+                • Average Case: O(n²)
+                • Worst Case: O(n²)
+                
+                Space Complexity: O(1) - only requires a constant amount of additional memory
+                
+                Selection Sort is simple but inefficient for large arrays. It makes the minimum
+                number of swaps among basic sorting algorithms (at most n-1 swaps),
+                which can be useful when memory write operations are costly.
+              </div>
+            </div>
+          )}
+          
+          {/* Code Section */}
+          {showCode && (
+            <div className="backdrop-blur-sm bg-gray-900/70 border border-gray-800 rounded-xl p-4 w-full overflow-x-auto">
+              <h3 className="text-lg font-medium text-violet-400 mb-3">Pseudo Code</h3>
+              <pre className="text-gray-300 font-mono text-sm">
+{`function selectionSort(arr):
+    n = arr.length
+    
+    // Traverse through all array elements
+    for i from 0 to n-1:
+        // Find the minimum element in the unsorted array
+        minIndex = i
+        
+        for j from i+1 to n:
+            if arr[j] < arr[minIndex]:
+                minIndex = j
+                
+        // Swap the found minimum element with the first element
+        if minIndex != i:
+            swap arr[minIndex] and arr[i]
+            
+    return arr`}
+              </pre>
+            </div>
+          )}
+        </div>
+
+        {/* Visualization Section */}
+        {arr.length > 0 && (
+          <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
+            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
+              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+              Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
+            </h3>
+            
+            {/* Legend */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-emerald-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Sorted Elements</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Current Index (i)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-purple-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Minimum Element</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-indigo-500 rounded"></div>
+                <span className="text-gray-300 text-xs">Compare Index (j)</span>
+              </div>
+            </div>
+            
+            {/* Array visualization */}
+            <div className="flex flex-wrap justify-center gap-3 mt-8 pb-20 relative">
+              {arr.map((val, index) => {
+                const isSorted = sortedArrayIndex.includes(index);
+                const isCurrentIndex = index === currentIndex;
+                const isCompareIndex = index === compareIndex;
+                const isMinIndex = index === minIndex;
+                
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center gap-1 relative my-8"
+                  >
+                    {/* Index number */}
+                    <div className="text-gray-500 text-xs mb-1">{index}</div>
+                    
+                    {/* Current Index Indicator */}
+                    {isCurrentIndex && (
+                      <div className="absolute -top-14 flex flex-col items-center">
+                        <span className="text-blue-400 text-sm font-medium mb-1">i</span>
+                        <div className="h-8 w-px bg-gradient-to-b from-blue-500 to-transparent"></div>
+                        <ArrowDownCircle size={20} className="text-blue-500" />
+                      </div>
+                    )}
+                    
+                    {/* Min Index Indicator */}
+                    {isMinIndex && !isCurrentIndex && (
+                      <div className="absolute -top-14 flex flex-col items-center">
+                        <span className="text-purple-400 text-sm font-medium mb-1">min</span>
+                        <div className="h-8 w-px bg-gradient-to-b from-purple-500 to-transparent"></div>
+                        <Target size={20} className="text-purple-500" />
+                      </div>
+                    )}
+                    
+                    {/* Compare Index Indicator */}
+                    {isCompareIndex && (
+                      <div className="absolute -top-14 flex flex-col items-center">
+                        <span className="text-indigo-400 text-sm font-medium mb-1">j</span>
+                        <div className="h-8 w-px bg-gradient-to-b from-indigo-500 to-transparent"></div>
+                        <ArrowDownCircle size={20} className="text-indigo-500" />
+                      </div>
+                    )}
+
+                    {/* Value Box with glass effect */}
+                    <div
+                      className={`relative rounded-lg backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
+                        ${isSorted
+                            ? "bg-emerald-500/30 border-2 border-emerald-500 text-emerald-300 shadow-emerald-500/30"
+                            : isCurrentIndex
+                                ? "bg-blue-500/30 border-2 border-blue-500 text-blue-300 shadow-blue-500/30"
+                                : isMinIndex
+                                    ? "bg-purple-500/30 border-2 border-purple-500 text-purple-300 shadow-purple-500/30"
+                                    : isCompareIndex
+                                        ? "bg-indigo-500/30 border-2 border-indigo-500 text-indigo-300 shadow-indigo-500/30"
+                                        : "bg-gray-800/50 border border-gray-700 text-gray-300"
+                        }`}
+                    >
+                      {/* Inner glow/pulse effect when comparing */}
+                      {(isMinIndex || isCompareIndex) && !isSorted && (
+                        <div className="absolute inset-0 bg-purple-500/10 animate-pulse rounded-lg"></div>
+                      )}
+                      <span className="relative z-10">{val}</span>
+                    </div>
+                    
+                    {/* Connection line between current and min indices */}
+                    {isCurrentIndex && minIndex !== currentIndex && (
+                      <div 
+                        className="absolute top-1/2 left-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 z-0"
+                        style={{
+                          width: `calc(50px * ${Math.abs(minIndex - currentIndex)})`
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Custom styled toast container */}
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1f2937',
+            color: '#f3f4f6',
+            borderRadius: '8px',
+          },
+        }}
+      />
+    </div>
   );
 };
 
