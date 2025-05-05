@@ -55,7 +55,7 @@ function App() {
         <Route path='/LeftRotateArray' element = { <LeftRotateArray/>}/>
         <Route path='/SpiralMatrix' element = { <SpiralMatrix/>}/>
         <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
-        <Route path='/Graph' element = {  <Graph/>}/>
+        {/* <Route path='/Graph' element = {  <Graph/>}/> */}
 
 
 
