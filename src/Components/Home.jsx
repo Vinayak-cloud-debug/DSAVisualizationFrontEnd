@@ -243,7 +243,7 @@ const Home = () => {
   const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : graphAlgorithms;
 
   return (
-    <div className="relative bg-gray-950 w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
+    <div className="relative bg-gray-950 scroll-smooth w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
       {/* Background particles */}
       {/* {backgroundParticles.map((particle, i) => (
         <div 
