@@ -136,10 +136,13 @@ const InsertionSort = () => {
     <div className="flex flex-col items-center bg-gray-900 min-h-screen w-full px-4 py-8 text-white bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-500">
+          
+          <h1 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-600">
             Insertion Sort Visualizer
           </h1>
-          <p className="text-gray-400">Watch how elements get inserted into their correct positions</p>
+          <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full"></div>
+
+          <p className="text-gray-400 mt-5">Watch how elements get inserted into their correct positions</p>
         </div>
 
         {/* Control Panel */}
@@ -188,7 +191,7 @@ const InsertionSort = () => {
                 step="100"
                 value={animationSpeed}
                 onChange={(e) => setAnimationSpeed(Number(e.target.value))}
-                className="w-full"
+                className="w-full "
                 disabled={isSorting}
               />
             </label>
@@ -199,7 +202,7 @@ const InsertionSort = () => {
             <button
               onClick={generateRandomArray}
               disabled={isSorting}
-              className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-all shadow-md hover:shadow-cyan-500/30 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-cyan-700 transition-all shadow-md hover:shadow-cyan-500/30 disabled:opacity-50 flex items-center gap-2"
             >
               <RefreshCw size={16} />
               Generate Random
@@ -216,7 +219,7 @@ const InsertionSort = () => {
             <button
               onClick={startInsertionSort}
               disabled={isSorting || arr.length === 0}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-md hover:shadow-emerald-500/30 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-md hover:shadow-emerald-500/30 disabled:opacity-50 flex items-center gap-2"
             >
               {isSorting ? (
                 <>

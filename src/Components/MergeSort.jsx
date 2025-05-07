@@ -372,12 +372,17 @@ const MergeSort = () => {
       </div>
 
       {/* Title with enhanced styling */}
-      <h1 className={`text-5xl font-extrabold ${theme.heading} mt-6 ${theme.glow}`}>
-        Merge Sort Visualization
-      </h1>
-      <p className={`${theme.textSecondary} text-center max-w-lg opacity-80`}>
-        A visual representation of the divide-and-conquer sorting algorithm
-      </p>
+      
+        <div className="relative mb-8 w-[400px] lg:w-[490px] mt-10">
+          <h1 className="text-3xl ml-12  sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
+            Merge Sort Algorithm
+          </h1>
+          <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
+          <p className={`${theme.textSecondary} text-center mt-10 max-w-lg opacity-80`}>
+            A visual representation of the divide-and-conquer sorting algorithm
+          </p>
+        </div>
+      
 
       {/* Input Section with enhanced styling */}
       <div className={`flex flex-col gap-4 w-full max-w-md ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
@@ -574,6 +579,10 @@ const MergeSort = () => {
               <h3 className={`text-xl font-bold ${theme.heading}`}>Merge Sort Algorithm</h3>
               <button 
                 onClick={() => setShowInfoModal(false)}
+
+
+
+
                 className="text-gray-400 hover:text-white"
               >
                 <X size={20} />
