@@ -245,7 +245,7 @@ const Home = () => {
   return (
     <div className="relative bg-gray-950 w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
       {/* Background particles */}
-      {backgroundParticles.map((particle, i) => (
+      {/* {backgroundParticles.map((particle, i) => (
         <div 
           key={i}
           className="absolute rounded-full bg-blue-500"
@@ -258,7 +258,7 @@ const Home = () => {
             filter: 'blur(1px)'
           }}
         />
-      ))}
+      ))} */}
       
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
