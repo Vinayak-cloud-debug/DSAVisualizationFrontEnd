@@ -1,5 +1,5 @@
+import { ArrowDownCircle, Loader2, Play, RefreshCw } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { ArrowDown, ArrowUp, RefreshCw, Play, Loader2 } from 'lucide-react';
 
 const InsertionSort = () => {
   const [arr, setArr] = useState([]);
@@ -8,6 +8,7 @@ const InsertionSort = () => {
   const [sortedArrayIndex, setSortedArrayIndex] = useState([]);
   const [leftIndex, setLeftIndex] = useState(-1);
   const [rightIndex, setRightIndex] = useState(-1);
+  const [nextIndex, setNextIndex] = useState(-1);
   const [isSorting, setIsSorting] = useState(false);
   const [animationSpeed, setAnimationSpeed] = useState(800);
   const [sortingProgress, setSortingProgress] = useState(0);
@@ -44,6 +45,7 @@ const InsertionSort = () => {
   const resetIndices = () => {
     setLeftIndex(-1);
     setRightIndex(-1);
+    setNextIndex(-1);
     setSortedArrayIndex([]);
     setSortingProgress(0);
   };
@@ -73,6 +75,7 @@ const InsertionSort = () => {
     setSortedArrayIndex([newArr[0]]); // First element is already sorted
     await delay(animationSpeed/2);
 
+
     for (let i = 1; i < arrSize; i++) {
       // Current element to be compared
       let current = newArr[i];
@@ -80,13 +83,16 @@ const InsertionSort = () => {
       
       setRightIndex(i);
       await delay(animationSpeed/2);
-      
+
       // Compare current element with sorted portion and move elements
       while (j >= 0 && newArr[j] > current) {
         setLeftIndex(j);
+        setNextIndex(j + 1);
         await delay(animationSpeed);
-        
-        newArr[j + 1] = newArr[j];
+        let temp = newArr[j];
+        newArr[j] = newArr[j+1];
+        newArr[j+1] = temp;
+
         setArr([...newArr]);
         await delay(animationSpeed/2);
         
@@ -103,9 +109,10 @@ const InsertionSort = () => {
       setSortingProgress(Math.round(((i + 1) / arrSize) * 100));
       await delay(animationSpeed);
     }
-    
+
     setLeftIndex(-1);
     setRightIndex(-1);
+    setNextIndex(-1);
     setIsSorting(false);
     showToast("Insertion Sort Completed!", 'success');
   };
@@ -133,7 +140,7 @@ const InsertionSort = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-900 min-h-screen w-full px-4 py-8 text-white bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="flex flex-col items-center bg-gray-950 min-h-screen w-full px-4 py-8 text-white">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           
@@ -146,7 +153,7 @@ const InsertionSort = () => {
         </div>
 
         {/* Control Panel */}
-        <div className="bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+        <div className="bg-gray-900/50 border border-gray-800 rounded-xl shadow-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {/* Array Size Input */}
             <div className="flex flex-col">
@@ -155,7 +162,7 @@ const InsertionSort = () => {
                 type="number"
                 min="1"
                 max="15"
-                className="p-3 border rounded-lg bg-gray-700 border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="p-3 border rounded-lg bg-gray-950 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 placeholder="Size"
                 value={arrSize}
                 onChange={handleSizeChange}
@@ -168,7 +175,7 @@ const InsertionSort = () => {
               <label className="text-gray-300 mb-2 text-sm">Array Elements (space separated)</label>
               <input
                 type="text"
-                className="p-3 border rounded-lg bg-gray-700 border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="p-3 border rounded-lg bg-gray-950 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 placeholder="Enter numbers separated by spaces"
                 value={inputValue}
                 onChange={handleInput}
@@ -178,7 +185,7 @@ const InsertionSort = () => {
           </div>
           
           {/* Animation Speed Control */}
-          <div className="mb-6">
+          <div className="mb-6 ">
             <label className="flex flex-col gap-2">
               <div className="flex justify-between">
                 <span className="text-gray-300 text-sm">Animation Speed</span>
@@ -219,7 +226,7 @@ const InsertionSort = () => {
             <button
               onClick={startInsertionSort}
               disabled={isSorting || arr.length === 0}
-              className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-md hover:shadow-emerald-500/30 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-gradient-to-r from-red-700 to-orange-600 hover:from-orange-500 hover:to-red-700 font-medium  text-white rounded-lg hover:bg-emerald-700 transition-all shadow-md hover:shadow-emerald-500/30 disabled:opacity-50 flex items-center gap-2"
             >
               {isSorting ? (
                 <>
@@ -231,6 +238,8 @@ const InsertionSort = () => {
                   <Play size={16} />
                   Start Sorting
                 </>
+
+                
               )}
             </button>
           </div>
@@ -238,7 +247,7 @@ const InsertionSort = () => {
         
         {/* Progress Bar */}
         {isSorting && (
-          <div className="w-full bg-gray-700 rounded-full h-2.5 mb-6 overflow-hidden">
+          <div className="w-full bg-gray-900/50 border border-gray-800 rounded-full h-2.5 mb-6 overflow-hidden">
             <div 
               className="bg-gradient-to-r from-cyan-500 to-emerald-500 h-2.5 rounded-full transition-all duration-300"
               style={{ width: `${sortingProgress}%` }}
@@ -247,7 +256,7 @@ const InsertionSort = () => {
         )}
 
         {/* Legend */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6 bg-gray-800/70 p-3 rounded-lg">
+        <div className="flex flex-wrap justify-center gap-4 mb-6 bg-gray-900/50 border border-gray-800 p-3 rounded-lg">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-emerald-500 rounded"></div>
             <span className="text-sm">Sorted</span>
@@ -260,49 +269,62 @@ const InsertionSort = () => {
             <div className="w-4 h-4 bg-yellow-500 rounded"></div>
             <span className="text-sm">Right Index</span>
           </div>
+
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-red-700 rounded"></div>
+            <span className="text-sm">Next Index</span>
+          </div>
         </div>
 
         {/* Array Visualization */}
-        <div className="flex flex-wrap justify-center gap-6 p-8 bg-gray-800/50 rounded-xl min-h-48 backdrop-blur-sm shadow-xl">
+        <div className="flex flex-wrap justify-center gap-6 p-8 bg-gray-900/50 border border-gray-800 rounded-xl min-h-72 backdrop-blur-sm shadow-xl">
           {arr.length === 0 ? (
             <div className="text-gray-400 italic">No array to visualize. Generate or submit an array to begin.</div>
           ) : (
             arr.map((val, index) => (
-              <div key={index} className="flex flex-col items-center relative">
-                {/* Top pointer indicator */}
-                <div className="h-10 relative w-full">
-                  {index === leftIndex && (
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                      <ArrowDown className="text-cyan-500" />
-                      <span className="text-xs text-cyan-500">Left</span>
-                    </div>
-                  )}
-                </div>
+              <div key={index} className="flex mt-24 flex-col items-center relative">
+        {/* Top pointer indicator - combined for better placement */}
+        {(index === leftIndex || index === rightIndex || index === nextIndex) && (
+          <div className="absolute -top-24 flex flex-col items-center">
+            <span
+              className={`text-sm font-medium mb-1 ${
+                index === leftIndex ? "text-blue-400" : index === rightIndex ? "text-indigo-400": "text-red-600"
+              }`}
+            >
+              {index === leftIndex ? "i" : index === rightIndex ? "j" : "i+1"}
+            </span>
+            <div
+              className={`h-8 w-px ${
+                index === leftIndex
+                  ? "bg-gradient-to-b from-blue-500 to-transparent"
+                  : index === rightIndex ?  "bg-gradient-to-b from-indigo-500 to-transparent": index === nextIndex ? "bg-gradient-to-b from-red-700 to-transparent" : "bg-gradient-to-b from-gray-700 to-transparent"
+              }`}
+            ></div>
+            <ArrowDownCircle
+              size={20}
+              className={`${
+                index === leftIndex ? "text-blue-500" : index == rightIndex ? "text-indigo-500": "text-red-700"
+              }`}
+            />
+          </div>
+
+        )}
+
+
 
                 {/* Array Element Box */}
                 <div
-                  className={`rounded-lg shadow-lg ${getElementSize()} flex items-center justify-center text-lg font-bold transition-all duration-300 ${
-                    sortedArrayIndex.includes(val) 
-                      ? 'bg-emerald-600 text-white' 
-                      : index === leftIndex 
-                        ? 'bg-cyan-700 text-white' 
-                        : index === rightIndex 
-                          ? 'bg-yellow-600 text-white' 
-                          : 'bg-gray-700 text-white'
+                  className={`rounded-lg  animate-pulse  shadow-lg ${getElementSize()} flex items-center justify-center text-lg font-bold transition-all duration-300 ${
+                    sortedArrayIndex.includes(val)
+                      ? "bg-emerald-500/30 border-2 border-emerald-500 text-emerald-300 shadow-emerald-500/30"
+                          : index === nextIndex
+                            ? "bg-red-700/30 border-2 border-red-700 text-red-300 shadow-red-500/30"
+                              : "bg-gray-800/30 border-2 border-gray-700 text-gray-300 shadow-gray-500/30"
                   }`}
                 >
                   {val}
                 </div>
 
-                {/* Bottom pointer indicator */}
-                <div className="h-10 relative w-full">
-                  {index === rightIndex && (
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-                      <span className="text-xs text-yellow-500">Right</span>
-                      <ArrowUp className="text-yellow-500" />
-                    </div>
-                  )}
-                </div>
               </div>
             ))
           )}

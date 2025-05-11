@@ -18,31 +18,31 @@ const BSAlgo = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
 
-  // Generate random particles for the background
-  useEffect(() => {
-    const particles = Array.from({ length: 40 }, () => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      speed: Math.random() * 0.3 + 0.1,
-      opacity: Math.random() * 0.4 + 0.1
-    }));
-    setBackgroundParticles(particles);
-  }, []);
+  // // Generate random particles for the background
+  // useEffect(() => {
+  //   const particles = Array.from({ length: 40 }, () => ({
+  //     x: Math.random() * 100,
+  //     y: Math.random() * 100,
+  //     size: Math.random() * 3 + 1,
+  //     speed: Math.random() * 0.3 + 0.1,
+  //     opacity: Math.random() * 0.4 + 0.1
+  //   }));
+  //   setBackgroundParticles(particles);
+  // }, []);
 
-  // Animation frame for particles
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBackgroundParticles(prev => 
-        prev.map(particle => ({
-          ...particle,
-          y: (particle.y + particle.speed) % 100
-        }))
-      );
-    }, 50);
+  // // Animation frame for particles
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setBackgroundParticles(prev => 
+  //       prev.map(particle => ({
+  //         ...particle,
+  //         y: (particle.y + particle.speed) % 100
+  //       }))
+  //     );
+  //   }, 50);
     
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleInputChange = (e) => setInputValue(e.target.value);
 
@@ -215,7 +215,7 @@ const BSAlgo = () => {
   return (
     <div className="relative flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
       {/* Background particles */}
-      {backgroundParticles.map((particle, i) => (
+      {/* {backgroundParticles.map((particle, i) => (
         <div 
           key={i}
           className="absolute rounded-full bg-blue-600"
@@ -229,7 +229,7 @@ const BSAlgo = () => {
           }}
         />
       ))}
-      
+       */}
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
       
@@ -356,7 +356,7 @@ const BSAlgo = () => {
               Visualization {isSearching && <span className="text-purple-400 ml-2">(in progress...)</span>}
             </h3>
             
-            <div className="flex flex-wrap justify-center gap-4 mt-8 pb-20 relative">
+            <div className="flex flex-row flex-wrap justify-center gap-4  mt-8 relative">
               {/* Legend */}
               <div className="absolute top-0 right-0 flex flex-col gap-2 bg-gray-900/70 p-3 rounded-lg border border-gray-800">
                 <div className="flex items-center gap-2">
@@ -377,7 +377,7 @@ const BSAlgo = () => {
               {arr.map((val, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-1 relative my-8"
+                  className="flex flex-col  items-center gap-1 relative my-28"
                 >
                   {/* Top Pointer (Mid) */}
                   {index === Mid && (
@@ -451,7 +451,7 @@ const BSAlgo = () => {
       <Toaster 
         position="bottom-center"
         toastOptions={{
-          duration: 3000,
+          duration: 500,
           style: {
             background: '#1f2937',
             color: '#f3f4f6',

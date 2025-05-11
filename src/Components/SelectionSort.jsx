@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { ArrowDownCircle, Code, RefreshCw, PlayCircle, Info, Target } from 'lucide-react';
+import { ArrowDownCircle, Code, RefreshCw, PlayCircle,Loader2, Info, Target } from 'lucide-react';
 
 
 const SelectionSort = () => {
@@ -398,7 +398,7 @@ const SelectionSort = () => {
                         <ArrowDownCircle size={20} className="text-blue-500" />
                       </div>
                     )}
-                    
+
                     {/* Min Index Indicator */}
                     {isMinIndex && !isCurrentIndex && (
                       <div className="absolute -top-14 flex flex-col items-center">
