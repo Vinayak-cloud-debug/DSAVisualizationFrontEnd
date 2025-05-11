@@ -24,6 +24,7 @@ import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import ResetPassword from './pages/resetPassword/ResetPassword'
 import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
 import Graph from './Components/Graph'
+import MaximumSubarraySumWithSizeK from './Components/MaximumSubarraySumWithSizeK.jsx'
   
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
         <Route path='/SpiralMatrix' element = { <SpiralMatrix/>}/>
         <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
         <Route path='/Graph' element = {  <Graph/>}/>
+        <Route path='/MaximumSubarraySumWithSizeK' element = {  <MaximumSubarraySumWithSizeK/>}/>
 
 
 

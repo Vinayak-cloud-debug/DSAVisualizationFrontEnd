@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Code, GitMerge, Shuffle, ArrowDownUp, Filter, Search, 
-         Network, GitBranch, Activity, Navigation, Diamond, Share2 } from 'lucide-react';
+         Network, GitBranch, Activity, Navigation, Diamond, Share2, 
+         Grid2X2,
+         ChartScatter} from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -50,6 +52,11 @@ const Home = () => {
       sessionStorage.setItem('id', id);
       navigate('/Graph');
     }
+    else
+    if(id == 13) {
+      navigate('/MaximumSubarraySumWithSizeK');
+    }
+
   };
 
   const sortingAlgorithms = [
@@ -70,8 +77,27 @@ const Home = () => {
     { id: 12, text: 'Prim\'s Algorithm', icon: <Diamond size={18} /> }
   ];
 
+  
+  const SlidingWindow = [
+    { id: 13, text: 'Maximum Sum of Subarray with Size k', icon: <GitBranch size={18} /> },
+    { id: 14, text: 'Longest Substring without Repeating Characters(Coming Soon..)', icon: <Network size={18} /> },
+    { id: 15, text: 'Maximum Consecutive Ones (Coming Soon..)', icon: <Navigation size={18} /> },
+    { id: 16, text: 'Count Binary Subarrays with Sum (Coming Soon..)', icon: <Share2 size={18} /> },
+    
+  ];
+
+  const GridPaths = [
+    { id: 17, text: 'Maximum Sum Path', icon: <GitBranch size={18} /> },
+    { id: 18, text: 'Minimum Path Sum', icon: <Network size={18} /> },
+    { id: 19, text: 'Count all the Paths in Grid', icon: <Navigation size={18} /> },
+    { id: 20, text: 'Unique Paths', icon: <Share2 size={18} /> },
+    { id: 21, text: 'Shortest Paths in a Grid', icon: <Share2 size={18} /> },
+
+    
+  ];
+
   // Get current algorithm set based on active category
-  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : graphAlgorithms;
+  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : activeCategory === 'graph' ? graphAlgorithms : activeCategory === 'slidingWindow' ?  SlidingWindow : GridPaths;
 
   return (
     <div className="relative bg-gray-950 scroll-smooth w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
@@ -108,7 +134,7 @@ const Home = () => {
         </div>
 
         {/* Category Selector Tabs */}
-        <div className="flex items-center justify-center mt-12 mb-8 bg-gray-900/50 p-1 rounded-xl backdrop-blur-sm border border-gray-800">
+        <div className="flex flex-wrap items-center justify-center mt-12 mb-8 bg-gray-900/50 p-1 rounded-xl backdrop-blur-sm border border-gray-800">
           <button 
             onClick={() => setActiveCategory('sorting')}
             className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
@@ -125,12 +151,36 @@ const Home = () => {
             onClick={() => setActiveCategory('graph')}
             className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
               activeCategory === 'graph' 
-                ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
                 : 'text-gray-400 hover:text-gray-200'
             }`}
           >
-            <Network size={18} />
+            <ChartScatter size={18} />
             <span>Graph Algorithms</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveCategory('slidingWindow')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'slidingWindow' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <ArrowDownUp size={18} />
+            <span>Sliding Window</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveCategory('GridPaths')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'GridPaths' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <Grid2X2 size={18} />
+            <span>Grid Paths..Coming Soon</span>
           </button>
         </div>
 
