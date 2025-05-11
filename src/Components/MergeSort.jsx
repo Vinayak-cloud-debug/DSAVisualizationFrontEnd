@@ -341,42 +341,8 @@ const MergeSort = () => {
 
   return (
     <div className={`flex flex-col min-h-screen items-center ${theme.background} gap-6 p-8 ${theme.text} font-mono transition-colors duration-500`}>
-      {/* Theme Toggle and Info Button */}
-      <div className="fixed top-4 right-4 flex gap-2 z-10">
-        <button
-          onClick={() => setShowInfoModal(true)}
-          className={`p-2 rounded-full ${theme.card} ${theme.glow} shadow-lg transition-all duration-300 opacity-80 hover:opacity-100`}
-          aria-label="Show information"
-        >
-          <Info className="h-6 w-6 text-gray-300" />
-        </button>
-        
-        <div className="relative">
-          <button
-            onClick={() => setThemeMenuOpen(!themeMenuOpen)}
-            className={`p-2 rounded-full ${theme.card} ${theme.glow} shadow-lg transition-all duration-300 opacity-80 hover:opacity-100`}
-            aria-label="Toggle theme menu"
-          >
-            <Sparkles className="h-6 w-6 text-amber-300" />
-          </button>
-          
-          {themeMenuOpen && (
-            <div className={`absolute right-0 mt-2 py-2 w-48 ${theme.card} rounded-lg shadow-xl ${theme.glow} z-20`}>
-              {Object.keys(THEMES).map((themeName) => (
-                <button
-                  key={themeName}
-                  onClick={() => setTheme(themeName)}
-                  className={`block w-full text-left px-4 py-2 ${
-                    currentTheme === themeName ? 'bg-gradient-to-r ' + THEMES[themeName].highlight : ''
-                  } hover:bg-gray-800/50 transition-colors`}
-                >
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+      
+      
 
       {/* Title with enhanced styling */}
       
@@ -392,9 +358,9 @@ const MergeSort = () => {
       
 
       {/* Input Section with enhanced styling */}
-      <div className={`flex flex-col gap-4 w-full max-w-xl ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
+      <div className={`flex flex-col flex-wrap gap-4 w-full max-w-lg lg:max-w-xl ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
         {/* Array size input with quick presets */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap flex-col gap-2">
           <div className="flex gap-2 items-center">
             <input
               type="number"
@@ -439,13 +405,13 @@ const MergeSort = () => {
             value={inputValue}
             onChange={handleInput}
           />
-          
+
         </div>
-        <div className="flex gap-4 justify-center">
+        <div className="flex flex-wrap items-center gap-4 justify-center">
         <button
             onClick={generateRandomArray}
             disabled={isSorting || !arrSize}
-            className={`  flex items-center px-6 py-3 gap-2 rounded-md ${theme.secondary} transition opacity-80 hover:opacity-100 disabled:opacity-50`}
+            className={` flex items-center px-6 py-3 gap-2 rounded-md ${theme.secondary} transition opacity-80 hover:opacity-100 disabled:opacity-50`}
             title="Generate random array"
           >
             <Shuffle className="h-4 w-6 " />
@@ -459,7 +425,7 @@ const MergeSort = () => {
             <RefreshCw size={16} />
             Submit Array
           </button>
-          
+
           <button
               onClick={handleMergeSort}
               disabled={isSorting || arr.length === 0}
