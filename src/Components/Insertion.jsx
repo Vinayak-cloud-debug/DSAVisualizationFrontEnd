@@ -277,7 +277,7 @@ const InsertionSort = () => {
         </div>
 
         {/* Array Visualization */}
-        <div className="flex flex-wrap justify-center gap-6 p-8 bg-gray-900/50 border border-gray-800 rounded-xl min-h-72 backdrop-blur-sm shadow-xl">
+        <div className="flex flex-wrap justify-center gap-3 p-8 bg-gray-900/50 border border-gray-800 rounded-xl min-h-72 backdrop-blur-sm shadow-xl">
           {arr.length === 0 ? (
             <div className="text-gray-400 italic">No array to visualize. Generate or submit an array to begin.</div>
           ) : (
