@@ -313,6 +313,7 @@ const InsertionSort = () => {
 
 
                 {/* Array Element Box */}
+                
                 <div
                   className={`rounded-lg  animate-pulse  shadow-lg ${getElementSize()} flex items-center justify-center text-lg font-bold transition-all duration-300 ${
                     sortedArrayIndex.includes(val)
