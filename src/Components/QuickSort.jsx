@@ -66,6 +66,17 @@ const QuickSort = () => {
   };
 
   const partition = async (arr, low, high) => {
+    if (low === high) {
+      setPivotIndex(low);
+      setLowIndex(low);
+      setHighIndex(high);
+      setStatusMessage(`Single element ${arr[low]} is already at correct position`);
+      await delay(speed);
+      setCorrectlyPlacedPivotIndex((prev) => [...prev, low]);
+      await delay(speed);
+      return low;
+    }
+
     let pivot = arr[low];
     let i = low;
     let j = high;
@@ -103,9 +114,7 @@ const QuickSort = () => {
     }
 
 
-    // Place pivot in the correct position
     
-
     setStatusMessage(`Placing pivot ${pivot} at its correct position`);
     [arr[low], arr[j]] = [arr[j], arr[low]];
     setArr([...arr]);
@@ -124,9 +133,9 @@ const QuickSort = () => {
   };
   
   const quickSort = async (array, low, high) => {
-    if (low < high) {
+    if (low <= high) {
       setStatusMessage(`Sorting subarray from index ${low} to ${high}`);
-      await delay(speed/2);
+      await delay(speed);
       
       const pi = await partition(array, low, high);
       
