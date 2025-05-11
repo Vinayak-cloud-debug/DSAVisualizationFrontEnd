@@ -17,6 +17,16 @@ const GraphVisualization = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationSpeed, setAnimationSpeed] = useState(500); // milliseconds
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+
   // Get graph ID from session storage
   const graphId = sessionStorage.getItem("id") || "";
 
@@ -574,8 +584,28 @@ const GraphVisualization = () => {
     { id: "12", handler: handlePrims, label: "Prim's Algorithm" },
   ];
 
+  const Close = () => {
+
+    setWindowWidth(1000);
+
+  }
+
   return (
     <div className="min-h-screen bg-[#0f172a] p-4 sm:p-8 text-white">
+      
+
+       
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
+
+      
       <div className="max-w-5xl mx-auto bg-[#1e293b] rounded-lg shadow-xl p-4 sm:p-6 border border-[#334155]">
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-white bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
           Graph Visualization

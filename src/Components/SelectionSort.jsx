@@ -17,6 +17,16 @@ const SelectionSort = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [particles, setParticles] = useState([]);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+
   // Generate random particles for the background
   useEffect(() => {
     const particlesArray = Array.from({ length: 40 }, () => ({
@@ -170,9 +180,26 @@ const SelectionSort = () => {
     toast.success("Reset successful!");
   };
 
+  const Close = () => {
+
+    setWindowWidth(1000);
+
+  }
+
   return (
-    <div className="relative flex flex-col bg-gray-950  min-h-screen w-full px-4 py-8 overflow-hidden">
+    <div className="relative z-10 flex flex-col bg-gray-950  min-h-screen w-full px-4 py-8 overflow-hidden">
       {/* Background particles */}
+
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
+
       {particles.map((particle, i) => (
         <div 
           key={i}

@@ -14,6 +14,15 @@ const InsertionSort = () => {
   const [sortingProgress, setSortingProgress] = useState(0);
 
   // Update input value when array changes
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
   useEffect(() => {
     setInputValue(arr.join(' '));
   }, [arr]);
@@ -139,8 +148,27 @@ const InsertionSort = () => {
     return 'w-10 h-10';
   };
 
+  
+  const Close = () => {
+
+    setWindowWidth(1000);
+
+  }
+
   return (
-    <div className="flex flex-col items-center bg-gray-950 min-h-screen w-full px-4 py-8 text-white">
+    <div className="flex z-10 flex-col items-center bg-gray-950 min-h-screen w-full px-4 py-8 text-white">
+      
+
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
+      
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           
@@ -313,7 +341,7 @@ const InsertionSort = () => {
 
 
                 {/* Array Element Box */}
-                
+
                 <div
                   className={`rounded-lg  animate-pulse  shadow-lg ${getElementSize()} flex items-center justify-center text-lg font-bold transition-all duration-300 ${
                     sortedArrayIndex.includes(val)

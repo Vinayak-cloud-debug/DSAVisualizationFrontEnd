@@ -16,6 +16,16 @@ const BubbleSort = () => {
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+
   // Generate random particles for the background
   useEffect(() => {
     const particles = Array.from({ length: 40 }, () => ({
@@ -178,9 +188,27 @@ const BubbleSort = () => {
     This algorithm is named for the way smaller elements "bubble" to the top of the list.
     While simple to understand and implement, Bubble Sort is not efficient for large data sets.`;
 
+    
+  const Close = () => {
+
+    setWindowWidth(1000);
+
+  }
   return (
-    <div className="relative flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
+    <div className="relative z-10 flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
       {/* Background particles */}
+
+      
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
+
       {backgroundParticles.map((particle, i) => (
         <div 
           key={i}

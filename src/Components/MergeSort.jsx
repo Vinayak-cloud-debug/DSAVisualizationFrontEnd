@@ -114,6 +114,16 @@ const MergeSort = () => {
   const [notification, setNotification] = useState(null);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+
   // Animation constants
   const PARTITION_DELAY = 1500;
   const COMPARISON_DELAY = 800;
@@ -339,10 +349,24 @@ const MergeSort = () => {
   // Generate quick preset array sizes
   const quickSizePresets = [5, 8, 10, 15, 20];
 
+  const Close = () => {
+
+    setWindowWidth(1000);
+
+  }
+
   return (
-    <div className={`flex flex-col min-h-screen items-center ${theme.background} gap-6 p-8 ${theme.text} font-mono transition-colors duration-500`}>
+    <div className={`flex z-10 flex-col min-h-screen items-center ${theme.background} gap-6 p-8 ${theme.text} font-mono transition-colors duration-500`}>
       
-      
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
 
       {/* Title with enhanced styling */}
       

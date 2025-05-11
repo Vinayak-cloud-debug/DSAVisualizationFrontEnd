@@ -18,32 +18,15 @@ const BSAlgo = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
 
-  // // Generate random particles for the background
-  // useEffect(() => {
-  //   const particles = Array.from({ length: 40 }, () => ({
-  //     x: Math.random() * 100,
-  //     y: Math.random() * 100,
-  //     size: Math.random() * 3 + 1,
-  //     speed: Math.random() * 0.3 + 0.1,
-  //     opacity: Math.random() * 0.4 + 0.1
-  //   }));
-  //   setBackgroundParticles(particles);
-  // }, []);
-
-  // // Animation frame for particles
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setBackgroundParticles(prev => 
-  //       prev.map(particle => ({
-  //         ...particle,
-  //         y: (particle.y + particle.speed) % 100
-  //       }))
-  //     );
-  //   }, 50);
-    
-  //   return () => clearInterval(interval);
-  // }, []);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    // Handle window resize
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
   const handleInputChange = (e) => setInputValue(e.target.value);
 
   const handleSubmit = () => {
@@ -212,8 +195,26 @@ const BSAlgo = () => {
             
     return -1  // Element not found`;
 
+    const Close = () => {
+
+      setWindowWidth(1000);
+  
+    }
+
   return (
-    <div className="relative flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
+    <div className="relative z-10 flex flex-col bg-gray-950 min-h-screen w-full px-4 py-8 overflow-hidden">
+      
+      
+      {windowWidth < 500 ?
+      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+          For Better View
+        </h2>
+        <p className="text-sm sm:text-base">Please rotate your phone to landscape mode.</p>
+        <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
+      </div>
+      :null}
+      
       {/* Background particles */}
       {/* {backgroundParticles.map((particle, i) => (
         <div 
