@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, ArrowUp, Moon, Sun, Shuffle, Info, X, Sparkles } from 'lucide-react';
+import { ArrowDownCircle, Moon, Sun, Shuffle, Info, X, Sparkles, ArrowUpCircle, PlayCircle,RefreshCw } from 'lucide-react';
 
 // Enhanced theme constants with stunning dark UI options
 const THEMES = {
@@ -20,7 +20,7 @@ const THEMES = {
     mergedArray: 'bg-gray-700',
     lowIndex: 'text-blue-400',
     midIndex: 'text-green-400',
-    highIndex: 'text-red-400',
+    highIndex: 'text-red-700',
     currentIndex: 'text-yellow-400',
     glow: 'shadow-lg shadow-black/40'
   },
@@ -41,7 +41,7 @@ const THEMES = {
     mergedArray: 'bg-slate-700',
     lowIndex: 'text-blue-400',
     midIndex: 'text-teal-400',
-    highIndex: 'text-amber-500',
+    highIndex: 'text-red-500',
     currentIndex: 'text-yellow-400',
     glow: 'shadow-lg shadow-black/30'
   },
@@ -63,7 +63,7 @@ const THEMES = {
     mergedArray: 'bg-gradient-to-r from-fuchsia-800 to-purple-800',
     lowIndex: 'text-cyan-400',
     midIndex: 'text-fuchsia-400',
-    highIndex: 'text-amber-400',
+    highIndex: 'text-red-400',
     currentIndex: 'text-green-300',
     glow: 'shadow-lg shadow-violet-950/70'
   },
@@ -85,7 +85,7 @@ const THEMES = {
     mergedArray: 'bg-gradient-to-r from-cyan-800 to-blue-800',
     lowIndex: 'text-cyan-400',
     midIndex: 'text-blue-400',
-    highIndex: 'text-pink-400',
+    highIndex: 'text-red-600',
     currentIndex: 'text-green-400',
     glow: 'shadow-lg shadow-cyan-900/30'
   }
@@ -103,6 +103,7 @@ const MergeSort = () => {
   const [low, setLow] = useState(0);
   const [mid, setMid] = useState(0);
   const [high, setHigh] = useState(0);
+  const [currIndex, setCurrIndex] = useState(-1);
   const [leftArr, setLeftArr] = useState([]);
   const [rightArr, setRightArr] = useState([]);
   const [leftIndex, setLeftIndex] = useState(-1);
@@ -202,7 +203,7 @@ const MergeSort = () => {
     setTemp([]);
     toast.success('Array submitted successfully!');
   };
-  
+
   const generateRandomArray = () => {
     const size = parseInt(arrSize, 10);
     if (isNaN(size) || size <= 0) {
@@ -248,15 +249,18 @@ const MergeSort = () => {
     while (i < left.length && j < right.length) {
       setLeftIndex(i);
       setRightIndex(j);
+      setCurrIndex(k);
       await delay(COMPARISON_DELAY);
 
       if (parseInt(left[i]) <= parseInt(right[j])) {
+        
         arr[k] = left[i];
         setTemp((prev) => [...prev, left[i]]);
         await delay(MERGE_DELAY);
         i++;
       } else {
         arr[k] = right[j];
+      
         setTemp((prev) => [...prev, right[j]]);
         await delay(MERGE_DELAY);
         j++;
@@ -269,6 +273,7 @@ const MergeSort = () => {
 
     while (i < left.length) {
       setLeftIndex(i);
+      setCurrIndex(k);
       await delay(COMPARISON_DELAY);
       arr[k++] = left[i];
       setArr([...arr]);
@@ -279,6 +284,7 @@ const MergeSort = () => {
 
     while (j < right.length) {
       setRightIndex(j);
+      setCurrIndex(k);
       await delay(COMPARISON_DELAY);
       arr[k++] = right[j];
       setArr([...arr]);
@@ -289,6 +295,7 @@ const MergeSort = () => {
 
     setLeftIndex(-1);
     setRightIndex(-1);
+    setCurrIndex(-1);
     await delay(PARTITION_DELAY);
   };
 
@@ -385,7 +392,7 @@ const MergeSort = () => {
       
 
       {/* Input Section with enhanced styling */}
-      <div className={`flex flex-col gap-4 w-full max-w-md ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
+      <div className={`flex flex-col gap-4 w-full max-w-xl ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
         {/* Array size input with quick presets */}
         <div className="flex flex-col gap-2">
           <div className="flex gap-2 items-center">
@@ -422,8 +429,9 @@ const MergeSort = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="relative">
+        
           <input
             type="text"
             className={`w-full p-3 rounded-lg ${theme.input} border focus:outline-none focus:ring-2 transition-colors duration-300`}
@@ -431,30 +439,35 @@ const MergeSort = () => {
             value={inputValue}
             onChange={handleInput}
           />
-          <button
-            onClick={generateRandomArray}
-            disabled={isSorting || !arrSize}
-            className={`absolute right-3 top-3 p-1 rounded-md ${theme.secondary} transition opacity-80 hover:opacity-100 disabled:opacity-50`}
-            title="Generate random array"
-          >
-            <Shuffle className="h-4 w-4" />
-          </button>
+          
         </div>
         <div className="flex gap-4 justify-center">
+        <button
+            onClick={generateRandomArray}
+            disabled={isSorting || !arrSize}
+            className={`  flex items-center px-6 py-3 gap-2 rounded-md ${theme.secondary} transition opacity-80 hover:opacity-100 disabled:opacity-50`}
+            title="Generate random array"
+          >
+            <Shuffle className="h-4 w-6 " />
+            Random
+          </button>
           <button
             onClick={handleSubmit}
             disabled={isSorting || !arrSize}
-            className={`px-6 py-3 ${theme.primary} rounded-lg transition ${theme.glow} disabled:opacity-50 font-semibold`}
+            className={`px-6 py-3 ${theme.primary} flex items-center gap-2 rounded-lg transition ${theme.glow} disabled:opacity-50 font-semibold`}
           >
+            <RefreshCw size={16} />
             Submit Array
           </button>
+          
           <button
-            onClick={handleMergeSort}
-            disabled={isSorting || !arr.length}
-            className={`px-6 py-3 ${theme.success} rounded-lg transition ${theme.glow} disabled:opacity-50 font-semibold`}
-          >
-            Start Sorting
-          </button>
+              onClick={handleMergeSort}
+              disabled={isSorting || arr.length === 0}
+              className="px-4 py-2 rounded-lg  bg-gradient-to-r from-teal-600 to-teal-800 hover:from-sky-700 hover:to-indigo-700 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
+            >
+              <PlayCircle size={18} />
+              {isSorting ? "Sorting..." : "Start Sorting"}
+            </button>
         </div>
       </div>
 
@@ -473,29 +486,37 @@ const MergeSort = () => {
             {index === mid && (
               <div className={`absolute mb-16 -top-14 ${theme.midIndex} flex flex-col items-center`}>
                 <span>Mid</span>
-                <ArrowDown className="h-4 w-4" />
+                <ArrowDownCircle className="h-4 w-4" />
               </div>
             )}
             {index === low && (
               <div className={`absolute ${theme.lowIndex} mb-5 flex flex-col items-center`}>
                 <span>Low</span>
-                <ArrowDown className="h-4 w-4" />
+                <ArrowDownCircle className="h-4 w-4" />
               </div>
             )}
+
             <div
               className={`w-14 h-14 mt-14 flex items-center justify-center rounded-lg text-lg font-bold 
               ${
                 index >= low && index <= high
-                  ? `bg-gradient-to-r ${theme.mainArray} text-white ${theme.glow}`
-                  : 'bg-gray-700 text-white'
+                  ? ` border-cyan-800 border-2  text-white ${theme.glow}`
+                  : index === currIndex ? 'bg-gray-950 border-2 border-cyan-500':'bg-gray-900 text-white'
               } transition-all duration-300 transform hover:scale-105`}
             >
               {val}
             </div>
             {index === high && (
               <div className={`absolute -bottom-12 ${theme.highIndex} flex flex-col items-center`}>
-                <ArrowUp className="h-4 w-4" />
+                <ArrowUpCircle className="h-4 w-4" />
                 <span>High</span>
+              </div>
+            )}
+
+            {index === currIndex && (
+              <div className={`absolute -bottom-24 text-cyan-600 flex flex-col items-center`}>
+                <ArrowUpCircle className="h-4 w-4" />
+                <span>curr</span>
               </div>
             )}
           </div>
@@ -504,19 +525,19 @@ const MergeSort = () => {
 
       {/* Left and Right Subarrays with enhanced styling */}
       {(leftArr.length > 0 || rightArr.length > 0) && (
-        <div className="flex flex-col gap-8 mt-16">
+        <div className="flex flex-col gap-8 mt-20">
           <div className="flex flex-col items-center">
             <h3 className={`text-xl mb-4 text-blue-300 ${theme.glow}`}>Left Subarray</h3>
-            <div className="flex gap-4 flex-wrap justify-center">
+            <div className="flex gap-4 mt-10 flex-wrap justify-center">
               {leftArr.map((val, index) => (
                 <div key={index} className="relative">
                   {index === leftIndex && (
-                    <div className={`absolute mt-5 -top-8 ${theme.currentIndex} flex flex-col items-center`}>
-                      <span>Current</span>
-                      <ArrowDown className="h-4 w-4" />
+                    <div className={`absolute mt-5 -top-14 ${theme.currentIndex} flex flex-col items-center`}>
+                      <span>left</span>
+                      <ArrowDownCircle className="h-4 w-4" />
                     </div>
                   )}
-                  <div className={`w-14 h-14 flex mt-5 items-center justify-center rounded-lg ${theme.leftArray} shadow-md transition-all duration-300 transform ${index === leftIndex ? 'scale-110 ring-2 ring-white/30' : ''} ${theme.glow}`}>
+                  <div className={`w-14 h-14 flex mt-5 items-center justify-center rounded-lg bg-gray-900 shadow-md transition-all duration-300 transform ${index === leftIndex ? 'scale-110 ring-2 ring-white/30' : ''} ${theme.glow}`}>
                     {val}
                   </div>
                 </div>
@@ -526,16 +547,16 @@ const MergeSort = () => {
 
           <div className="flex flex-col items-center">
             <h3 className={`text-xl mb-4 text-teal-300 ${theme.glow}`}>Right Subarray</h3>
-            <div className="flex gap-4 flex-wrap justify-center">
+            <div className="flex gap-4 mt-10 flex-wrap justify-center">
               {rightArr.map((val, index) => (
                 <div key={index} className="relative">
                   {index === rightIndex && (
-                    <div className={`absolute mt-5 -top-8 ${theme.currentIndex} flex flex-col items-center`}>
-                      <span>Current</span>
-                      <ArrowDown className="h-4 w-4" />
+                    <div className={`absolute mt-5 -top-14 ${theme.currentIndex} flex flex-col items-center`}>
+                      <span>right</span>
+                      <ArrowDownCircle className="h-4 w-4" />
                     </div>
                   )}
-                  <div className={`w-14 h-14 mt-5 flex items-center justify-center rounded-lg ${theme.rightArray} shadow-md transition-all duration-300 transform ${index === rightIndex ? 'scale-110 ring-2 ring-white/30' : ''} ${theme.glow}`}>
+                  <div className={`w-14 h-14 mt-5 flex items-center justify-center rounded-lg bg-gray-900 shadow-md transition-all duration-300 transform ${index === rightIndex ? 'scale-110 ring-2 ring-white/30' : ''} ${theme.glow}`}>
                     {val}
                   </div>
                 </div>
@@ -548,12 +569,12 @@ const MergeSort = () => {
       {/* Merged Array with enhanced styling */}
       {temp.length > 0 && (
         <div className="flex flex-col gap-5 mt-16">
-          <h3 className={`text-xl mb-4 text-amber-300 ${theme.glow}`}>Merged Array</h3>
+          <h3 className={`text-xl mb-4 w-40 text-amber-300 ${theme.glow}`}>Merged Array</h3>
           <div className="flex gap-4 flex-wrap justify-center">
             {temp.map((val, index) => (
               <div
                 key={index}
-                className={`w-14 h-14 flex text-lg font-bold items-center justify-center rounded-lg ${theme.mergedArray} shadow-inner transition-all duration-300 ${theme.glow} animate-pulse`}
+                className={`w-14 h-14 flex text-lg font-bold items-center justify-center rounded-lg bg-gray-900 shadow-inner transition-all duration-300 ${theme.glow} animate-pulse`}
               >
                 {val}
               </div>
