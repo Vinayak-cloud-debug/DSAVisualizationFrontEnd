@@ -216,8 +216,7 @@ const QuickSort = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900  to-black text-gray-100">
-      {/* Header */}
+    <div className={`flex flex-col min-h-screen bg-gradient-to-br from-gray-900  to-black text-gray-100 ${windowWidth < 440 ? 'rotate-90 origin-center' : ''}`}>
       <header className="w-full py-6 bg-black/40 backdrop-blur-sm">
         <div className="relative mb-6 w-[90%] mx-auto">
           <h1 className="text-3xl text-center sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500">
