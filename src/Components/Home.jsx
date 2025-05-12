@@ -43,6 +43,26 @@ const Home = () => {
     if(id == 15) {
       navigate('/MaximumConsecutiveOnes');
     }
+    else
+    if(id == 23) {
+      navigate('/KadaneAlgo');
+    }
+    else
+    if(id == 25) {
+      navigate('/LowerBound');
+    }
+    else
+    if(id == 26) {
+      navigate('/UpperBound');
+    }
+    else
+    if(id == 27) {
+      navigate('/FirstOccurrence');
+    }
+    else
+    if(id == 28) {
+      navigate('/LastOccurrence');
+    }
 
   };
 
@@ -52,7 +72,7 @@ const Home = () => {
     { id: 3, text: 'Bubble Sort', icon: <ArrowDownUp size={18} /> },
     { id: 4, text: 'Insertion Sort', icon: <Filter size={18} /> },
     { id: 5, text: 'Selection Sort', icon: <Filter size={18} /> },
-    { id: 6, text: 'Binary Search', icon: <Search size={18} /> },
+   
   ];
 
   const graphAlgorithms = [
@@ -91,6 +111,7 @@ const Home = () => {
   ];
 
   const BinarySearch = [
+    { id: 6, text: 'Binary Search', icon: <Search size={18} /> },
     { id: 25, text: 'Lower Bound', icon: <GitBranch size={18} /> },
     { id: 26, text: 'Upper Bound', icon: <Network size={18} /> },
     { id: 27, text: 'First Occurence of an element', icon: <Navigation size={18} /> },

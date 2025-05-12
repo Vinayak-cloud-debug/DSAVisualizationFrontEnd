@@ -1,20 +1,20 @@
 
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import BSAlgo from './Components/BSAlgo'
-import BubbleSort from './Components/BubbleSort'
+import BSAlgo from './Components/BinarySearch/BSAlgo'
+import BubbleSort from './Components/Sorting/BubbleSort'
 import Home from './Components/Home'
-import InsertionSort from './Components/Insertion'
+import InsertionSort from './Components/Sorting/Insertion'
 import LargestElement from './Components/LargestElement'
 import LeftRotateArray from './Components/LeftRotateArray'
 import LinearSearch from './Components/LinearSearch'
-import MergeSort from './Components/MergeSort'
+import MergeSort from './Components/Sorting/MergeSort'
 import MergeSortFunction from './Components/MergeSortFunction'
-import NumberOfPaths from './Components/NumberOfPaths'
-import QuickSort from './Components/QuickSort'
+import NumberOfPaths from './Components/Grids/NumberOfPaths'
+import QuickSort from './Components/Sorting/QuickSort'
 import ReverseLL from './Components/ReverseLL'
 import SecondLargestElement from './Components/SecondLargestElement'
-import SelectionSort from './Components/SelectionSort'
+import SelectionSort from './Components/Sorting/SelectionSort'
 import SmallestElement from './Components/SmallestElement'
 import SpiralMatrix from './Components/SpiralMatrix'
 import TwoPointerAlgo from './Components/TwoPointerAlgo'
@@ -24,10 +24,14 @@ import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import ResetPassword from './pages/resetPassword/ResetPassword'
 import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
 import Graph from './Components/Graph'
-import MaximumSubarraySumWithSizeK from './Components/MaximumSubarraySumWithSizeK.jsx'
-import MaximumConsecutiveOnes from './Components/MaximumConsecutiveOnes'
-import LongestSubstringWithoutRepeatingCharacters from './Components/LongestSubstringWithoutRepeatingCharacters'
-import KadaneAlgo from './Components/KadaneAlgo'
+import MaximumSubarraySumWithSizeK from './Components/SW/MaximumSubarraySumWithSizeK.jsx.jsx'
+import MaximumConsecutiveOnes from './Components/SW/MaximumConsecutiveOnes'
+import LongestSubstringWithoutRepeatingCharacters from './Components/SW/LongestSubstringWithoutRepeatingCharacters'
+import KadaneAlgo from './Components/TwoPointers/KadaneAlgo'
+import LowerBound from './Components/BinarySearch/LowerBound'
+import UpperBound from './Components/BinarySearch/UpperBound'
+import FirstOccurrence from './Components/BinarySearch/FirstOccurenceOfElement'
+import LastOccurence from './Components/BinarySearch/LastOccurenceOfElement'
 function App() {
 
 
@@ -63,6 +67,12 @@ function App() {
         <Route path='/MaximumConsecutiveOnes' element = {  <MaximumConsecutiveOnes/>}/>
         <Route path='/LongestSubstringWithoutRepeatingCharacters' element = {  <LongestSubstringWithoutRepeatingCharacters/>}/>
         <Route path='/KadaneAlgo' element = {  <KadaneAlgo/>}/>
+        <Route path='/LowerBound' element = {  <LowerBound/>}/>
+        <Route path='/UpperBound' element = {  <UpperBound/>}/>
+        <Route path='/FirstOccurrence' element = {  <FirstOccurrence/>}/>
+        <Route path='/LastOccurrence' element = {  <LastOccurence/>}/>
+
+
 
 
 
