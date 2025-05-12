@@ -93,7 +93,7 @@ const THEMES = {
 
 const MergeSort = () => {
   // Theme state
-  const [currentTheme, setCurrentTheme] = useState('nebula'); // Default to new nebula theme
+  const [currentTheme, setCurrentTheme] = useState('cyber'); // Default to new nebula theme
   const theme = THEMES[currentTheme];
   
   // Component state
