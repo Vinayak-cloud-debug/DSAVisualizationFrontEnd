@@ -453,7 +453,7 @@ const LastOccurence = () => {
         {arr.length > 0 && found && (
           <div className="mt-4 p-4 bg-green-500/20 border border-green-500 rounded-lg text-green-300 flex items-center gap-2">
             <FaSearch className="text-green-400" />
-            <span>Last Occurrence of {searchValue} is <strong>{loc}</strong></span>
+            <span>Last Occurrence of {searchValue} is at index <strong>{loc}</strong></span>
           </div>
         )}
         

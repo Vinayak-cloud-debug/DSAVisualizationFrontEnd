@@ -453,7 +453,7 @@ const LowerBound = () => {
         {arr.length > 0 && found && (
           <div className="mt-4 p-4 bg-green-500/20 border border-green-500 rounded-lg text-green-300 flex items-center gap-2">
             <FaSearch className="text-green-400" />
-            <span>Lower Bound of {searchValue} is <strong>{lbound}</strong></span>
+            <span>Lower Bound of {searchValue} is at index <strong>{lbound}</strong></span>
           </div>
         )}
         

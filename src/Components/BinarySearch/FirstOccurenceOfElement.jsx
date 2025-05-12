@@ -454,7 +454,7 @@ const FirstOccurrence = () => {
         {arr.length > 0 && found && (
           <div className="mt-4 p-4 bg-green-500/20 border border-green-500 rounded-lg text-green-300 flex items-center gap-2">
             <FaSearch className="text-green-400" />
-            <span>First Occurrence of {searchValue} is <strong>{foc}</strong></span>
+            <span>First Occurrence of {searchValue} is at index <strong>{foc}</strong></span>
           </div>
         )}
         
