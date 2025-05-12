@@ -134,7 +134,7 @@ const Home = () => {
         </div>
 
         {/* Category Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-center mt-12 mb-8 bg-gray-900/50 p-1 rounded-xl backdrop-blur-sm border border-gray-800">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center mt-12 mb-8 bg-gray-900/50 p-1 rounded-xl backdrop-blur-sm border border-gray-800">
           <button 
             onClick={() => setActiveCategory('sorting')}
             className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
@@ -144,7 +144,7 @@ const Home = () => {
             }`}
           >
             <Code size={18} />
-            <span>Sorting Algorithms</span>
+            <span>Sorting Algos</span>
           </button>
           
           <button 
@@ -156,7 +156,7 @@ const Home = () => {
             }`}
           >
             <ChartScatter size={18} />
-            <span>Graph Algorithms</span>
+            <span>Graph Algos</span>
           </button>
 
           <button 
@@ -168,7 +168,7 @@ const Home = () => {
             }`}
           >
             <ArrowDownUp size={18} />
-            <span>Sliding Window</span>
+            <span>Sliding Window </span>
           </button>
 
           <button 
@@ -180,7 +180,7 @@ const Home = () => {
             }`}
           >
             <Grid2X2 size={18} />
-            <span>Grid Paths..Coming Soon</span>
+            <span>Grid Paths</span>
           </button>
         </div>
 
