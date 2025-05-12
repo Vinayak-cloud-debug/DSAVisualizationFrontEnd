@@ -63,6 +63,7 @@ const Home = () => {
     if(id == 28) {
       navigate('/LastOccurrence');
     }
+    
 
   };
 
@@ -117,10 +118,8 @@ const Home = () => {
     { id: 27, text: 'First Occurence of an element', icon: <Navigation size={18} /> },
     { id: 28, text: 'Last Occurence of an element', icon: <Share2 size={18} /> },
     { id: 29, text: 'Search in Rotated Sorted Array 1', icon: <Filter size={18} /> },
-    { id: 30, text: 'Search in Rotated Sorted Array 2', icon: <Activity size={18} /> },
     { id: 31, text: 'Find Minimum Element with Constraints', icon: <Diamond size={18} /> },
 
-   
   ];
 
   // Get current algorithm set based on active category
