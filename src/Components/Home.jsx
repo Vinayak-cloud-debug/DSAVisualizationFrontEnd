@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Code, GitMerge, Shuffle, ArrowDownUp, Filter, Search, 
          Network, GitBranch, Activity, Navigation, Diamond, Share2, 
          Grid2X2,
-         ChartScatter} from 'lucide-react';
+         ChartScatter,
+         ArrowUpDown,
+        
+         } from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,31 +15,7 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState('sorting');
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   
-  // Generate random particles for the background
-  // useEffect(() => {
-  //   const particles = Array.from({ length: 50 }, () => ({
-  //     x: Math.random() * 100,
-  //     y: Math.random() * 100,
-  //     size: Math.random() * 3 + 1,
-  //     speed: Math.random() * 0.3 + 0.1,
-  //     opacity: Math.random() * 0.6 + 0.1
-  //   }));
-  //   setBackgroundParticles(particles);
-  // }, []);
-
-  // Animation frame for particles
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setBackgroundParticles(prev => 
-  //       prev.map(particle => ({
-  //         ...particle,
-  //         y: (particle.y + particle.speed) % 100
-  //       }))
-  //     );
-  //   }, 50);
-    
-  //   return () => clearInterval(interval);
-  // }, []);
+ 
 
   const selectedBlink = (id) => {
     setBlink(id);
@@ -90,9 +69,11 @@ const Home = () => {
     { id: 13, text: 'Maximum Sum of Subarray with Size k', icon: <GitBranch size={18} /> },
     { id: 14, text: 'Longest Substring without Repeating Characters', icon: <Network size={18} /> },
     { id: 15, text: 'Maximum Consecutive Ones ', icon: <Navigation size={18} /> },
-    { id: 16, text: 'Count Binary Subarrays with Sum ', icon: <Share2 size={18} /> },
+    
     
   ];
+
+
 
   const GridPaths = [
     { id: 17, text: 'Maximum Sum Path', icon: <GitBranch size={18} /> },
@@ -101,11 +82,28 @@ const Home = () => {
     { id: 20, text: 'Unique Paths', icon: <Share2 size={18} /> },
     { id: 21, text: 'Shortest Paths in a Grid', icon: <Share2 size={18} /> },
 
-    
+  ];
+
+  const TwoPointer = [
+    { id: 23, text: 'Kadane Algo', icon: <GitBranch size={18} /> },
+    { id: 24, text: 'Two Number Sum Equals Target', icon: <Network size={18} /> },
+  
+  ];
+
+  const BinarySearch = [
+    { id: 25, text: 'Lower Bound', icon: <GitBranch size={18} /> },
+    { id: 26, text: 'Upper Bound', icon: <Network size={18} /> },
+    { id: 27, text: 'First Occurence of an element', icon: <Navigation size={18} /> },
+    { id: 28, text: 'Last Occurence of an element', icon: <Share2 size={18} /> },
+    { id: 29, text: 'Search in Rotated Sorted Array 1', icon: <Filter size={18} /> },
+    { id: 30, text: 'Search in Rotated Sorted Array 2', icon: <Activity size={18} /> },
+    { id: 31, text: 'Find Minimum Element with Constraints', icon: <Diamond size={18} /> },
+
+   
   ];
 
   // Get current algorithm set based on active category
-  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : activeCategory === 'graph' ? graphAlgorithms : activeCategory === 'slidingWindow' ?  SlidingWindow : GridPaths;
+  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : activeCategory === 'graph' ? graphAlgorithms : activeCategory === 'slidingWindow' ?  SlidingWindow :  activeCategory === 'GridPaths' ?  GridPaths : activeCategory === 'TwoPointers' ? TwoPointer : BinarySearch;
 
   return (
     <div className="relative bg-gray-950 scroll-smooth w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
@@ -189,6 +187,30 @@ const Home = () => {
           >
             <Grid2X2 size={18} />
             <span>Grid Paths</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveCategory('TwoPointers')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'TwoPointers' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <ArrowUpDown size={18} />
+            <span>Two Pointers</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveCategory('BinarySearch')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'BinarySearch' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <ArrowUpDown size={18} />
+            <span>BS Algos</span>
           </button>
         </div>
 

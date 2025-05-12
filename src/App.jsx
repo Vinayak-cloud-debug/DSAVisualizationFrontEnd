@@ -27,6 +27,7 @@ import Graph from './Components/Graph'
 import MaximumSubarraySumWithSizeK from './Components/MaximumSubarraySumWithSizeK.jsx'
 import MaximumConsecutiveOnes from './Components/MaximumConsecutiveOnes'
 import LongestSubstringWithoutRepeatingCharacters from './Components/LongestSubstringWithoutRepeatingCharacters'
+import KadaneAlgo from './Components/KadaneAlgo'
 function App() {
 
 
@@ -61,6 +62,7 @@ function App() {
         <Route path='/MaximumSubarraySumWithSizeK' element = {  <MaximumSubarraySumWithSizeK/>}/>
         <Route path='/MaximumConsecutiveOnes' element = {  <MaximumConsecutiveOnes/>}/>
         <Route path='/LongestSubstringWithoutRepeatingCharacters' element = {  <LongestSubstringWithoutRepeatingCharacters/>}/>
+        <Route path='/KadaneAlgo' element = {  <KadaneAlgo/>}/>
 
 
 
