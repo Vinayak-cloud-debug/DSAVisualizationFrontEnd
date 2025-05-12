@@ -56,6 +56,14 @@ const Home = () => {
     if(id == 13) {
       navigate('/MaximumSubarraySumWithSizeK');
     }
+    else
+    if(id == 14) {
+      navigate('/LongestSubstringWithoutRepeatingCharacters');
+    }
+    else
+    if(id == 15) {
+      navigate('/MaximumConsecutiveOnes');
+    }
 
   };
 
@@ -80,9 +88,9 @@ const Home = () => {
   
   const SlidingWindow = [
     { id: 13, text: 'Maximum Sum of Subarray with Size k', icon: <GitBranch size={18} /> },
-    { id: 14, text: 'Longest Substring without Repeating Characters(Coming Soon..)', icon: <Network size={18} /> },
-    { id: 15, text: 'Maximum Consecutive Ones (Coming Soon..)', icon: <Navigation size={18} /> },
-    { id: 16, text: 'Count Binary Subarrays with Sum (Coming Soon..)', icon: <Share2 size={18} /> },
+    { id: 14, text: 'Longest Substring without Repeating Characters', icon: <Network size={18} /> },
+    { id: 15, text: 'Maximum Consecutive Ones ', icon: <Navigation size={18} /> },
+    { id: 16, text: 'Count Binary Subarrays with Sum ', icon: <Share2 size={18} /> },
     
   ];
 

@@ -25,7 +25,8 @@ import ResetPassword from './pages/resetPassword/ResetPassword'
 import VerifyOTP from './pages/verifyOtp/verifyGmailOtp'
 import Graph from './Components/Graph'
 import MaximumSubarraySumWithSizeK from './Components/MaximumSubarraySumWithSizeK.jsx'
-  
+import MaximumConsecutiveOnes from './Components/MaximumConsecutiveOnes'
+import LongestSubstringWithoutRepeatingCharacters from './Components/LongestSubstringWithoutRepeatingCharacters'
 function App() {
 
 
@@ -58,6 +59,8 @@ function App() {
         <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
         <Route path='/Graph' element = {  <Graph/>}/>
         <Route path='/MaximumSubarraySumWithSizeK' element = {  <MaximumSubarraySumWithSizeK/>}/>
+        <Route path='/MaximumConsecutiveOnes' element = {  <MaximumConsecutiveOnes/>}/>
+        <Route path='/LongestSubstringWithoutRepeatingCharacters' element = {  <LongestSubstringWithoutRepeatingCharacters/>}/>
 
 
 
