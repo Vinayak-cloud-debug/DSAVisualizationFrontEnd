@@ -130,7 +130,7 @@ const Home = () => {
       <div className="relative z-10 w-full max-w-6xl flex flex-col items-center">
         {/* Header with animated glow */}
         <div className="relative">
-          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 mt-4 pb-2">
+          <h1 className="text-4xl md:text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 mt-4 pb-2">
             AlgoVision
           </h1>
           <div className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
