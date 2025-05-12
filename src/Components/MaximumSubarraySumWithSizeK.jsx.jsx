@@ -124,7 +124,7 @@ const MaximumSubarraySumWithSizeK = () => {
     setMaxSum(prevMax => sum);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-   
+
     while(r<arr.length){
 
         setLeftIndex(l);
@@ -204,7 +204,7 @@ const MaximumSubarraySumWithSizeK = () => {
   };
 
   // Pseudo code for bubble sort
-  const bubbleSortCode = `function bubbleSort(arr):
+  const bubbleSortCode = `function MaximumSubArraySumWithSizeK(arr):
       n = arr.length
     
      let l = 0,r = 0,sum = 0,lmaxi = 0,rmaxi = 0,maxi = 0;
@@ -418,7 +418,7 @@ const MaximumSubarraySumWithSizeK = () => {
           {/* Algorithm Info */}
           {showInfo && (
             <div className="backdrop-blur-sm bg-gray-900/70 border border-gray-800 rounded-xl p-4 w-full overflow-x-auto">
-              <h3 className="text-lg font-medium text-emerald-400 mb-3">About Bubble Sort</h3>
+              <h3 className="text-lg font-medium text-emerald-400 mb-3">About Sliding Window</h3>
               <div className="text-gray-300 text-sm whitespace-pre-line">
                 {algorithmInfo}
               </div>
