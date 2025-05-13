@@ -33,6 +33,7 @@ import UpperBound from './Components/BinarySearch/UpperBound'
 import FirstOccurrence from './Components/BinarySearch/FirstOccurenceOfElement'
 import LastOccurence from './Components/BinarySearch/LastOccurenceOfElement'
 import RotatedSorted1 from './Components/BinarySearch/SRSArray1'
+
 function App() {
 
 
@@ -73,7 +74,7 @@ function App() {
         <Route path='/FirstOccurrence' element = {  <FirstOccurrence/>}/>
         <Route path='/LastOccurrence' element = {  <LastOccurence/>}/>
         <Route path='/RotatedSorted1' element = {  <RotatedSorted1/>}/>
-
+        <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
       </Routes>
     </div>
   )

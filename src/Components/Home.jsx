@@ -67,6 +67,11 @@ const Home = () => {
     if(id == 29) {
       navigate('/RotatedSorted1');
     }
+    else
+    if(id == 19) {
+      navigate('/NumberOfPaths');
+    }
+
     
 
   };
