@@ -104,26 +104,25 @@ const MaximumSubarraySumWithSizeK = () => {
   };
 
   const handlestartSlidingWindow = async () => {
+
     let newArr = [...arr];
     let l = 0,r = 0,sum = 0,lmaxi = 0,rmaxi = 0,Maxi = 0;
 
+    setSlidingWindow([]);
+    setSortedArrayIndex([]);
     setLeftIndex(l);
     while(r<k){
+
       setRightIndex(r);
       await new Promise((resolve) => setTimeout(resolve, 800));
       sum += newArr[r];
       setSUM(sum);
-      setSlidingWindow(prev => [...prev, newArr[r]]);
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      setSlidingWindow(prev => [...prev, r]);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       r++;
     }
 
-    
-    setRightIndex(r);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    
     setMaxSum(sum);
     Maxi = sum;
     lmaxi = l;
@@ -133,53 +132,58 @@ const MaximumSubarraySumWithSizeK = () => {
 
     while(r<arr.length){
 
-        setLeftIndex(l);
         setRightIndex(r);
-        setSlidingWindow(prev => [...prev, newArr[r]]);
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        setSlidingWindow(prev => [...prev, r]);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         
         setSUM(sum);
         await new Promise((resolve) => setTimeout(resolve, 700));
         sum += newArr[r];
         sum -= newArr[l++];
 
+
+        
         setSUM(sum);
         setLeftIndex(l);
         setSlidingWindow(prev => prev.slice(1));
         await new Promise((resolve) => setTimeout(resolve, 1300));
 
-        r++;
-        setRightIndex(r);
-        await new Promise((resolve) => setTimeout(resolve, 1300));
 
         if(Maxi < sum){
           Maxi = sum;
 
           lmaxi = l;
-          rmaxi = r-1;
+          rmaxi = r;
           
           setMaxSum(prevMax => Math.max(prevMax, Maxi));
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
 
 
+        r++;
+        setRightIndex(r);
+        await new Promise((resolve) => setTimeout(resolve, 1300));
+
+
+
     }
 
     setSlidingWindow([])
 
+
+
     await new Promise((resolve) => setTimeout(resolve, 1400));
-    
         setLeftIndex(lmaxi);
         setRightIndex(rmaxi);
         await new Promise((resolve) => setTimeout(resolve, 1400));
 
-        for(let i = lmaxi; i <=rmaxi; i++){
+        for(let i = lmaxi; i <= rmaxi; i++){
           setSortedArrayIndex(prev => [...prev, i]);
-          setSlidingWindow(prev => [...prev, newArr[i]]);
-          await new Promise((resolve) => setTimeout(resolve, 500));
+          setSlidingWindow(prev => [...prev, i]);
+          await new Promise((resolve) => setTimeout(resolve, 900));
         }
 
-      
+
   };
 
   const startSlidingWindow = async () => {
@@ -477,7 +481,7 @@ const MaximumSubarraySumWithSizeK = () => {
                 const isSorted = sortedArrayIndex.includes(index);
                 const isLeft = index === leftIndex;
                 const isRight = index === rightIndex;
-                
+
                 return (
                   <div
                     key={index}
@@ -485,7 +489,7 @@ const MaximumSubarraySumWithSizeK = () => {
                   >
                     {/* Index number */}
                     <div className="text-gray-500 text-xs mb-1">{index}</div>
-                    
+
                     {/* Left Comparison Indicator */}
                     {isLeft && (
                       <div className="absolute -top-14 flex flex-col items-center">
@@ -504,17 +508,24 @@ const MaximumSubarraySumWithSizeK = () => {
                       </div>
                     )}
 
+
                     {/* Value Box with glass effect */}
-                    <div className={` backdrop-blur-sm  shadow-lg w-20 h-16 items-center  justify-center  border-emerald-500 ${slidingwindow.length > 1 && slidingwindow[0] === val ? 'border-t-2 border-l-2 border-b-2 rounded-l-lg': slidingwindow.length > 1 && slidingwindow[slidingwindow.length - 1] === val ? 'border-t-2 border-r-2 border-b-2 rounded-r-lg' : slidingwindow.length > 1 && slidingwindow.includes(val) ? 'border-t-2 border-b-2' : slidingwindow.length === 1 && slidingwindow[0] === val ? 'border-2 rounded-lg' : ''}`}>
-                    <div
+                    <div className={`relative backdrop-blur-sm  shadow-lg w-20 h-16 items-center  justify-center  border-emerald-500 
+                  ${slidingwindow.length === 1 && slidingwindow[0] === index
+                      ? 'border-2 rounded-lg'
+                      : slidingwindow.length > 1 && slidingwindow[0] === index
+                      ? 'border-t-2 border-l-2 border-b-2 rounded-l-lg'
+                      : slidingwindow.length > 1 &&
+                        slidingwindow[slidingwindow.length - 1] === index
+                      ? 'border-t-2 border-r-2 border-b-2 rounded-r-lg'
+                      : slidingwindow.includes(index)
+                      ? 'border-t-2 border-b-2'
+                      : '' } `}>
+                        <div
                       className={`relative rounded-lg ml-3 mt-0.5  backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
-                        ${isSorted || slidingwindow.includes(val)
+                        ${isSorted || slidingwindow.includes(index)
                             ? "bg-emerald-500/30 border-2 border-emerald-500 text-emerald-300 shadow-emerald-500/30"
-                            : isLeft
-                                ? "bg-blue-500/30 border-2 border-blue-500 text-blue-300 shadow-blue-500/30"
-                                : isRight
-                                    ? "bg-purple-500/30 border-2 border-purple-500 text-purple-300 shadow-purple-500/30"
-                                    : "bg-gray-800/50 border border-gray-700 text-gray-300"
+                            : "bg-gray-800/50 border border-gray-700 text-gray-300"
                         }`}
                     >
                       {/* Inner glow/pulse effect when swapping */}

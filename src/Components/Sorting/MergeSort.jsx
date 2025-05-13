@@ -356,7 +356,7 @@ const MergeSort = () => {
   }
 
   return (
-    <div className={`flex z-10 flex-col min-h-screen items-center ${theme.background} gap-6 p-8 ${theme.text} font-mono transition-colors duration-500`}>
+    <div className={`flex z-10 flex-col bg-gray-950 min-h-screen items-center  gap-6 p-8 ${theme.text} font-mono transition-colors duration-500`}>
       
       {windowWidth < 500 ?
       <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
@@ -370,7 +370,7 @@ const MergeSort = () => {
 
       {/* Title with enhanced styling */}
       
-        <div className="relative mb-8 w-[400px] lg:w-[490px] mt-10">
+        <div className="relative  mb-8 w-[400px] lg:w-[490px] mt-10">
           <h1 className="text-3xl ml-12  sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
             Merge Sort Algorithm
           </h1>
@@ -382,7 +382,7 @@ const MergeSort = () => {
       
 
       {/* Input Section with enhanced styling */}
-      <div className={`flex flex-col flex-wrap gap-4 w-full max-w-lg lg:max-w-xl ${theme.card} p-6 rounded-xl border shadow-xl ${theme.glow} transition-colors duration-300 mt-4`}>
+      <div className={`flex flex-col backdrop-blur-sm bg-gray-900/50 border border-gray-800 flex-wrap gap-4 w-full max-w-lg lg:max-w-xl p-6 rounded-xl  shadow-xl transition-colors duration-300 mt-4`}>
         {/* Array size input with quick presets */}
         <div className="flex flex-wrap flex-col gap-2">
           <div className="flex gap-2 items-center">
