@@ -197,7 +197,7 @@ const RotatedSorted1 = () => {
   };
 
   // Pseudo code for binary search
-  const binarySearchCode = `function binarySearch(arr, target):
+  const binarySearchCode = `function FindELementInRotatedArray(arr, target):
     low = 0
     high = arr.length - 1
     

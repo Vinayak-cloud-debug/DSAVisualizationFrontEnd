@@ -63,6 +63,10 @@ const Home = () => {
     if(id == 28) {
       navigate('/LastOccurrence');
     }
+    else
+    if(id == 29) {
+      navigate('/RotatedSorted1');
+    }
     
 
   };
