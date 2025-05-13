@@ -17,6 +17,7 @@ const LongestSubstringWithoutRepeatingCharacters = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [markedCharacters, setMarkedCharacters] = useState([]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -89,9 +90,11 @@ const LongestSubstringWithoutRepeatingCharacters = () => {
       toast.error(`Please enter exactly ${arrSize} elements.`);
       return;
     }
+    
     setArr(elements.split(''));
 
     setSortedArrayIndex([]);
+    setMarkedCharacters([]);
     setLeftIndex(-1);
     setRightIndex(-1);
     toast.success("Array initialized successfully!");
@@ -130,6 +133,7 @@ const LongestSubstringWithoutRepeatingCharacters = () => {
         }
 
         dhash[charCode] = r;
+        setMarkedCharacters(prev => [...prev, charCode]);
         setHash([...dhash])
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -416,7 +420,8 @@ const LongestSubstringWithoutRepeatingCharacters = () => {
 
                 <div
                     key={index}
-                    className="relative rounded-lg backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden bg-gray-800/50 border border-gray-700 text-gray-300"
+                    className={`relative rounded-lg backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
+                  ${markedCharacters.includes(index)   ? ' bg-red-800/50 border border-red-700 text-gray-300':' bg-gray-800/50 border border-gray-700 text-gray-300'} `}
                 >
                     <span className="relative z-10">
                         {String.fromCharCode(97 + index)}: {val}

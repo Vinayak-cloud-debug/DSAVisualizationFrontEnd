@@ -18,6 +18,7 @@ const MaximumSubarraySumWithSizeK = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [slidingwindow,setSlidingWindow] = useState([]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
@@ -106,22 +107,27 @@ const MaximumSubarraySumWithSizeK = () => {
     let newArr = [...arr];
     let l = 0,r = 0,sum = 0,lmaxi = 0,rmaxi = 0,Maxi = 0;
 
+    setLeftIndex(l);
     while(r<k){
       setRightIndex(r);
       await new Promise((resolve) => setTimeout(resolve, 800));
       sum += newArr[r];
       setSUM(sum);
+      setSlidingWindow(prev => [...prev, newArr[r]]);
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       r++;
     }
-    
 
+    
     setRightIndex(r);
     await new Promise((resolve) => setTimeout(resolve, 800));
 
     
-    setMaxSum(prevMax => sum);
+    setMaxSum(sum);
+    Maxi = sum;
+    lmaxi = l;
+    rmaxi = r-1;
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
 
@@ -129,7 +135,7 @@ const MaximumSubarraySumWithSizeK = () => {
 
         setLeftIndex(l);
         setRightIndex(r);
-        
+        setSlidingWindow(prev => [...prev, newArr[r]]);
         await new Promise((resolve) => setTimeout(resolve, 500));
         
         setSUM(sum);
@@ -139,6 +145,7 @@ const MaximumSubarraySumWithSizeK = () => {
 
         setSUM(sum);
         setLeftIndex(l);
+        setSlidingWindow(prev => prev.slice(1));
         await new Promise((resolve) => setTimeout(resolve, 1300));
 
         r++;
@@ -158,14 +165,17 @@ const MaximumSubarraySumWithSizeK = () => {
 
     }
 
+    setSlidingWindow([])
+
     await new Promise((resolve) => setTimeout(resolve, 1400));
     
         setLeftIndex(lmaxi);
         setRightIndex(rmaxi);
         await new Promise((resolve) => setTimeout(resolve, 1400));
 
-        for(let i = lmaxi+1; i <rmaxi; i++){
+        for(let i = lmaxi; i <=rmaxi; i++){
           setSortedArrayIndex(prev => [...prev, i]);
+          setSlidingWindow(prev => [...prev, newArr[i]]);
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
 
@@ -180,6 +190,7 @@ const MaximumSubarraySumWithSizeK = () => {
     
     setIsSorting(true);
     setSortedArrayIndex([]);
+    setSlidingWindow([]);
     setLeftIndex(-1);
     setRightIndex(-1);
     setMaxSum(0);
@@ -383,7 +394,7 @@ const MaximumSubarraySumWithSizeK = () => {
               <PlayCircle size={18} />
               {isSorting ? "Sliding..." : "Start Sliding Window"}
             </button>
-            
+
             <button
               onClick={resetArray}
               disabled={isSorting}
@@ -461,7 +472,7 @@ const MaximumSubarraySumWithSizeK = () => {
             </div>
             
             {/* Array visualization */}
-            <div className="flex flex-wrap justify-center gap-3 mt-8 pb-20 relative">
+            <div className="flex flex-wrap justify-center  mt-8 pb-20 relative">
               {arr.map((val, index) => {
                 const isSorted = sortedArrayIndex.includes(index);
                 const isLeft = index === leftIndex;
@@ -470,7 +481,7 @@ const MaximumSubarraySumWithSizeK = () => {
                 return (
                   <div
                     key={index}
-                    className="flex flex-col items-center gap-1 relative my-8"
+                    className="flex flex-col items-center  relative my-8"
                   >
                     {/* Index number */}
                     <div className="text-gray-500 text-xs mb-1">{index}</div>
@@ -494,9 +505,10 @@ const MaximumSubarraySumWithSizeK = () => {
                     )}
 
                     {/* Value Box with glass effect */}
+                    <div className={` backdrop-blur-sm  shadow-lg w-20 h-16 items-center  justify-center  border-emerald-500 ${slidingwindow.length > 1 && slidingwindow[0] === val ? 'border-t-2 border-l-2 border-b-2 rounded-l-lg': slidingwindow.length > 1 && slidingwindow[slidingwindow.length - 1] === val ? 'border-t-2 border-r-2 border-b-2 rounded-r-lg' : slidingwindow.length > 1 && slidingwindow.includes(val) ? 'border-t-2 border-b-2' : slidingwindow.length === 1 && slidingwindow[0] === val ? 'border-2 rounded-lg' : ''}`}>
                     <div
-                      className={`relative rounded-lg backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
-                        ${isSorted
+                      className={`relative rounded-lg ml-3 mt-0.5  backdrop-blur-sm shadow-lg w-14 h-14 text-xl font-medium flex items-center justify-center transition-all duration-300 overflow-hidden
+                        ${isSorted || slidingwindow.includes(val)
                             ? "bg-emerald-500/30 border-2 border-emerald-500 text-emerald-300 shadow-emerald-500/30"
                             : isLeft
                                 ? "bg-blue-500/30 border-2 border-blue-500 text-blue-300 shadow-blue-500/30"
@@ -510,6 +522,7 @@ const MaximumSubarraySumWithSizeK = () => {
                         <div className="absolute inset-0 bg-blue-500/10 animate-pulse rounded-lg"></div>
                       )}
                       <span className="relative z-10">{val}</span>
+                    </div>
                     </div>
                     
                     {/* Connection line between compared elements */}
