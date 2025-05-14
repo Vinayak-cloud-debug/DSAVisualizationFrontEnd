@@ -1,9 +1,9 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaArrowDown, FaArrowUp, FaSearch } from 'react-icons/fa';
-import { ChevronDown, ChevronUp, Search, RefreshCw, PlayCircle, Code, Shuffle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search, RefreshCw, PlayCircle, Code, Shuffle, Pause } from 'lucide-react';
 
 const FirstOccurrence = () => {
   const [arr, setArr] = useState([]);
@@ -18,7 +18,7 @@ const FirstOccurrence = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
-
+  const isPaused = useRef(false)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
     // Handle window resize
@@ -113,6 +113,15 @@ const FirstOccurrence = () => {
     }
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
   const visualizeBinarySearch = async () => {
     if (arr.length === 0) {
       toast.error("Please initialize the array first");
@@ -138,6 +147,9 @@ const FirstOccurrence = () => {
     let ans = -1;
     while (low <= high) {
 
+
+      await checkPaused();
+
       let mid = Math.floor((low + high) / 2);
       setLow(low);
       setHigh(high);
@@ -150,13 +162,16 @@ const FirstOccurrence = () => {
       if (newArr[mid] >= value) {
         ans = mid;
         high = mid-1;
-        
+        await checkPaused();
+
         setMid(mid);
         setHigh(high);
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
 
       } else {
+        await checkPaused();
+
         low = mid + 1;
         setLow(low);
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -177,6 +192,8 @@ const FirstOccurrence = () => {
     });
     setIsSearching(false);
     }else{
+
+        await checkPaused();
 
         setFoc(ans)
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -370,11 +387,23 @@ const FirstOccurrence = () => {
         {/* Visualization Section */}
         {arr.length > 0 && (
           <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
-            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSearching ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
-              Visualization {isSearching && <span className="text-purple-400 ml-2">(in progress...)</span>}
-            </h3>
-            
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-300 mb-6 mt-3 flex items-center">
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSearching ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+                Visualization {isSearching && <span className="text-purple-400 ml-2">(in progress...)</span>}
+              </h3>
+
+              <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSearching}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
+
+        </div>
+
             <div className="flex flex-row flex-wrap justify-center gap-4  mt-8 relative">
               {/* Legend */}
               <div className="absolute top-0 right-0 flex flex-col gap-2 bg-gray-900/70 p-3 rounded-lg border border-gray-800">
@@ -391,7 +420,7 @@ const FirstOccurrence = () => {
                   <span className="text-gray-300 text-xs">Mid</span>
                 </div>
               </div>
-              
+
               {/* Array visualization */}
               {arr.map((val, index) => (
                 <div
@@ -421,9 +450,10 @@ const FirstOccurrence = () => {
                                   ? "bg-red-500/20 border-2 border-red-500 text-red-300 shadow-red-500/30"
                                   : "bg-gray-800/50 border border-gray-700 text-gray-300"
                       }`}
+                  
                   >
                     {/* Inner glow/pulse effect when found */}
-                    {found && index === Mid && (
+                    {found && index === foc && (
                       <div className="absolute inset-0 bg-green-500/30 animate-pulse rounded-lg"></div>
                     )}
                     <span className="relative z-10">{val}</span>

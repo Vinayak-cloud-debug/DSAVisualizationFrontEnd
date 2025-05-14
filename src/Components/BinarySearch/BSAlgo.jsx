@@ -1,9 +1,9 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaArrowDown, FaArrowUp, FaSearch } from 'react-icons/fa';
-import { ChevronDown, ChevronUp, Search, RefreshCw, PlayCircle, Code, Shuffle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search, RefreshCw, PlayCircle, Code, Shuffle, Pause } from 'lucide-react';
 
 const BSAlgo = () => {
   const [arr, setArr] = useState([]);
@@ -17,7 +17,7 @@ const BSAlgo = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
-
+  const isPaused = useRef(false)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
     // Handle window resize
@@ -112,6 +112,16 @@ const BSAlgo = () => {
     }
   };
 
+
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
   const visualizeBinarySearch = async () => {
     if (arr.length === 0) {
       toast.error("Please initialize the array first");
@@ -134,6 +144,7 @@ const BSAlgo = () => {
     let high = arr.length - 1;
     
     while (low <= high) {
+      await checkPaused();
       const mid = Math.floor((low + high) / 2);
       setLow(low);
       setHigh(high);
@@ -143,6 +154,8 @@ const BSAlgo = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       if (arr[mid] === value) {
+        await checkPaused();
+
         setFound(true);
         setMid(mid);
         toast.success(`Element found at index ${mid}`, {
@@ -157,10 +170,14 @@ const BSAlgo = () => {
         return;
       } else if (arr[mid] < value) {
         low = mid + 1;
+        await checkPaused();
+
         setLow(mid+1);
         await new Promise((resolve) => setTimeout(resolve, 1500));
       } else {
         high = mid - 1;
+        await checkPaused();
+
         setHigh(mid-1);
         await new Promise((resolve) => setTimeout(resolve, 1500));
       }
@@ -352,10 +369,22 @@ const BSAlgo = () => {
         {/* Visualization Section */}
         {arr.length > 0 && (
           <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
-            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSearching ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
-              Visualization {isSearching && <span className="text-purple-400 ml-2">(in progress...)</span>}
-            </h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-300 mb-6 mt-3 flex items-center">
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSearching ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+                Visualization {isSearching && <span className="text-purple-400 ml-2">(in progress...)</span>}
+              </h3>
+
+              <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSearching}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
+
+        </div>
             
             <div className="flex flex-row flex-wrap justify-center gap-4  mt-8 relative">
               {/* Legend */}
