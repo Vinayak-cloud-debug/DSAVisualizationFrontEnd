@@ -43,6 +43,13 @@ const checkPaused = async () => {
 
 
   const handleSubmit = () => {
+
+    
+    window.scrollBy({
+      top: 1200,
+      behavior: 'smooth'
+    })
+    
     // Validate size
     if (arrSize <= 0) {
       toast.error("Please enter a valid array size");

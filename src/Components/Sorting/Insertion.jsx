@@ -38,6 +38,13 @@ const InsertionSort = () => {
   };
 
   const handleSubmit = () => {
+
+    
+    window.scrollBy({
+      top: 1200,
+      behavior: 'smooth'
+    })
+    
     const elements = inputValue.trim().split(/\s+/).map(Number);
     if (elements.some(isNaN)) {
       showToast('Please enter valid integers separated by space.', 'error');

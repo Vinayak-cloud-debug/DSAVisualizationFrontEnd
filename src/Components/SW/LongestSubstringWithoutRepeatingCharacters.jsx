@@ -91,6 +91,14 @@ const checkPaused = async () => {
 
 
   const handleSubmit = () => {
+
+
+    
+    window.scrollBy({
+      top: 1200,
+      behavior: 'smooth'
+    })
+    
     if (!arrSize || arrSize <= 0) {
         toast.error("Please enter a valid array size");
         return;
