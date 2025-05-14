@@ -71,6 +71,15 @@ const Home = () => {
     if(id == 19) {
       navigate('/NumberOfPaths');
     }
+    else
+    if(id == 19) {
+      navigate('/NumberOfPaths');
+    }
+     else
+    if(id == 99) {
+      navigate('/CompareAlgos');
+    }
+
 
     
 
@@ -82,7 +91,9 @@ const Home = () => {
     { id: 3, text: 'Bubble Sort', icon: <ArrowDownUp size={18} /> },
     { id: 4, text: 'Insertion Sort', icon: <Filter size={18} /> },
     { id: 5, text: 'Selection Sort', icon: <Filter size={18} /> },
-   
+    { id: 99, text: 'Compare Algos', icon: <Diamond size={18} /> },
+
+
   ];
 
   const graphAlgorithms = [

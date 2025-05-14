@@ -33,6 +33,7 @@ import UpperBound from './Components/BinarySearch/UpperBound'
 import FirstOccurrence from './Components/BinarySearch/FirstOccurenceOfElement'
 import LastOccurence from './Components/BinarySearch/LastOccurenceOfElement'
 import RotatedSorted1 from './Components/BinarySearch/SRSArray1'
+import CompareAlgos from './Components/Comparisons/CompareAlgos.jsx'
 
 function App() {
 
@@ -75,6 +76,8 @@ function App() {
         <Route path='/LastOccurrence' element = {  <LastOccurence/>}/>
         <Route path='/RotatedSorted1' element = {  <RotatedSorted1/>}/>
         <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
+        <Route path='/CompareAlgos' element = {  <CompareAlgos/>}/>
+
       </Routes>
     </div>
   )
