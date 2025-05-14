@@ -1,8 +1,8 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { ArrowDownCircle, ArrowUpCircle, Code, RefreshCw, PlayCircle, Info } from 'lucide-react';
+import { ArrowDownCircle, ArrowUpCircle, Code, RefreshCw, PlayCircle, Info, Pause } from 'lucide-react';
 
 const BubbleSort = () => {
   const [arr, setArr] = useState([]);
@@ -15,6 +15,7 @@ const BubbleSort = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const isPaused = useRef(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
@@ -99,11 +100,24 @@ const BubbleSort = () => {
     toast.success("Array initialized successfully!");
   };
 
+
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+  
+
+
+
   const handleBubbleSort = async () => {
     let newArr = [...arr];
     
     for (let i = 0; i < arrSize - 1; i++) {
       for (let j = 0; j < arrSize - i - 1; j++) {
+        await checkPaused(); // Wait if paused
         setLeftIndex(j);
         setRightIndex(j + 1);
         await new Promise((resolve) => setTimeout(resolve, 800));
@@ -155,6 +169,7 @@ const BubbleSort = () => {
     setArr([]);
     setInputValue('');
     setSortedArrayIndex([]);
+    isPaused.current.value = false;
     setLeftIndex(-1);
     setRightIndex(-1);
     toast.success("Reset successful!");
@@ -310,6 +325,17 @@ const BubbleSort = () => {
               <RefreshCw size={18} />
               Reset
             </button>
+
+           <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSorting}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
+
+
             
             <div className="flex gap-2 ml-auto">
               <button
@@ -384,7 +410,7 @@ const BubbleSort = () => {
                 const isSorted = sortedArrayIndex.includes(index);
                 const isLeft = index === leftIndex;
                 const isRight = index === rightIndex;
-                
+
                 return (
                   <div
                     key={index}

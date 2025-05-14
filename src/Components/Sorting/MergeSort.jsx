@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowDownCircle, Moon, Sun, Shuffle, Info, X, Sparkles, ArrowUpCircle, PlayCircle,RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowDownCircle, Moon, Sun, Shuffle, Info, X, Sparkles, ArrowUpCircle, PlayCircle,RefreshCw, Pause } from 'lucide-react';
 
 // Enhanced theme constants with stunning dark UI options
 const THEMES = {
@@ -113,6 +113,7 @@ const MergeSort = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [notification, setNotification] = useState(null);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const isPaused = useRef(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
@@ -242,9 +243,22 @@ const MergeSort = () => {
     toast.success('Random array generated successfully!');
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+  
+
   const merge = async (arr, low, mid, high) => {
     const left = arr.slice(low, mid + 1);
     const right = arr.slice(mid + 1, high + 1);
+
+    await checkPaused();
 
     setLeftArr(left);
     setRightArr(right);
@@ -263,6 +277,8 @@ const MergeSort = () => {
       await delay(COMPARISON_DELAY);
 
       if (parseInt(left[i]) <= parseInt(right[j])) {
+
+        await checkPaused();
         
         arr[k] = left[i];
         setTemp((prev) => [...prev, left[i]]);
@@ -282,6 +298,7 @@ const MergeSort = () => {
     }
 
     while (i < left.length) {
+      await checkPaused();
       setLeftIndex(i);
       setCurrIndex(k);
       await delay(COMPARISON_DELAY);
@@ -293,6 +310,8 @@ const MergeSort = () => {
     }
 
     while (j < right.length) {
+
+      await checkPaused();
       setRightIndex(j);
       setCurrIndex(k);
       await delay(COMPARISON_DELAY);
@@ -311,6 +330,7 @@ const MergeSort = () => {
 
   const mergeSort = async (arr, low, high) => {
     if (low < high) {
+      await checkPaused();
       setLow(low);
       setHigh(high);
       const mid = Math.floor((low + high) / 2);
@@ -449,6 +469,16 @@ const MergeSort = () => {
             <RefreshCw size={16} />
             Submit Array
           </button>
+
+          <button
+                onClick={() => (isPaused.current = !isPaused.current)}
+                disabled={!isSorting}
+                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+              >
+                {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+                {isPaused.current ? "Resume" : "Pause"}
+          </button>
+              
 
           <button
               onClick={handleMergeSort}

@@ -1,7 +1,7 @@
 
 
-import React, { useState, useEffect } from 'react';
-import { ArrowDown, ArrowUpCircle, RefreshCw, Play, Pause, SkipBack,ArrowDownCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowDown, ArrowUpCircle, RefreshCw, Play, Pause, SkipBack,ArrowDownCircle,PlayCircle } from 'lucide-react';
 
 const QuickSort = () => {
   const [arr, setArr] = useState([]);
@@ -14,7 +14,7 @@ const QuickSort = () => {
   const [speed, setSpeed] = useState(1000);
   const [statusMessage, setStatusMessage] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  const isPaused = useRef(false);
   // Handle window resize
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -65,6 +65,16 @@ const QuickSort = () => {
     showToast('Random array generated!', 'success');
   };
 
+
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
   const partition = async (arr, low, high) => {
     if (low === high) {
       setPivotIndex(low);
@@ -89,16 +99,24 @@ const QuickSort = () => {
     await delay(speed);
   
     while (i <= j) {
+
+      
       // Move i right until we find a number > pivot
       while (i <= high && arr[i] <= pivot) {
+
+        await checkPaused();
         setLowIndex(i);
         setStatusMessage(`Left pointer moving right: Finding element > ${pivot}`);
         await delay(speed);
         i++;
       }
+
+      
   
       // Move j left until we find a number <= pivot
       while (j > low && arr[j] > pivot) {
+
+        await checkPaused();
         setHighIndex(j);
         setStatusMessage(`Right pointer moving left: Finding element <= ${pivot}`);
         await delay(speed);
@@ -106,6 +124,8 @@ const QuickSort = () => {
       }
   
       if (i < j) {
+        
+        await checkPaused();
         setStatusMessage(`Swapping elements: ${arr[i]} and ${arr[j]}`);
         [arr[i], arr[j]] = [arr[j], arr[i]];
         setArr([...arr]);
@@ -114,7 +134,7 @@ const QuickSort = () => {
     }
 
 
-    
+    await checkPaused();
     setStatusMessage(`Placing pivot ${pivot} at its correct position`);
     [arr[low], arr[j]] = [arr[j], arr[low]];
     setArr([...arr]);
@@ -286,13 +306,22 @@ const QuickSort = () => {
                 <SkipBack size={16} />
                 Reset
               </button>
+
+              <button
+                onClick={() => (isPaused.current = !isPaused.current)}
+                disabled={!isSorting}
+                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+              >
+                {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+                {isPaused.current ? "Resume" : "Pause"}
+              </button>
               
               <button
                 onClick={handleQuickSort}
                 disabled={isSorting || arr.length === 0}
                 className="px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:from-pink-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-purple-500/30 flex items-center gap-2 font-medium"
               >
-                {isSorting ? <Pause size={16} /> : <Play size={16} />}
+                {isSorting ? <Pause size={16} /> : <PlayCircle size={16} />}
                 {isSorting ? 'Sorting...' : 'Start Sort'}
               </button>
             </div>
@@ -353,7 +382,7 @@ const QuickSort = () => {
         </div>
 
         {/* Array Visualization */}
-        <div className="flex flex-wrap justify-center gap-4 p-8 bg-gray-800/40 rounded-xl min-h-56 backdrop-blur-sm shadow-xl border border-gray-700/50">
+        <div className="flex flex-wrap justify-center gap-4 p-8 backdrop-blur-sm bg-gray-900/30  border-gray-800 rounded-xl min-h-56 shadow-xl border border-gray-700/50">
           {arr.length === 0 ? (
             <div className="text-gray-400 italic flex flex-col items-center justify-center min-h-32">
               <RefreshCw size={40} className="text-gray-500 mb-4 opacity-30" />
@@ -387,8 +416,8 @@ const QuickSort = () => {
 
                 {/* Array Element Box - Enhanced with better shadows and gradients */}
                 <div
-                  className={`${getElementSize()} animate-pulse flex items-center justify-center font-bold transition-all duration-300 rounded-xl ${
-                    index === pivotIndex ? 'bg-gradient-to-br from-purple-500 to-purple-800 text-white ring-2 ring-purple-400 shadow-lg shadow-purple-500/30 transform scale-105' :
+                  className={`${getElementSize()}  flex items-center justify-center font-bold transition-all duration-300 rounded-xl ${
+                    index === pivotIndex ? 'bg-blue-800/30 to-blue-900 text-white ring-2 ring-blue-500/30 shadow-lg shadow-blue-500/30 transform scale-105' :
                     correctlyPlacedPivotIndex.includes(index) ? 'bg-green-700/30 border-2 border-green-700 text-green-300 shadow-green-500/30' :
                     'bg-gray-800/30 border-2 border-gray-700 text-gray-300 shadow-gray-500/30'
                   }`}

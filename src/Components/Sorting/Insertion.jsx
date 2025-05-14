@@ -1,5 +1,5 @@
-import { ArrowDownCircle, Loader2, Play, RefreshCw } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { ArrowDownCircle, Loader2, Pause, Play, RefreshCw,PlayCircle } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const InsertionSort = () => {
   const [arr, setArr] = useState([]);
@@ -12,6 +12,7 @@ const InsertionSort = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [animationSpeed, setAnimationSpeed] = useState(800);
   const [sortingProgress, setSortingProgress] = useState(0);
+  const isPaused = useRef(false); // Ref to track pause state
 
   // Update input value when array changes
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -72,10 +73,24 @@ const InsertionSort = () => {
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+
+  
+
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+
+
   // Insertion Sort implementation
   const handleInsertionSort = async () => {
     setIsSorting(true);
     let newArr = [...arr];
+
+    
     
     setLeftIndex(0);
     setRightIndex(0);
@@ -89,12 +104,16 @@ const InsertionSort = () => {
       // Current element to be compared
       let current = newArr[i];
       let j = i - 1;
+
+      await checkPaused();
       
       setRightIndex(i);
       await delay(animationSpeed/2);
 
       // Compare current element with sorted portion and move elements
       while (j >= 0 && newArr[j] > current) {
+
+        await checkPaused();
         setLeftIndex(j);
         setNextIndex(j + 1);
         await delay(animationSpeed);
@@ -102,12 +121,14 @@ const InsertionSort = () => {
         newArr[j] = newArr[j+1];
         newArr[j+1] = temp;
 
+        await checkPaused();
         setArr([...newArr]);
         await delay(animationSpeed/2);
         
         j--;
       }
       
+      await checkPaused();
       // Place current element at correct position
       newArr[j + 1] = current;
       setArr([...newArr]);
@@ -270,6 +291,15 @@ const InsertionSort = () => {
                 
               )}
             </button>
+
+            <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSorting}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
           </div>
         </div>
         

@@ -1,7 +1,7 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { ArrowDownCircle, Code, RefreshCw, PlayCircle,Loader2, Info, Target } from 'lucide-react';
+import { ArrowDownCircle, Code, RefreshCw, PlayCircle,Loader2, Info, Target,Pause } from 'lucide-react';
 
 
 const SelectionSort = () => {
@@ -16,6 +16,7 @@ const SelectionSort = () => {
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [particles, setParticles] = useState([]);
+  const isPaused = useRef(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
@@ -76,6 +77,17 @@ const SelectionSort = () => {
     toast.success("Random array generated!");
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+  
+
   const handleSubmit = () => {
     if (!arrSize || arrSize <= 0) {
       toast.error("Please enter a valid array size");
@@ -107,22 +119,27 @@ const SelectionSort = () => {
     
     for (let i = 0; i < arrSize - 1; i++) {
       let minIndex = i;
+
+      await checkPaused();
       
       setCurrentIndex(i);
       setMinIndex(i);
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       for (let j = i + 1; j < arrSize; j++) {
+        await checkPaused();
         setCompareIndex(j);
         await new Promise((resolve) => setTimeout(resolve, 800));
         
         if (newArr[j] < newArr[minIndex]) {
+          await checkPaused();
           minIndex = j;
           setMinIndex(minIndex);
           await new Promise((resolve) => setTimeout(resolve, 800));
         }
       }
 
+      await checkPaused();
       setMinIndex(minIndex);
       await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -132,15 +149,19 @@ const SelectionSort = () => {
         newArr[minIndex] = newArr[i];
         newArr[i] = temp;
 
+        await checkPaused();
         setArr([...newArr]);
         await new Promise((resolve) => setTimeout(resolve, 1200));
       }
 
+      await checkPaused();
       // Mark as sorted
       setSortedArrayIndex(prev => [...prev, i]);
       await new Promise((resolve) => setTimeout(resolve, 800));
     }
     
+
+    await checkPaused();
     // Mark the last element as sorted too
     setSortedArrayIndex(prev => [...prev, arrSize - 1]);
     
@@ -301,6 +322,16 @@ const SelectionSort = () => {
               <RefreshCw size={18} />
               Reset
             </button>
+
+             <button
+                onClick={() => (isPaused.current = !isPaused.current)}
+                disabled={!isSorting}
+                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+              >
+                {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+                {isPaused.current ? "Resume" : "Pause"}
+              </button>
+              
             
             <div className="flex gap-2 ml-auto">
               <button
