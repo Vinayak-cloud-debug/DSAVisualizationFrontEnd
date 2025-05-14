@@ -178,6 +178,13 @@ const MergeSort = () => {
   };
 
   const handleSubmit = () => {
+
+
+    window.scrollBy({
+      top: 1200,
+      behavior: 'smooth'
+    })
+    
     const size = parseInt(arrSize, 10);
     if (isNaN(size) || size <= 0) {
       toast.error('Please enter a valid array size');
@@ -213,6 +220,7 @@ const MergeSort = () => {
     setRightArr([]);
     setTemp([]);
     toast.success('Array submitted successfully!');
+    
   };
 
   const generateRandomArray = () => {

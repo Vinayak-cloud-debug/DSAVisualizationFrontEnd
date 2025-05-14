@@ -1,10 +1,11 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowDown, ArrowUpCircle, RefreshCw, Play, Pause, SkipBack,ArrowDownCircle,PlayCircle } from 'lucide-react';
+import { ArrowDown, ArrowUpCircle, RefreshCw, Play, Pause, SkipBack,ArrowDownCircle,PlayCircle, Code } from 'lucide-react';
 
 const QuickSort = () => {
   const [arr, setArr] = useState([]);
+  const [arrSize, setArrSize] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [lowIndex, setLowIndex] = useState(-1);
   const [highIndex, setHighIndex] = useState(-1);
@@ -241,11 +242,16 @@ const checkPaused = async () => {
 
   }
 
+
+  const [showCode, setShowCode] = useState(false);
+
+
+
   return (
-    <div className={`flex z-10  flex-col min-h-screen bg-gradient-to-br from-gray-900  to-black text-gray-100`}>
+    <div className={`flex  flex-col min-h-screen bg-gradient-to-br from-gray-900  to-black text-gray-100`}>
 
       {windowWidth < 500 ?
-      <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
+      <div className="max-w-sm   ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
         <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
           For Better View
         </h2>
@@ -254,72 +260,112 @@ const checkPaused = async () => {
       </div>
       :null}
 
-      <header className="w-full py-6 bg-black/40 backdrop-blur-sm">
-        <div className="relative mb-6 w-[90%] mx-auto">
-          <h1 className="text-3xl text-center sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500">
-            Quick Sort Visualizer
-          </h1>
-          <div className="mt-2 h-1.5 w-full bg-gray-900 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full"></div>
-          <p className="text-center text-gray-300 mt-3">Watch the algorithm sort in real-time</p>
-        </div>
-      </header>
+      
 
-      {/* Main Content */}
-      <div className=" flex-grow lg:w-[900px]  bg-gray-900 container mx-auto px-4 py-6">
         {/* Controls Section */}
-        <div className="mb-8 bg-gray-900 p-5 rounded-xl shadow-lg backdrop-blur-sm border border-gray-700/50">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                className="w-full p-3 rounded-lg bg-gray-900 border border-purple-500/30 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all shadow-md"
-                placeholder="Enter numbers separated by spaces"
-                value={inputValue}
-                onChange={handleInput}
-                disabled={isSorting}
-              />
+          <div className=" bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
+      
+      {/* Content container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+        {/* Header with animated border */}
+        <div className="relative mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
+            Quick Sort Algorithm
+          </h1>
+          <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
+          <p className="text-gray-400 text-center mt-3 max-w-xl">
+            Visualize how the Quick Sort algorithm works with real-time animations.
+          </p>
+        </div>
+
+        {/* Input Section - Glass morphism card */}
+        <div className="backdrop-blur-sm bg-gray-900/50 border border-gray-800 rounded-xl p-6 w-full max-w-3xl mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-gray-300 text-sm font-medium">Array Size <span className="text-gray-500">(max 15)</span></label>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  max="15"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  placeholder="Enter size"
+                  onChange={(e) => setArrSize(parseInt(e.target.value, 10))}
+                  disabled={isSorting}
+                />
+              </div>
             </div>
             
-            <div className="flex flex-wrap gap-3 justify-center md:justify-end">
-              <button
-                onClick={handleSubmit}
-                disabled={isSorting}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-purple-500/20 font-medium"
-              >
-                Submit
-              </button>
-              
-              <button
-                onClick={generateRandomArray}
-                disabled={isSorting}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-blue-500/20 flex items-center gap-2 font-medium"
-              >
-                <RefreshCw size={16} className="animate-spin-slow" />
-                Random
-              </button>
-              
-              <button
-                onClick={reset}
-                disabled={isSorting || arr.length === 0}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-gray-500/20 flex items-center gap-2 font-medium"
-              >
-                <SkipBack size={16} />
-                Reset
-              </button>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-gray-300 text-sm font-medium">Array Elements</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800/80 text-white placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  placeholder="Enter elements separated by space (e.g., 42 17 8 23 5)"
+                  value={inputValue}
+                  onChange={handleInput}
+                  disabled={isSorting}
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 mt-6">
+            <button
+              onClick={handleSubmit}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-emerald-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} className={isSorting ? "animate-spin" : ""} />
+              Initialize Array
+            </button>
+            
+            <button
+              onClick={generateRandomArray}
+              disabled={isSorting || !arrSize}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium flex items-center gap-2 shadow-lg shadow-blue-700/20 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Random Array
+            </button>
+            
+            <button
+              onClick={handleQuickSort}
+              disabled={isSorting || arr.length === 0}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
+            >
+              <PlayCircle size={18} />
+              {isSorting ? "Sorting..." : "Start Sorting"}
+            </button>
+            
+            <button
+              onClick={resetIndices}
+              disabled={isSorting}
+              className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={18} />
+              Reset
+            </button>
 
-              
+          
+
+            
+            <div className="flex gap-2 ml-auto">
               
               <button
-                onClick={handleQuickSort}
-                disabled={isSorting || arr.length === 0}
-                className="px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg hover:from-pink-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-purple-500/30 flex items-center gap-2 font-medium"
+                onClick={() => setShowCode(!showCode)}
+                className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium flex items-center gap-2 transition-all"
               >
-                {isSorting ? <Pause size={16} /> : <PlayCircle size={16} />}
-                {isSorting ? 'Sorting...' : 'Start Sort'}
+                <Code size={18} />
+                {showCode ? "Hide Code" : "Show Code"}
               </button>
             </div>
           </div>
         </div>
+
+        
 
         {/* Speed Control and Status */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -354,6 +400,9 @@ const checkPaused = async () => {
           </div>
         </div>
 
+
+        
+
         {/* Legend */}
         <div className="flex flex-wrap justify-center gap-4 mb-6 bg-gray-800/50 p-4 rounded-lg shadow-md border border-gray-700/30">
           <div className="flex items-center gap-2">
@@ -384,7 +433,7 @@ const checkPaused = async () => {
         </div>
 
         {/* Array Visualization */}
-        <div className="flex flex-wrap justify-center gap-4 p-8 backdrop-blur-sm bg-gray-900/30  border-gray-800 rounded-xl min-h-56 shadow-xl border border-gray-700/50">
+        <div className="flex flex-wrap justify-center gap-4 p-8 backdrop-blur-sm bg-gray-900/30  border-gray-800 rounded-xl min-h-56 shadow-xl border ">
           {arr.length === 0 ? (
             <div className="text-gray-400 italic flex flex-col items-center justify-center min-h-32">
               <RefreshCw size={40} className="text-gray-500 mb-4 opacity-30" />
@@ -444,36 +493,11 @@ const checkPaused = async () => {
           )}
         </div>
 
-        {/* Algorithm Explanation - Added for educational value */}
-        <div className="mt-8 bg-gray-800/50 p-5 rounded-xl shadow-lg backdrop-blur-sm border border-gray-700/50">
-          <h2 className="text-xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">How QuickSort Works</h2>
-          <p className="text-gray-300 mb-4">QuickSort is a divide-and-conquer algorithm that works by selecting a 'pivot' element and partitioning the array around it.</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-gray-700/50 p-3 rounded-lg">
-              <h3 className="font-bold mb-2 text-purple-300">1. Pivot Selection</h3>
-              <p className="text-gray-300">Choose an element as pivot (here we use the first element)</p>
-            </div>
-            
-            <div className="bg-gray-700/50 p-3 rounded-lg">
-              <h3 className="font-bold mb-2 text-purple-300">2. Partitioning</h3>
-              <p className="text-gray-300">Rearrange elements: smaller elements to left of pivot, larger to right</p>
-            </div>
-            
-            <div className="bg-gray-700/50 p-3 rounded-lg">
-              <h3 className="font-bold mb-2 text-purple-300">3. Recursion</h3>
-              <p className="text-gray-300">Apply the same process to subarrays until the array is sorted</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
-      {/* Footer */}
-      <footer className="w-full py-4 bg-black/60 backdrop-blur-sm mt-6">
-        <div className="container mx-auto px-4 text-center text-gray-400 text-sm">
-          <p>QuickSort Visualizer | Interactive Algorithm Learning Tool</p>
-        </div>
-      </footer>
+    </div>
+
+    <div className='mb-32'></div>
     </div>
   );
 };

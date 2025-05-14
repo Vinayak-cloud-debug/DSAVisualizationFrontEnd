@@ -619,6 +619,14 @@ const CompareAlgos = () => {
       return;
     }
 
+
+    setArrSize([])
+    setArr1([])
+    setArr2([])
+    setArr3([])
+    setArr4([])
+    
+
     setArr([...elements]);
     setArr1([...elements])
     setArr2([...elements])

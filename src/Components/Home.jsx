@@ -241,7 +241,7 @@ const Home = () => {
             <span>Two Pointers</span>
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveCategory('BinarySearch')}
             className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
               activeCategory === 'BinarySearch' 
