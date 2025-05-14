@@ -307,14 +307,7 @@ const checkPaused = async () => {
                 Reset
               </button>
 
-              <button
-                onClick={() => (isPaused.current = !isPaused.current)}
-                disabled={!isSorting}
-                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
-              >
-                {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
-                {isPaused.current ? "Resume" : "Pause"}
-              </button>
+              
               
               <button
                 onClick={handleQuickSort}
@@ -379,6 +372,15 @@ const checkPaused = async () => {
             <div className="w-5 h-5 bg-gradient-to-br from-green-500 to-green-700 rounded-full shadow-md shadow-green-500/30"></div>
             <span className="text-sm text-gray-300">Sorted Element</span>
           </div>
+
+           <button
+              onClick={() => (isPaused.current = !isPaused.current)}
+              disabled={!isSorting}
+              className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+              {isPaused.current ? "Resume" : "Pause"}
+          </button>
         </div>
 
         {/* Array Visualization */}

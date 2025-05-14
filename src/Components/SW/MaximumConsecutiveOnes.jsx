@@ -1,8 +1,8 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { ArrowDownCircle, ArrowUpCircle, Code, RefreshCw, PlayCircle, Info } from 'lucide-react';
+import { ArrowDownCircle, ArrowUpCircle, Code, RefreshCw, PlayCircle, Info, Pause } from 'lucide-react';
 
 const MaximumConsecutiveOnes = () => {
 
@@ -18,6 +18,7 @@ const MaximumConsecutiveOnes = () => {
   const [backgroundParticles, setBackgroundParticles] = useState([]);
   const [showCode, setShowCode] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const isPaused = useRef(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
@@ -103,10 +104,23 @@ const MaximumConsecutiveOnes = () => {
     toast.success("Array initialized successfully!");
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+ 
+
   const handlestartSlidingWindow = async () => {
     let newArr = [...arr];
     let flips = k;
     let l = 0,r = 0,lmaxi = 0,rmaxi = 0,Maxi = 0;
+
+
 
     setLeftIndex(l);
     setRightIndex(r);
@@ -130,6 +144,7 @@ const MaximumConsecutiveOnes = () => {
 
             }
 
+            await checkPaused();
             l++;
             setLeftIndex(l)
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -149,6 +164,8 @@ const MaximumConsecutiveOnes = () => {
         
 
         r++;
+
+        await checkPaused();
         setRightIndex(r);
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -428,10 +445,23 @@ const MaximumConsecutiveOnes = () => {
         {/* Visualization Section */}
         {arr.length > 0 && (
           <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
-            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
-              Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
-            </h3>
+           <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-300 mb-6 mt-3 flex items-center">
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+                Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
+              </h3>
+
+                <button
+              onClick={() => (isPaused.current = !isPaused.current)}
+              disabled={!isSorting}
+              className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+              {isPaused.current ? "Resume" : "Pause"}
+            </button>
+
+
+          </div>
 
             {/* Legend */}
             <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 justify-center">

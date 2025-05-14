@@ -90,7 +90,7 @@ const checkPaused = async () => {
     setIsSorting(true);
     let newArr = [...arr];
 
-    
+
     
     setLeftIndex(0);
     setRightIndex(0);
@@ -292,14 +292,7 @@ const checkPaused = async () => {
               )}
             </button>
 
-            <button
-            onClick={() => (isPaused.current = !isPaused.current)}
-            disabled={!isSorting}
-            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
-          >
-            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
-            {isPaused.current ? "Resume" : "Pause"}
-          </button>
+         
           </div>
         </div>
         
@@ -332,10 +325,25 @@ const checkPaused = async () => {
             <div className="w-4 h-4 bg-red-700 rounded"></div>
             <span className="text-sm">Next Index</span>
           </div>
+          
+          
+        <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSorting}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+        </button>
+
+
         </div>
 
         {/* Array Visualization */}
+
+        
         <div className="flex flex-wrap justify-center gap-3 p-8 bg-gray-900/50 border border-gray-800 rounded-xl min-h-72 backdrop-blur-sm shadow-xl">
+          
           {arr.length === 0 ? (
             <div className="text-gray-400 italic">No array to visualize. Generate or submit an array to begin.</div>
           ) : (

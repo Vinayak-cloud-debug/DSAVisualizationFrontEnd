@@ -470,15 +470,7 @@ const checkPaused = async () => {
             Submit Array
           </button>
 
-          <button
-                onClick={() => (isPaused.current = !isPaused.current)}
-                disabled={!isSorting}
-                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
-              >
-                {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
-                {isPaused.current ? "Resume" : "Pause"}
-          </button>
-              
+        
 
           <button
               onClick={handleMergeSort}
@@ -492,13 +484,25 @@ const checkPaused = async () => {
       </div>
 
       {/* Status indicator */}
-      {isSorting && (
-        <div className={`mt-4 ${theme.textSecondary} flex items-center gap-2`}>
-          <span className="inline-block h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
-          <span>Sorting in progress...</span>
-        </div>
-      )}
+  
 
+        <div className="flex justify-between gap-6 items-center mb-4">
+                <h3 className="text-lg font-medium text-gray-300 mb-6 mt-3 flex items-center">
+                  <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+                  Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
+                </h3>
+  
+                <button
+              onClick={() => (isPaused.current = !isPaused.current)}
+              disabled={!isSorting}
+              className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+            >
+              {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+              {isPaused.current ? "Resume" : "Pause"}
+            </button>
+      
+      
+      </div>
       {/* Main Array with enhanced styling */}
       <div className="flex flex-wrap mt-14 gap-4 justify-center">
         {arr.map((val, index) => (
