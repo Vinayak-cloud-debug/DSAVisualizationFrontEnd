@@ -58,25 +58,44 @@ const ZeroesToFront = () => {
   }, []);
 
   const handleInput = (e) => setInputValue(e.target.value);
+
 const generateRandomArray = () => {
   if (!arrSize || arrSize <= 0 || arrSize > 15) {
     toast.error("Please enter a valid array size between 1 and 15");
     return;
   }
 
-   const MAX_VALUE = 100; // Set your desired maximum value here
+  const MAX_VALUE = 100;
 
-  const randomArray = Array.from({ length: arrSize }, () =>
-    Math.floor(Math.random() * (MAX_VALUE + 1)) // 0 to MAX_VALUE
+  let randomArray = Array.from({ length: arrSize }, () =>
+    Math.floor(Math.random() * (MAX_VALUE + 1))
   );
+
+  // Count how many zeros already exist
+  const zeroCount = randomArray.filter(num => num === 0).length;
+
+  if (zeroCount < 2) {
+    const neededZeros = 2 - zeroCount;
+
+    // Get unique random indices to set as 0
+    const indices = new Set();
+    while (indices.size < neededZeros) {
+      indices.add(Math.floor(Math.random() * arrSize));
+    }
+
+    for (let index of indices) {
+      randomArray[index] = 0;
+    }
+  }
 
   setArr(randomArray);
   setInputValue(randomArray.join(' '));
   setSortedArrayIndex([]);
   setLeftIndex(-1);
   setRightIndex(-1);
-  toast.success("Random array of non-negative integers generated!");
+  toast.success("Random array with at least two 0s generated!");
 };
+
 
 
   const handleSubmit = () => {
@@ -145,11 +164,16 @@ const generateRandomArray = () => {
             let temp = newArr[left];
             newArr[left] = newArr[right];
             newArr[right] = temp;
+
+            setArr([...newArr])
+            await new Promise((resolve) => setTimeout(resolve, 800));
+
             right--;
             setRightIndex(right)
-            setArr([...newArr])
-
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            
+            
 
             setLeftSwapIndex(-1);
             setRightSwapIndex(-1);
@@ -214,20 +238,17 @@ const generateRandomArray = () => {
       
     
 
-      while(newArr[left]){ // until and unless we dont find a zero move ahead
+    while(newArr[left]){ // until and unless we dont find a zero move ahead
         left++;
         
     
 
 
-    let right = left+1;
-    setRightIndex(right)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    int right = left+1;
+    
+    while(right < nums.size){
 
-
-    while(right < newArr.length){
-
-        if(newArr[right]){
+        if(nums[right]){
             
             swap(nums[left],nums[right])
             left++;
@@ -503,10 +524,7 @@ const generateRandomArray = () => {
                                 </div>
                                 </div>
                                 
-                                {/* Connection line between compared elements */}
-                                {isLeft && arr[index + 1] !== undefined && index + 1 === rightIndex && (
-                                  <div className="absolute top-1/2 left-[calc(100%_-_7px)] w-[calc(100%_+_6px)] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                                )}
+
                               </div>
                             );
                           })}

@@ -58,16 +58,17 @@ const SortZeroOneTwo = () => {
   }, []);
 
   const handleInput = (e) => setInputValue(e.target.value);
+
 const generateRandomArray = () => {
   if (!arrSize || arrSize <= 0 || arrSize > 15) {
     toast.error("Please enter a valid array size between 1 and 15");
     return;
   }
 
-   const MAX_VALUE = 100; // Set your desired maximum value here
+  const MAX_VALUE = 2; // Only 0, 1, or 2
 
   const randomArray = Array.from({ length: arrSize }, () =>
-    Math.floor(Math.random() * (MAX_VALUE + 1)) // 0 to MAX_VALUE
+    Math.floor(Math.random() * (MAX_VALUE + 1)) // generates 0, 1, or 2
   );
 
   setArr(randomArray);
@@ -75,7 +76,7 @@ const generateRandomArray = () => {
   setSortedArrayIndex([]);
   setLeftIndex(-1);
   setRightIndex(-1);
-  toast.success("Random array of non-negative integers generated!");
+  toast.success("Random array with elements 0, 1, and 2 generated!");
 };
 
 
@@ -120,7 +121,6 @@ const generateRandomArray = () => {
     setSortedArrayIndex([]);
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    
 
     for(let i = 0; i<2; i++){
 
@@ -129,7 +129,7 @@ const generateRandomArray = () => {
         setRightIndex(right);
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        while(newArr[right]!=i){
+        while(newArr[right]!=i &&  right>=0){
             
             right--;
             setRightIndex(right)
@@ -152,11 +152,12 @@ const generateRandomArray = () => {
                 let temp = newArr[left];
                 newArr[left] = newArr[right];
                 newArr[right] = temp;
+                setArr([...newArr])
+                await new Promise((resolve) => setTimeout(resolve, 800));
+
                 right--;
                 setRightIndex(right)
-                setArr([...newArr])
-
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                await new Promise((resolve) => setTimeout(resolve, 800));
 
                 setLeftSwapIndex(-1);
                 setRightSwapIndex(-1);
@@ -180,7 +181,7 @@ const generateRandomArray = () => {
 
     for(let i = 0; i<newArr.length; i++){
         setSortedArrayIndex((prev) => [...prev,i])
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 400));
     }
 
 
@@ -202,7 +203,7 @@ const generateRandomArray = () => {
     await handlestartSlidingWindow();
     
     
-    toast.success("Sliding Window  Completed!");
+    toast.success("Sorted 0's 1's 2's  Completed!");
     setIsSorting(false);
   };
 
@@ -219,38 +220,40 @@ const generateRandomArray = () => {
 
   // Pseudo code for bubble sort
   const bubbleSortCode = `function ZeroesToEnd(nums):
-      
-    
 
-      while(newArr[left]){ // until and unless we dont find a zero move ahead
-        left++;
+    for(int i = 0; i<2; i++){
+
+        int right = nums.size()-1;
+
+
+        while(nums[right]!=i)
+            right--;
         
-    
 
 
-    let right = left+1;
-    setRightIndex(right)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+        int left = right-1;
 
 
-    while(right < newArr.length){
 
-        if(newArr[right]){
+        while(left >= 0){
+
+            if(nums[left] > i){
+                
+                swap(nums[left], nums[right]);
+                right--;
+
+            }
+
+            left--;
             
-            swap(nums[left],nums[right])
-            left++;
         }
-
-        right++;
     }
-        
-    return nums;
   }
     `;
 
   // Algorithm info
   const algorithmInfo = `
-  Best, Average, Worst Case: O(n)
+  Best, Average, Worst Case: O(2*n)
 
   The entire array is traversed once with constant-time updates to the sum.
   O(1)
@@ -259,6 +262,8 @@ const generateRandomArray = () => {
 
   Here we find the first zero using left pointer and take right pointer to move ahead , so  moving ahead 
   if we find a non-zero element we then swap values in left and right pointer.
+   this is will be done for 1 in the second pass and then everything will be sorted.
+   if you sort 0's and 1's then 2's will be automatically sorted.
 
   `;
     
@@ -305,11 +310,11 @@ const generateRandomArray = () => {
         {/* Header with animated border */}
         <div className="relative mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
-            Move Zeroes to the End
+            Sort 0's, 1's and 2's
           </h1>
           <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
           <p className="text-gray-400 text-center mt-3  lg:max-w-2xl">
-            Visualize how using two pointers we can move all the zeroes to the end
+            Visualize how using two pointers we can sort 0's 1's and 2's
           </p>
         </div>
 
@@ -374,9 +379,9 @@ const generateRandomArray = () => {
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
             >
               <PlayCircle size={18} />
-              {isSorting ? "Finding Max Sum..." : "Start"}
+              {isSorting ? "Sort..." : "Start"}
             </button>
-            
+
             <button
               onClick={resetArray}
               disabled={isSorting}
@@ -511,10 +516,7 @@ const generateRandomArray = () => {
                                 </div>
                                 </div>
                                 
-                                {/* Connection line between compared elements */}
-                                {isLeft && arr[index + 1] !== undefined && index + 1 === rightIndex && (
-                                  <div className="absolute top-1/2 left-[calc(100%_-_7px)] w-[calc(100%_+_6px)] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                                )}
+                                
                               </div>
                             );
                           })}

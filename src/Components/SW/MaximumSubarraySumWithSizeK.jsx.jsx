@@ -570,10 +570,7 @@ const checkPaused = async () => {
                     </div>
                     </div>
                     
-                    {/* Connection line between compared elements */}
-                    {isLeft && arr[index + 1] !== undefined && index + 1 === rightIndex && (
-                      <div className="absolute top-1/2 left-[calc(100%_-_7px)] w-[calc(100%_+_6px)] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                    )}
+                    
                   </div>
                 );
               })}
