@@ -405,7 +405,7 @@ const checkPaused = async () => {
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-purple-700/20 transition-all disabled:opacity-50"
             >
               <PlayCircle size={18} />
-              {isSorting ? "Finding Max Sum..." : "Start"}
+              {isSorting ? "Move Zeroes To Front..." : "Start"}
             </button>
             
             <button
