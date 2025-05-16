@@ -65,11 +65,13 @@ const KadaneAlgo = () => {
       return;
     }
   
-    
-    const randomArray = Array.from({ length: arrSize }, () =>
-        Math.floor((Math.random() - 0.5) * 2 * Number.MAX_SAFE_INTEGER)
-    );
 
+    
+    const MAX_VALUE = 100;
+
+  let randomArray = Array.from({ length: arrSize }, () =>
+    Math.floor(Math.random() * (MAX_VALUE + 1))
+  );
 
     setArr(randomArray);
     setInputValue(randomArray.join(' '));

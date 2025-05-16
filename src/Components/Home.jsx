@@ -89,6 +89,14 @@ const Home = () => {
     if(id == 31) {
       navigate('/SortZeroOneTwo');
     }
+    else
+    if(id == 18) {
+      navigate('/MinimumPathSum');
+    }
+    else
+    if(id == 20) {
+      navigate('/UniquePaths');
+    }
 
 
     
@@ -127,11 +135,9 @@ const Home = () => {
 
 
   const GridPaths = [
-    { id: 17, text: 'Maximum Sum Path', icon: <GitBranch size={18} /> },
     { id: 18, text: 'Minimum Path Sum', icon: <Network size={18} /> },
     { id: 19, text: 'Count all the Paths in Grid', icon: <Navigation size={18} /> },
     { id: 20, text: 'Unique Paths', icon: <Share2 size={18} /> },
-    { id: 21, text: 'Shortest Paths in a Grid', icon: <Share2 size={18} /> },
 
   ];
 

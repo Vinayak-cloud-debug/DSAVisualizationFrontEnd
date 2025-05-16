@@ -37,6 +37,8 @@ import CompareAlgos from './Components/Comparisons/CompareAlgos.jsx'
 import ZeroesToEnd from './Components/Arrays/MovingZeroesToEnd.jsx'
 import ZeroesToFront from './Components/Arrays/MovingZeroesToFront.jsx'
 import SortZeroOneTwo from './Components/Arrays/Sort0\'s1\'s2\'s.jsx'
+import MinimumPathSum from './Components/Grids/MinimumPathSum.jsx'
+import UniquePaths from './Components/Grids/UniquePaths.jsx'
 
 function App() {
 
@@ -83,8 +85,8 @@ function App() {
         <Route path='/ZeroesToEnd' element = {  <ZeroesToEnd/>}/>
         <Route path='/ZeroesToFront' element = {  <ZeroesToFront/>}/>
         <Route path='/SortZeroOneTwo' element = {  <SortZeroOneTwo/>}/>
-
-
+        <Route path='/MinimumPathSum' element = {  <MinimumPathSum/>}/>
+        <Route path='/UniquePaths' element = {  <UniquePaths/>}/>
 
       </Routes>
     </div>

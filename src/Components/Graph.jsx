@@ -111,10 +111,10 @@ const GraphVisualization = () => {
       toast.error("Please enter a valid number of vertices");
       return;
     }
-
+    
     // Reset current graph
     resetAlgorithmState();
-    
+
     const numVertices = parseInt(vertices, 10);
     const maxEdges = Math.min(numVertices * (numVertices - 1) / 2, numVertices * 3); // Limit number of edges
     const numEdges = Math.floor(Math.random() * maxEdges) + numVertices; // At least numVertices edges to ensure connectivity
