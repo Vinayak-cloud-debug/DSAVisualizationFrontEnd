@@ -111,7 +111,7 @@ const UniquePaths = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 flex flex-col items-center bg-gradient-to-br from-gray-900 to-black text-white w-screen min-h-screen justify-center overflow-hidden p-5 space-y-6 font-mono">
+    <div className=" left-0 top-0 flex flex-col items-center bg-gradient-to-br from-gray-900 to-black text-white w-screen min-h-screen justify-center overflow-hidden p-5 space-y-6 font-mono">
       <h2 className="text-2xl font-bold text-yellow-300">
         Count Unique Paths (Grid Traversal)
       </h2>
