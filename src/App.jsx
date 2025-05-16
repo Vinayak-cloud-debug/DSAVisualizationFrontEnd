@@ -27,13 +27,14 @@ import Graph from './Components/Graph'
 import MaximumSubarraySumWithSizeK from './Components/SW/MaximumSubarraySumWithSizeK.jsx.jsx'
 import MaximumConsecutiveOnes from './Components/SW/MaximumConsecutiveOnes'
 import LongestSubstringWithoutRepeatingCharacters from './Components/SW/LongestSubstringWithoutRepeatingCharacters'
-import KadaneAlgo from './Components/TwoPointers/KadaneAlgo'
+import KadaneAlgo from './Components/Arrays/KadaneAlgo'
 import LowerBound from './Components/BinarySearch/LowerBound'
 import UpperBound from './Components/BinarySearch/UpperBound'
 import FirstOccurrence from './Components/BinarySearch/FirstOccurenceOfElement'
 import LastOccurence from './Components/BinarySearch/LastOccurenceOfElement'
 import RotatedSorted1 from './Components/BinarySearch/SRSArray1'
 import CompareAlgos from './Components/Comparisons/CompareAlgos.jsx'
+import ZeroesToEnd from './Components/Arrays/MovingZeroesToEnd.jsx'
 
 function App() {
 
@@ -77,6 +78,8 @@ function App() {
         <Route path='/RotatedSorted1' element = {  <RotatedSorted1/>}/>
         <Route path='/NumberOfPaths' element = {  <NumberOfPaths/>}/>
         <Route path='/CompareAlgos' element = {  <CompareAlgos/>}/>
+        <Route path='/ZeroesToEnd' element = {  <ZeroesToEnd/>}/>
+
 
       </Routes>
     </div>

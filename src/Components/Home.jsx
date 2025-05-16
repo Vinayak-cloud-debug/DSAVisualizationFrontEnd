@@ -6,6 +6,7 @@ import { Code, GitMerge, Shuffle, ArrowDownUp, Filter, Search,
          Grid2X2,
          ChartScatter,
          ArrowUpDown,
+         Brackets,
         
          } from 'lucide-react';
 
@@ -79,6 +80,10 @@ const Home = () => {
     if(id == 99) {
       navigate('/CompareAlgos');
     }
+      else
+    if(id == 24) {
+      navigate('/ZeroesToEnd');
+    }
 
 
     
@@ -125,9 +130,9 @@ const Home = () => {
 
   ];
 
-  const TwoPointer = [
+  const Arrays = [
     { id: 23, text: 'Kadane Algo', icon: <GitBranch size={18} /> },
-    { id: 24, text: 'Two Number Sum Equals Target', icon: <Network size={18} /> },
+    { id: 24, text: 'Move Zeroes To the End', icon: <Network size={18} /> },
   
   ];
 
@@ -143,7 +148,7 @@ const Home = () => {
   ];
 
   // Get current algorithm set based on active category
-  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : activeCategory === 'graph' ? graphAlgorithms : activeCategory === 'slidingWindow' ?  SlidingWindow :  activeCategory === 'GridPaths' ?  GridPaths : activeCategory === 'TwoPointers' ? TwoPointer : BinarySearch;
+  const currentAlgorithms = activeCategory === 'sorting' ? sortingAlgorithms : activeCategory === 'graph' ? graphAlgorithms : activeCategory === 'slidingWindow' ?  SlidingWindow :  activeCategory === 'GridPaths' ?  GridPaths : activeCategory === 'Arrays' ? Arrays : BinarySearch;
 
   return (
     <div className="relative bg-gray-950 scroll-smooth w-full min-h-screen flex flex-col items-center overflow-hidden px-4 py-8">
@@ -230,15 +235,15 @@ const Home = () => {
           </button>
 
           <button 
-            onClick={() => setActiveCategory('TwoPointers')}
+            onClick={() => setActiveCategory('Arrays')}
             className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
-              activeCategory === 'TwoPointers' 
+              activeCategory === 'Arrays' 
                 ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
                 : 'text-gray-400 hover:text-gray-200'
             }`}
           >
-            <ArrowUpDown size={18} />
-            <span>Two Pointers</span>
+            <Brackets size={18} />
+            <span>Arrays</span>
           </button>
 
           <button
