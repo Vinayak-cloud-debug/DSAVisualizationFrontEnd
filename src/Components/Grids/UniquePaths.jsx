@@ -33,7 +33,7 @@ const UniquePaths = () => {
     if (i === m - 1 && j === n - 1) return 1;
 
     setVisited((prev) => [...prev, { i, j }]);
-    await delay(300);
+    await delay(900);
 
     const right = await recursive(i, j + 1, grid, m, n);
     const down = await recursive(i + 1, j, grid, m, n);
@@ -52,7 +52,7 @@ const UniquePaths = () => {
     }
 
     setVisited((prev) => [...prev, { i, j }]);
-    await delay(300);
+    await delay(900);
 
     const right = await memoization(i, j + 1, grid, m, n, currentDp);
     const down = await memoization(i + 1, j, grid, m, n, currentDp);
@@ -79,7 +79,7 @@ const UniquePaths = () => {
 
         setVisited([{ i, j }]);
         setDp(dpTable.map((r) => [...r]));
-        await delay(100);
+        await delay(1000);
       }
     }
 

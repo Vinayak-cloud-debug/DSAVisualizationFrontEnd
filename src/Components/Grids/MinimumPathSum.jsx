@@ -33,7 +33,7 @@ const MinimumPathSum = () => {
     if (i === m - 1 && j === n - 1) return path[i][j];
 
     setVisited((prev) => [...prev, { i, j }]);
-    await delay(400);
+    await delay(900);
 
     const right = await recursive(i, j + 1, path, m, n);
     const down = await recursive(i + 1, j, path, m, n);
@@ -54,7 +54,7 @@ const MinimumPathSum = () => {
     }
 
     setVisited((prev) => [...prev, { i, j }]);
-    await delay(400);
+    await delay(900);
 
     const right = await memoization(i, j + 1, path, m, n, currentDp);
     const down = await memoization(i + 1, j, path, m, n, currentDp);
@@ -64,19 +64,19 @@ const MinimumPathSum = () => {
     setDp([...currentDp]);
 
     setVisited((prev) => prev.filter((v) => v.i !== i || v.j !== j));
-    await delay(400);
+    await delay(900);
     return res;
   };
 
   // Tabulation
   const tabulation = async (path, m, n) => {
-    
+
     const dpTable = Array.from({ length: m }, () => Array(n).fill(0));
     setDp(dpTable.map((r) => [...r])); // Initialize DP table in state
     dpTable[0][0] = path[0][0];
     setVisited([{ i: 0, j: 0 }]);
     setDp(dpTable.map((r) => [...r]));
-    await delay(200);
+    await delay(900);
 
     for (let i = 0; i < m; i++) {
       for (let j = 0; j < n; j++) {
@@ -87,7 +87,7 @@ const MinimumPathSum = () => {
 
         setVisited([{ i, j }]);
         setDp(dpTable.map((r) => [...r]));
-        await delay(200);
+        await delay(1100);
       }
     }
 
