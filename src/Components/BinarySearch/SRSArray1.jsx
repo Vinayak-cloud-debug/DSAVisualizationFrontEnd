@@ -255,23 +255,7 @@ const checkPaused = async () => {
         <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
       </div>
       :null}
-      
-      {/* Background particles */}
-      {/* {backgroundParticles.map((particle, i) => (
-        <div 
-          key={i}
-          className="absolute rounded-full bg-blue-600"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            opacity: particle.opacity,
-            filter: 'blur(1px)'
-          }}
-        />
-      ))}
-       */}
+     
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
       
