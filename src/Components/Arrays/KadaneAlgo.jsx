@@ -208,7 +208,7 @@ const checkPaused = async () => {
     await handlestartSlidingWindow();
     
     
-    toast.success("Sliding Window  Completed!");
+    toast.success("Max Sum Computed!");
     setIsSorting(false);
   };
 

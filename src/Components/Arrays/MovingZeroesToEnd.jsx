@@ -234,7 +234,7 @@ const checkPaused = async () => {
     await handlestartSlidingWindow();
     
     
-    toast.success("Sliding Window  Completed!");
+    toast.success("Successfully Moved Zeroes to the End!");
     setIsSorting(false);
   };
 
