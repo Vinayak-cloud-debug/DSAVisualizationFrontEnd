@@ -197,42 +197,6 @@ const Home = () => {
             <Code size={18} />
             <span>Sorting Algos</span>
           </button>
-          
-          <button 
-            onClick={() => setActiveCategory('graph')}
-            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
-              activeCategory === 'graph' 
-                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
-                : 'text-gray-400 hover:text-gray-200'
-            }`}
-          >
-            <ChartScatter size={18} />
-            <span>Graph Algos</span>
-          </button>
-
-          <button 
-            onClick={() => setActiveCategory('slidingWindow')}
-            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
-              activeCategory === 'slidingWindow' 
-                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
-                : 'text-gray-400 hover:text-gray-200'
-            }`}
-          >
-            <ArrowDownUp size={18} />
-            <span>Sliding Window </span>
-          </button>
-
-          <button 
-            onClick={() => setActiveCategory('GridPaths')}
-            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
-              activeCategory === 'GridPaths' 
-                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
-                : 'text-gray-400 hover:text-gray-200'
-            }`}
-          >
-            <Grid2X2 size={18} />
-            <span>Grid Paths</span>
-          </button>
 
           <button 
             onClick={() => setActiveCategory('Arrays')}
@@ -257,6 +221,46 @@ const Home = () => {
             <ArrowUpDown size={18} />
             <span>BS Algos</span>
           </button>
+
+           <button 
+            onClick={() => setActiveCategory('slidingWindow')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'slidingWindow' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <ArrowDownUp size={18} />
+            <span>Sliding Window </span>
+          </button>
+          
+          <button 
+            onClick={() => setActiveCategory('graph')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'graph' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <ChartScatter size={18} />
+            <span>Graph Algos</span>
+          </button>
+
+         
+
+          <button 
+            onClick={() => setActiveCategory('GridPaths')}
+            className={`px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 ${
+              activeCategory === 'GridPaths' 
+                ? 'bg-gradient-to-r from-red-600  to-orange-600 text-white shadow-lg' 
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <Grid2X2 size={18} />
+            <span>Grid Paths</span>
+          </button>
+
+          
         </div>
 
         {/* Algorithm Cards Grid */}
