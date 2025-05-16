@@ -153,7 +153,7 @@ const checkPaused = async () => {
         Find Minimum Path Sum
       </h2>
 
-      <div className="flex space-x-2 items-center">
+      <div className="flex flex-wrap space-x-2 items-center">
         <input
           type="number"
           min="1"
