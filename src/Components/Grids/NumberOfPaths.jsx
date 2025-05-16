@@ -1,6 +1,7 @@
 
 
-import React, { useState } from "react";
+import { Pause } from "lucide-react";
+import React, { useRef, useState } from "react";
 
 const NumberOfPaths = () => {
   const [matrix, setMatrix] = useState([]);
@@ -11,6 +12,7 @@ const NumberOfPaths = () => {
   const [cols, setCols] = useState(4);
   const [dpTable, setDpTable] = useState([]);
   const [strategy, setStrategy] = useState("recursion");
+  const isPaused = useRef(false);
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -28,9 +30,21 @@ const NumberOfPaths = () => {
     setDpTable([]);
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+
   const findPathsRecursion = async (i, j, path, m, n) => {
     if (i >= m || j >= n || path[i][j] === "*") return 0;
     if (i === m - 1 && j === n - 1) {
+
+      await checkPaused();
       setNumPaths((prev) => prev + 1);
       setVisited((prev) => [...prev, { i, j }]);
       await delay(900);
@@ -40,7 +54,11 @@ const NumberOfPaths = () => {
 
     setVisited((prev) => [...prev, { i, j }]);
     await delay(900);
+
+    await checkPaused();
     const right = await findPathsRecursion(i, j + 1, path, m, n);
+
+    await checkPaused();
     const down = await findPathsRecursion(i + 1, j, path, m, n);
     setVisited((prev) => prev.filter((cell) => cell.i !== i || cell.j !== j));
     return right + down;
@@ -52,6 +70,7 @@ const NumberOfPaths = () => {
     const memo = Array.from({ length: m }, () => Array(n).fill(-1));
 
     const dfs = async (i, j) => {
+
       if (i >= m || j >= n || matrix[i][j] === "*") return 0;
       if (i === m - 1 && j === n - 1) return 1;
       if (memo[i][j] !== -1) return memo[i][j];
@@ -59,10 +78,16 @@ const NumberOfPaths = () => {
       setVisited((prev) => [...prev, { i, j }]);
       await delay(1000);
 
+
+      await checkPaused();
       const right = await dfs(i, j + 1);
+
+      await checkPaused();
       const down = await dfs(i + 1, j);
       memo[i][j] = right + down;
 
+
+      await checkPaused();
       setDpTable([...memo.map((row) => [...row])]);
       setVisited((prev) => prev.filter((cell) => cell.i !== i || cell.j !== j));
       return memo[i][j];
@@ -88,12 +113,15 @@ const NumberOfPaths = () => {
             (i > 0 ? dp[i - 1][j] : 0) + (j > 0 ? dp[i][j - 1] : 0);
         }
 
+
+        await checkPaused();
         setVisited([{ i, j }]);
         setDpTable([...dp.map((row) => [...row])]);
         await delay(1150);
       }
     }
 
+    await checkPaused();
     setVisited([]);
     setNumPaths(dp[m - 1][n - 1]);
   };
@@ -119,10 +147,10 @@ const NumberOfPaths = () => {
   return (
     <div className=" left-0 top-0 flex flex-col items-center bg-gradient-to-br from-gray-900 to-black text-white w-screen min-h-screen justify-center overflow-hidden p-5 space-y-6 font-mono">
       <h2 className="text-2xl font-bold text-emerald-400">
-        Matrix Pathfinding Visualization
+        Count all the paths from top-left to bottom-right
       </h2>
 
-      <div className="flex space-x-2 items-center">
+      <div className="flex flex-wrap gap-5 space-x-2 items-center">
         <input
           type="number"
           min="2"
@@ -155,6 +183,15 @@ const NumberOfPaths = () => {
         >
           Generate Grid
         </button>
+
+        <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isRunning}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
       </div>
 
       {matrix.length > 0 && (

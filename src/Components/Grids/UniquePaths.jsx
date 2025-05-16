@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { Pause } from "lucide-react";
+import React, { useRef, useState } from "react";
 
 const UniquePaths = () => {
   const [matrix, setMatrix] = useState([]);
@@ -9,6 +10,7 @@ const UniquePaths = () => {
   const [rows, setRows] = useState(4);
   const [cols, setCols] = useState(4);
   const [approach, setApproach] = useState("memoization");
+  const isPaused = useRef(false);
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -28,6 +30,14 @@ const UniquePaths = () => {
     setPathCount(0);
   };
 
+
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
   const recursive = async (i, j, grid, m, n) => {
     if (i >= m || j >= n || grid[i][j] === "*") return 0;
     if (i === m - 1 && j === n - 1) return 1;
@@ -35,7 +45,11 @@ const UniquePaths = () => {
     setVisited((prev) => [...prev, { i, j }]);
     await delay(900);
 
+    await checkPaused();
+
     const right = await recursive(i, j + 1, grid, m, n);
+
+    await checkPaused();
     const down = await recursive(i + 1, j, grid, m, n);
 
     setVisited((prev) => prev.filter((v) => v.i !== i || v.j !== j));
@@ -46,6 +60,8 @@ const UniquePaths = () => {
     if (i >= m || j >= n || grid[i][j] === "*") return 0;
     if (currentDp[i][j] !== -1) return currentDp[i][j];
     if (i === m - 1 && j === n - 1) {
+
+        await checkPaused();
       currentDp[i][j] = 1;
       setDp([...currentDp]);
       return 1;
@@ -54,11 +70,19 @@ const UniquePaths = () => {
     setVisited((prev) => [...prev, { i, j }]);
     await delay(900);
 
+
+    await checkPaused();
     const right = await memoization(i, j + 1, grid, m, n, currentDp);
+    await checkPaused();
     const down = await memoization(i + 1, j, grid, m, n, currentDp);
 
+
+
+    await checkPaused();
     currentDp[i][j] = right + down;
     setDp([...currentDp]);
+
+    await checkPaused();
 
     setVisited((prev) => prev.filter((v) => v.i !== i || v.j !== j));
     return currentDp[i][j];
@@ -77,12 +101,16 @@ const UniquePaths = () => {
         if (i > 0) dpTable[i][j] += dpTable[i - 1][j];
         if (j > 0) dpTable[i][j] += dpTable[i][j - 1];
 
+
+        await checkPaused();
         setVisited([{ i, j }]);
         setDp(dpTable.map((r) => [...r]));
         await delay(1000);
       }
     }
 
+
+    
     setVisited([]);
     return dpTable[m - 1][n - 1];
   };
@@ -140,6 +168,17 @@ const UniquePaths = () => {
         >
           Generate Grid
         </button>
+
+
+        
+        <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isRunning}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
       </div>
 
       <div className="flex space-x-4">

@@ -1,7 +1,7 @@
 
 
-import { ArrowDownCircle, Code, Info, PlayCircle, RefreshCw } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ArrowDownCircle, Code, Info, Pause, PlayCircle, RefreshCw } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SortZeroOneTwo = () => {
@@ -12,6 +12,7 @@ const SortZeroOneTwo = () => {
   const [sortedArrayIndex, setSortedArrayIndex] = useState([]);
   const [leftSwapIndex, setLeftSwapIndex] = useState(-1);
   const [rightSwapIndex, setRightSwapIndex] = useState(-1);
+  const isPaused = useRef(false);
   
   const [leftIndex,setLeftIndex] = useState(-1);
   const [rightIndex,setRightIndex] = useState(-1);
@@ -80,6 +81,16 @@ const generateRandomArray = () => {
 };
 
 
+
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
+
+
   const handleSubmit = () => {
 
 
@@ -130,7 +141,7 @@ const generateRandomArray = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         while(newArr[right]!=i &&  right>=0){
-            
+            await checkPaused();
             right--;
             setRightIndex(right)
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -149,12 +160,16 @@ const generateRandomArray = () => {
                 setRightSwapIndex(right);
                 await new Promise((resolve) => setTimeout(resolve, 1000));
 
+
+                await checkPaused();
                 let temp = newArr[left];
                 newArr[left] = newArr[right];
                 newArr[right] = temp;
                 setArr([...newArr])
                 await new Promise((resolve) => setTimeout(resolve, 800));
 
+
+                await checkPaused();
                 right--;
                 setRightIndex(right)
                 await new Promise((resolve) => setTimeout(resolve, 800));
@@ -166,6 +181,7 @@ const generateRandomArray = () => {
 
             }
 
+            await checkPaused();
             left--;
             setLeftIndex(left)
             
@@ -180,6 +196,7 @@ const generateRandomArray = () => {
 
 
     for(let i = 0; i<newArr.length; i++){
+        await checkPaused();
         setSortedArrayIndex((prev) => [...prev,i])
         await new Promise((resolve) => setTimeout(resolve, 400));
     }
@@ -437,10 +454,23 @@ const generateRandomArray = () => {
         {/* Visualization Section */}
         {arr.length > 0 && (
           <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-6 w-full max-w-4xl mt-4">
-            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center">
-              <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
-              Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
-            </h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-300 mb-6 mt-3 flex items-center">
+                <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isSorting ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}></span>
+                Visualization {isSorting && <span className="text-purple-400 ml-2">(in progress...)</span>}
+              </h3>
+
+              <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isSorting}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
+
+
+        </div>
 
             {/* Legend */}
             <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 justify-center">
@@ -464,7 +494,7 @@ const generateRandomArray = () => {
                             const isSorted = sortedArrayIndex.includes(index);
                             const isLeft = index === leftIndex;
                             const isRight = index === rightIndex;
-            
+
                             return (
                               <div
                                 key={index}
@@ -490,8 +520,7 @@ const generateRandomArray = () => {
                                     <ArrowDownCircle size={20} className="text-purple-500" />
                                   </div>
                                 )}
-            
-            
+
                                 {/* Value Box with glass effect */}
                                 <div className={`relative backdrop-blur-sm  shadow-lg w-20 h-16 items-center  justify-center  border-emerald-500 
                               ${sortedArrayIndex.length === 1 && sortedArrayIndex[0] === index

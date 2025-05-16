@@ -1,6 +1,7 @@
 
 
-import React, { useState } from "react";
+import { Pause } from "lucide-react";
+import React, { useRef, useState } from "react";
 
 const MinimumPathSum = () => {
   const [matrix, setMatrix] = useState([]);
@@ -11,9 +12,10 @@ const MinimumPathSum = () => {
   const [rows, setRows] = useState(4);
   const [cols, setCols] = useState(4);
   const [approach, setApproach] = useState("memoization");
-
+    const isPaused = useRef(false);
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const MAX_VALUE = 100;
+
 
   const generateRandomMatrix = (rows, cols) => {
     const newMatrix = Array.from({ length: rows }, () =>
@@ -27,6 +29,15 @@ const MinimumPathSum = () => {
     setMinSum(0);
   };
 
+
+  
+const checkPaused = async () => {
+
+  while (isPaused.current) {
+    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100ms
+  }
+};
+
   // Recursive (no memoization)
   const recursive = async (i, j, path, m, n) => {
     if (i >= m || j >= n) return Infinity;
@@ -35,9 +46,13 @@ const MinimumPathSum = () => {
     setVisited((prev) => [...prev, { i, j }]);
     await delay(900);
 
+    await checkPaused();
     const right = await recursive(i, j + 1, path, m, n);
+    await checkPaused();
     const down = await recursive(i + 1, j, path, m, n);
 
+
+    await checkPaused();
     setVisited((prev) => prev.filter((v) => v.i !== i || v.j !== j));
     return path[i][j] + Math.min(right, down);
   };
@@ -48,6 +63,8 @@ const MinimumPathSum = () => {
     if (currentDp[i][j] !== -1) return currentDp[i][j];
 
     if (i === m - 1 && j === n - 1) {
+
+        await checkPaused();
       currentDp[i][j] = path[i][j];
       setDp([...currentDp]);
       return path[i][j];
@@ -56,11 +73,18 @@ const MinimumPathSum = () => {
     setVisited((prev) => [...prev, { i, j }]);
     await delay(900);
 
+
+    await checkPaused();
+
     const right = await memoization(i, j + 1, path, m, n, currentDp);
+
+    await checkPaused();
     const down = await memoization(i + 1, j, path, m, n, currentDp);
 
     const res = path[i][j] + Math.min(right, down);
     currentDp[i][j] = res;
+
+    await checkPaused();
     setDp([...currentDp]);
 
     setVisited((prev) => prev.filter((v) => v.i !== i || v.j !== j));
@@ -70,6 +94,8 @@ const MinimumPathSum = () => {
 
   // Tabulation
   const tabulation = async (path, m, n) => {
+
+
 
     const dpTable = Array.from({ length: m }, () => Array(n).fill(0));
     setDp(dpTable.map((r) => [...r])); // Initialize DP table in state
@@ -85,7 +111,10 @@ const MinimumPathSum = () => {
         const left = j > 0 ? dpTable[i][j - 1] : Infinity;
         dpTable[i][j] = path[i][j] + Math.min(top, left);
 
+
+        await checkPaused();
         setVisited([{ i, j }]);
+        await checkPaused();
         setDp(dpTable.map((r) => [...r]));
         await delay(1100);
       }
@@ -148,6 +177,15 @@ const MinimumPathSum = () => {
         >
           Generate Grid
         </button>
+
+           <button
+            onClick={() => (isPaused.current = !isPaused.current)}
+            disabled={!isRunning}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-red-500 text-white font-medium flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
+            {isPaused.current ? "Resume" : "Pause"}
+          </button>
       </div>
 
       <div className="flex space-x-4">
