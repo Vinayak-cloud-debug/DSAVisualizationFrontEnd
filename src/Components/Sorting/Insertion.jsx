@@ -196,12 +196,12 @@ const checkPaused = async () => {
         <p onClick={Close} className='w-20 h-7 mt-7 cursor-pointer hover:bg-slate-700 ring-1 ring-slate-700 text-center rounded-xl'>Close</p>
       </div>
       :null}
-      
+
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           
           <h1 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-600">
-            Insertion Sort Visualizer
+            Insertion Sort Algorithm
           </h1>
           <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full"></div>
 

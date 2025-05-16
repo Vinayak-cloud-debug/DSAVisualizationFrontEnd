@@ -4,7 +4,7 @@ import { ArrowDownCircle, Code, Info, PlayCircle, RefreshCw } from 'lucide-react
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-const ZeroesToEnd = () => {
+const ZeroesToFront = () => {
 
   const [arr, setArr] = useState([]);
   const [arrSize, setArrSize] = useState(0);
@@ -28,7 +28,7 @@ const ZeroesToEnd = () => {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
-  
+
 
   // Generate random particles for the background
   useEffect(() => {
@@ -81,8 +81,6 @@ const generateRandomArray = () => {
 
   const handleSubmit = () => {
 
-
-    
     window.scrollBy({
       top: 1200,
       behavior: 'smooth'
@@ -114,35 +112,32 @@ const generateRandomArray = () => {
   };
 
   const handlestartSlidingWindow = async () => {
+
     let newArr = [...arr];
 
 
-    
-    let left = 0;
+    let right = newArr.length-1;
 
-    setLeftIndex(left);
+    setRightIndex(right);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
 
-    while(newArr[left]){
+    while(newArr[right]){
         
-        left++;
-        setLeftIndex(left)
+        right--;
+        setRightIndex(right)
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
 
-    let right = left+1;
-    setRightIndex(right)
+    let left = right-1;
+    setLeftIndex(left);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
 
-    while(right < newArr.length){
+    while(left >= 0){
 
-
-
-
-        if(newArr[right]){
+        if(newArr[left]){
             setLeftSwapIndex(left);
             setRightSwapIndex(right);
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -150,8 +145,8 @@ const generateRandomArray = () => {
             let temp = newArr[left];
             newArr[left] = newArr[right];
             newArr[right] = temp;
-            left++;
-            setLeftIndex(left)
+            right--;
+            setRightIndex(right)
             setArr([...newArr])
 
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -163,19 +158,19 @@ const generateRandomArray = () => {
 
         }
 
-        right++;
-        setRightIndex(right)
+        left--;
+        setLeftIndex(left)
         
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
     }
 
-    setLeftIndex(left);
-    setRightIndex(arr.length-1);
+    setLeftIndex(0);
+    setRightIndex(right);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
 
-    for(let i = left; i< arr.length; i++){
+    for(let i = 0; i<=right; i++){
         setSortedArrayIndex((prev) => [...prev,i])
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }
@@ -302,11 +297,11 @@ const generateRandomArray = () => {
         {/* Header with animated border */}
         <div className="relative mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
-            Move Zeroes to the End
+            Move Zeroes to the Front
           </h1>
           <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
           <p className="text-gray-400 text-center mt-3  lg:max-w-2xl">
-            Visualize how using two pointers we can move all the zeroes to the end
+            Visualize how using two pointers we can move all the zeroes to the front
           </p>
         </div>
 
@@ -539,4 +534,4 @@ const generateRandomArray = () => {
   );
 };
 
-export default ZeroesToEnd;
+export default ZeroesToFront;

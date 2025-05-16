@@ -72,10 +72,7 @@ const Home = () => {
     if(id == 19) {
       navigate('/NumberOfPaths');
     }
-    else
-    if(id == 19) {
-      navigate('/NumberOfPaths');
-    }
+    
      else
     if(id == 99) {
       navigate('/CompareAlgos');
@@ -83,6 +80,10 @@ const Home = () => {
       else
     if(id == 24) {
       navigate('/ZeroesToEnd');
+    }
+    else
+    if(id == 30) {
+      navigate('/ZeroesToFront');
     }
 
 
@@ -133,6 +134,8 @@ const Home = () => {
   const Arrays = [
     { id: 23, text: 'Kadane Algo', icon: <GitBranch size={18} /> },
     { id: 24, text: 'Move Zeroes To the End', icon: <Network size={18} /> },
+    { id: 30, text: 'Move Zeroes To the Front', icon: <Share2 size={18} /> },
+
   
   ];
 
