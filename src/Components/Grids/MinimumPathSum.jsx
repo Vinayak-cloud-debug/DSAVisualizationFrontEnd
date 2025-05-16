@@ -153,7 +153,7 @@ const checkPaused = async () => {
         Find Minimum Path Sum
       </h2>
 
-      <div className="flex flex-wrap space-x-2 gap-5 items-center">
+      <div className="flex flex-wrap ml-5 grid-cols-3 space-x-2 gap-5 items-center">
         <input
           type="number"
           min="1"
@@ -186,6 +186,19 @@ const checkPaused = async () => {
             {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
             {isPaused.current ? "Resume" : "Pause"}
           </button>
+
+
+           <button
+        onClick={startFindingPaths}
+        disabled={isRunning || !matrix.length}
+        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 transition rounded-md"
+      >
+        {isRunning ? "Calculating..." : "Start Traversal"}
+      </button>
+
+      <h3 className="text-lg font-semibold text-emerald-300">
+        MinPathSum: {minSum}
+      </h3>
       </div>
 
       <div className="flex space-x-4">
@@ -246,17 +259,7 @@ const checkPaused = async () => {
         </div>
       )}
 
-      <button
-        onClick={startFindingPaths}
-        disabled={isRunning || !matrix.length}
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 transition rounded-md"
-      >
-        {isRunning ? "Calculating..." : "Start Traversal"}
-      </button>
-
-      <h3 className="text-lg font-semibold text-emerald-300">
-        MinPathSum: {minSum}
-      </h3>
+     
     </div>
   );
 };

@@ -110,7 +110,7 @@ const checkPaused = async () => {
     }
 
 
-    
+
     setVisited([]);
     return dpTable[m - 1][n - 1];
   };
@@ -140,11 +140,11 @@ const checkPaused = async () => {
 
   return (
     <div className=" left-0 top-0 flex flex-col items-center bg-gradient-to-br from-gray-900 to-black text-white w-screen min-h-screen justify-center overflow-hidden p-5 space-y-6 font-mono">
-      <h2 className="text-2xl font-bold text-yellow-300">
+      <h2 className="text-2xl ml-5 font-bold text-yellow-300">
         Count Unique Paths (Grid Traversal)
       </h2>
 
-      <div className="flex space-x-2 items-center">
+      <div className="flex flex-wrap ml-5 gap-5 grid-cols-3 space-x-2 items-center">
         <input
           type="number"
           min="1"
@@ -179,6 +179,18 @@ const checkPaused = async () => {
             {isPaused.current ? <PlayCircle size={18} /> : <Pause size={18} />}
             {isPaused.current ? "Resume" : "Pause"}
           </button>
+
+        <button
+        onClick={startTraversal}
+        disabled={isRunning || !matrix.length}
+        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 transition rounded-md"
+      >
+        {isRunning ? "Calculating..." : "Start Traversal"}
+      </button>
+
+      <h3 className="text-lg font-semibold text-yellow-300">
+        Unique Paths: {pathCount}
+      </h3>
       </div>
 
       <div className="flex space-x-4">
@@ -247,17 +259,7 @@ const checkPaused = async () => {
         </div>
       )}
 
-      <button
-        onClick={startTraversal}
-        disabled={isRunning || !matrix.length}
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 transition rounded-md"
-      >
-        {isRunning ? "Calculating..." : "Start Traversal"}
-      </button>
-
-      <h3 className="text-lg font-semibold text-yellow-300">
-        Unique Paths: {pathCount}
-      </h3>
+      
     </div>
   );
 };
