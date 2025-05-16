@@ -36,6 +36,7 @@ import RotatedSorted1 from './Components/BinarySearch/SRSArray1'
 import CompareAlgos from './Components/Comparisons/CompareAlgos.jsx'
 import ZeroesToEnd from './Components/Arrays/MovingZeroesToEnd.jsx'
 import ZeroesToFront from './Components/Arrays/MovingZeroesToFront.jsx'
+import SortZeroOneTwo from './Components/Arrays/Sort0\'s1\'s2\'s.jsx'
 
 function App() {
 
@@ -81,6 +82,8 @@ function App() {
         <Route path='/CompareAlgos' element = {  <CompareAlgos/>}/>
         <Route path='/ZeroesToEnd' element = {  <ZeroesToEnd/>}/>
         <Route path='/ZeroesToFront' element = {  <ZeroesToFront/>}/>
+        <Route path='/SortZeroOneTwo' element = {  <SortZeroOneTwo/>}/>
+
 
 
       </Routes>

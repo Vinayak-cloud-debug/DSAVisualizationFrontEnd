@@ -85,6 +85,10 @@ const Home = () => {
     if(id == 30) {
       navigate('/ZeroesToFront');
     }
+    else
+    if(id == 31) {
+      navigate('/SortZeroOneTwo');
+    }
 
 
     
@@ -135,6 +139,7 @@ const Home = () => {
     { id: 23, text: 'Kadane Algo', icon: <GitBranch size={18} /> },
     { id: 24, text: 'Move Zeroes To the End', icon: <Network size={18} /> },
     { id: 30, text: 'Move Zeroes To the Front', icon: <Share2 size={18} /> },
+    { id: 31, text: 'Sort 0 1 2 ', icon: <Navigation size={18} /> },
 
   
   ];
