@@ -276,7 +276,7 @@ const checkPaused = async () => {
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
         {/* Header with animated border */}
         <div className="relative mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
+          <h1 className="text-3xl sm:text-4xl mt-5 text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-500 to-green-600">
             Quick Sort Algorithm
           </h1>
           <div className="mt-2 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-full"></div>
