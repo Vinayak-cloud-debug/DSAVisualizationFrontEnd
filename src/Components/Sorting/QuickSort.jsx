@@ -61,8 +61,7 @@ const QuickSort = () => {
 
   const generateRandomArray = () => {
     // Adjust size based on screen width
-    const maxSize = windowWidth < 640 ? 5 : windowWidth < 1024 ? 7 : 10;
-    const size = Math.floor(Math.random() * (maxSize - 3)) + 4; // 4 to maxSize elements
+    const size = arrSize // 4 to maxSize elements
     
     const randomArr = Array.from({ length: size }, () => 
       Math.floor(Math.random() * 100)
