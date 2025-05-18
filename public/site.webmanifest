@@ -1,0 +1,20 @@
+{
+  "name": "Algo Vision",
+  "short_name": "AlgoVision",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/AlgoVision.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/AlgoVision.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
