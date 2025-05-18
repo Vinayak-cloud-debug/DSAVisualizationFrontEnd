@@ -231,20 +231,7 @@ const checkPaused = async () => {
       </div>
       :null}
 
-      {backgroundParticles.map((particle, i) => (
-        <div 
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            background: particle.color,
-            filter: 'blur(1px)'
-          }}
-        />
-      ))}
+     
       
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>

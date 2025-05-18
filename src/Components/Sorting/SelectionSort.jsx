@@ -94,6 +94,7 @@ const checkPaused = async () => {
     window.scrollBy({
       top: 1200,
       behavior: 'smooth'
+
     })
     
 
@@ -217,7 +218,6 @@ const checkPaused = async () => {
 
   return (
     <div className="relative z-10 flex flex-col bg-gray-950  min-h-screen w-full px-4 py-8 overflow-hidden">
-      {/* Background particles */}
 
       {windowWidth < 500 ?
       <div className="max-w-sm absolute z-40 ml-5 mt-10 bg-gray-800 text-gray-200 p-6 rounded-xl shadow-lg border border-gray-700">
@@ -229,20 +229,7 @@ const checkPaused = async () => {
       </div>
       :null}
 
-      {particles.map((particle, i) => (
-        <div 
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            background: particle.color,
-            filter: 'blur(1px)'
-          }}
-        />
-      ))}
+      
       
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950 to-gray-950 z-0"></div>
